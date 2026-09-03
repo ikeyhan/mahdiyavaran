@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحه یافت نشد | ستاد مهدی‌یاوران</title>
+<title>فروشندگان | ستاد مهدی‌یاوران</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="assets/svg/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<style>
-  .err-code{ font-size:clamp(5rem,14vw,9rem); font-weight:800; background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; }
-</style>
+
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -144,7 +142,7 @@
       <button class="btn-icon menu-toggle" data-drawer-open aria-label="منو"><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
-  <div class="container nav-row"><nav class="nav-main"><a href="categories.html" class="all"><svg class="icon"><use href="#icon-grid"/></svg> همه دسته‌بندی‌ها</a><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="sellers.html">فروشندگان</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">وبلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
+  <div class="container nav-row"><nav class="nav-main"><a href="categories.html" class="all"><svg class="icon"><use href="#icon-grid"/></svg> همه دسته‌بندی‌ها</a><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="sellers.html" class="active">فروشندگان</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">وبلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
@@ -167,18 +165,74 @@
 </aside>
 
 <main>
-<section class="section state-block">
+
+<section class="page-hero">
   <div class="container">
-    <div class="err-code reveal">۴۰۴</div>
-    <div class="ic reveal" style="margin-top:10px;"><svg class="icon"><use href="#icon-box"/></svg></div>
-    <h1 class="h-1 reveal" style="margin-top:20px;">این صفحه پیدا نشد!</h1>
-    <p class="lead reveal" style="max-width:460px; margin:14px auto 30px;">به نظر می‌رسد صفحه‌ای که دنبالش هستید جابه‌جا شده یا وجود ندارد. نگران نباشید، می‌توانید به بازارگاه برگردید.</p>
-    <div class="hero-cta center reveal">
-      <a href="index.html" class="btn btn-primary btn-lg">بازگشت به خانه</a>
-      <a href="product.html" class="btn btn-lg">مشاهده محصولات</a>
+    <nav class="crumbs"><a href="index.html">خانه</a><svg class="icon"><use href="#icon-chevron-left"/></svg><span>فروشندگان</span></nav>
+    <h1>فروشندگان تأیید‌شده و برتر</h1>
+    <p>هزاران کسب‌وکار معتبر و احراز هویت‌شده؛ با اطمینان از فروشگاه‌های منتخب خرید کنید.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="sort-bar reveal">
+      <div class="sort-opts"><span class="lbl">مرتب‌سازی:</span>
+        <button class="active">برترین</button><button>پرفروش‌ترین</button><button>جدیدترین</button><button>بیشترین امتیاز</button>
+      </div>
+      <span class="result-count">۴۸٬۰۰۰ فروشنده فعال</span>
+    </div>
+    <div class="seller-grid reveal">
+      <a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-2"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>آترا چرم</b><span class="role">محصولات چرم طبیعی</span>
+  <div class="seller-meta"><div><b>۴.۹</b><span>امتیاز</span></div><div><b>۳۲۰۰+</b><span>فروش</span></div><div><b>۴ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-7"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>هنرکده پارسیان</b><span class="role">صنایع‌دستی اصیل</span>
+  <div class="seller-meta"><div><b>۴.۸</b><span>امتیاز</span></div><div><b>۱۸۰۰+</b><span>فروش</span></div><div><b>۶ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-4"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>استودیو نگاره</b><span class="role">طراحی و برندینگ</span>
+  <div class="seller-meta"><div><b>۵.۰</b><span>امتیاز</span></div><div><b>۹۸۰+</b><span>فروش</span></div><div><b>۲ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-3"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>سفال سبز</b><span class="role">سرامیک و سفال</span>
+  <div class="seller-meta"><div><b>۴.۷</b><span>امتیاز</span></div><div><b>۱۴۰۰+</b><span>فروش</span></div><div><b>۳ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-8"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>باغ طبیعت</b><span class="role">خشکبار و ادویه</span>
+  <div class="seller-meta"><div><b>۴.۶</b><span>امتیاز</span></div><div><b>۲۱۰۰+</b><span>فروش</span></div><div><b>۵ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-1"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>حریر نقش</b><span class="role">پوشاک سنتی</span>
+  <div class="seller-meta"><div><b>۴.۸</b><span>امتیاز</span></div><div><b>۱۱۰۰+</b><span>فروش</span></div><div><b>۳ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-6"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>آکادمی رشد</b><span class="role">خدمات آموزشی</span>
+  <div class="seller-meta"><div><b>۴.۹</b><span>امتیاز</span></div><div><b>۷۶۰+</b><span>فروش</span></div><div><b>۲ سال</b><span>سابقه</span></div></div>
+</a><a href="seller.html" class="seller-card">
+  <div class="seller-ava"><div class="fill ph-5"></div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>
+  <b>فرش ایران</b><span class="role">فرش و موکت</span>
+  <div class="seller-meta"><div><b>۴.۵</b><span>امتیاز</span></div><div><b>۴۵۰۰+</b><span>فروش</span></div><div><b>۸ سال</b><span>سابقه</span></div></div>
+</a>
+    </div>
+    <div class="pagination reveal">
+      <a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">…</a><a href="#">۲۰</a><a href="#"><svg class="icon"><use href="#icon-chevron-left"/></svg></a>
+    </div>
+
+    <div class="banner reveal" style="margin-top:40px;">
+      <div>
+        <span class="chip" style="background:rgba(255,255,255,.18);color:#fff;">فرصت طلایی فروش</span>
+        <h2 class="h-1" style="margin-top:14px;">شما هم فروشنده ستاد مهدی‌یاوران شوید</h2>
+        <p>در کمتر از ۱۰ دقیقه فروشگاه بسازید و به میلیون‌ها مشتری دسترسی پیدا کنید.</p>
+        <div class="hero-cta"><a href="seller-dashboard.html" class="btn btn-primary">شروع فروش رایگان</a><a href="seller.html" class="btn btn-ghost" style="color:#fff;">نمونه فروشگاه</a></div>
+      </div>
+      <div class="banner-deco"><div class="bd"><svg class="icon"><use href="#icon-trending-up"/></svg></div><div class="bd"><svg class="icon"><use href="#icon-users"/></svg></div><div class="bd"><svg class="icon"><use href="#icon-wallet"/></svg></div></div>
     </div>
   </div>
 </section>
+
 </main>
 
 <footer class="site-footer">
@@ -225,6 +279,12 @@
   </div>
 </footer>
 
+<button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
 <script src="assets/js/main.js"></script>
+<script>
+  var b=document.getElementById('toTopBtn');
+  window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+</script>
 </body>
 </html>

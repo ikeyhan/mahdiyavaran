@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحه یافت نشد | ستاد مهدی‌یاوران</title>
+<title>تماس با ما | ستاد مهدی‌یاوران</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="assets/svg/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<style>
-  .err-code{ font-size:clamp(5rem,14vw,9rem); font-weight:800; background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; }
-</style>
+
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -144,7 +142,7 @@
       <button class="btn-icon menu-toggle" data-drawer-open aria-label="منو"><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
-  <div class="container nav-row"><nav class="nav-main"><a href="categories.html" class="all"><svg class="icon"><use href="#icon-grid"/></svg> همه دسته‌بندی‌ها</a><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="sellers.html">فروشندگان</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">وبلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
+  <div class="container nav-row"><nav class="nav-main"><a href="categories.html" class="all"><svg class="icon"><use href="#icon-grid"/></svg> همه دسته‌بندی‌ها</a><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="sellers.html">فروشندگان</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">وبلاگ</a><a href="about.html">درباره ما</a><a href="contact.html" class="active">تماس</a></nav></div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
@@ -167,18 +165,37 @@
 </aside>
 
 <main>
-<section class="section state-block">
+
+<section class="page-hero">
   <div class="container">
-    <div class="err-code reveal">۴۰۴</div>
-    <div class="ic reveal" style="margin-top:10px;"><svg class="icon"><use href="#icon-box"/></svg></div>
-    <h1 class="h-1 reveal" style="margin-top:20px;">این صفحه پیدا نشد!</h1>
-    <p class="lead reveal" style="max-width:460px; margin:14px auto 30px;">به نظر می‌رسد صفحه‌ای که دنبالش هستید جابه‌جا شده یا وجود ندارد. نگران نباشید، می‌توانید به بازارگاه برگردید.</p>
-    <div class="hero-cta center reveal">
-      <a href="index.html" class="btn btn-primary btn-lg">بازگشت به خانه</a>
-      <a href="product.html" class="btn btn-lg">مشاهده محصولات</a>
+    <nav class="crumbs"><a href="index.html">خانه</a><svg class="icon"><use href="#icon-chevron-left"/></svg><span>تماس با ما</span></nav>
+    <h1>تماس با ما</h1>
+    <p>سوال، پیشنهاد یا انتقادی دارید؟ تیم پشتیبانی ستاد مهدی‌یاوران ۲۴ ساعته پاسخگوی شماست.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <div class="contact-info reveal">
+      <div class="row"><div class="ic"><svg class="icon"><use href="#icon-phone"/></svg></div><div><b>تلفن پشتیبانی</b><span>۰۲۱-۹۱۰۰۰۰۰۰ (۲۴ ساعته)</span></div></div>
+      <div class="row"><div class="ic"><svg class="icon"><use href="#icon-mail"/></svg></div><div><b>ایمیل</b><span>info@mahdiyavaran.ir</span></div></div>
+      <div class="row"><div class="ic"><svg class="icon"><use href="#icon-map-pin"/></svg></div><div><b>آدرس دفتر مرکزی</b><span>تهران، خیابان ولیعصر، برج ستاد، طبقه ۱۲</span></div></div>
+      <div class="row"><div class="ic"><svg class="icon"><use href="#icon-clock"/></svg></div><div><b>ساعات کاری</b><span>شنبه تا پنج‌شنبه، ۹ تا ۱۸</span></div></div>
+      <div class="map-embed"><svg class="icon"><use href="#icon-map-pin"/></svg> <span style="margin-inline-start:8px;">نقشه موقعیت دفتر</span></div>
+    </div>
+    <div class="panel reveal">
+      <h3 class="h-3" style="margin-bottom:18px;">پیام خود را ارسال کنید</h3>
+      <div class="grid grid-2">
+        <div class="field"><label>نام و نام‌خانوادگی</label><input type="text" placeholder="نام شما"></div>
+        <div class="field"><label>ایمیل یا موبایل</label><input type="text" placeholder="راه ارتباطی"></div>
+      </div>
+      <div class="field" style="margin-top:16px;"><label>موضوع</label><input type="text" placeholder="موضوع پیام"></div>
+      <div class="field" style="margin-top:16px;"><label>متن پیام</label><textarea placeholder="پیام خود را بنویسید..."></textarea></div>
+      <button class="btn btn-primary btn-lg" style="margin-top:20px;">ارسال پیام <svg class="icon"><use href="#icon-arrow-up-left"/></svg></button>
     </div>
   </div>
 </section>
+
 </main>
 
 <footer class="site-footer">
@@ -225,6 +242,12 @@
   </div>
 </footer>
 
+<button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
 <script src="assets/js/main.js"></script>
+<script>
+  var b=document.getElementById('toTopBtn');
+  window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+</script>
 </body>
 </html>

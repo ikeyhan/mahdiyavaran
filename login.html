@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحه یافت نشد | ستاد مهدی‌یاوران</title>
+<title>ورود / ثبت‌نام | ستاد مهدی‌یاوران</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="assets/svg/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<style>
-  .err-code{ font-size:clamp(5rem,14vw,9rem); font-weight:800; background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; }
-</style>
+
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -167,18 +165,38 @@
 </aside>
 
 <main>
-<section class="section state-block">
-  <div class="container">
-    <div class="err-code reveal">۴۰۴</div>
-    <div class="ic reveal" style="margin-top:10px;"><svg class="icon"><use href="#icon-box"/></svg></div>
-    <h1 class="h-1 reveal" style="margin-top:20px;">این صفحه پیدا نشد!</h1>
-    <p class="lead reveal" style="max-width:460px; margin:14px auto 30px;">به نظر می‌رسد صفحه‌ای که دنبالش هستید جابه‌جا شده یا وجود ندارد. نگران نباشید، می‌توانید به بازارگاه برگردید.</p>
-    <div class="hero-cta center reveal">
-      <a href="index.html" class="btn btn-primary btn-lg">بازگشت به خانه</a>
-      <a href="product.html" class="btn btn-lg">مشاهده محصولات</a>
+
+<div class="auth-wrap">
+  <div class="auth-card reveal">
+    <a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" class="mark" alt=""><b style="font-size:1.1rem;">ستاد مهدی‌یاوران</b></a>
+    <div class="auth-tabs" data-auth-tabs>
+      <button class="active" data-auth="login">ورود</button>
+      <button data-auth="signup">ثبت‌نام</button>
     </div>
+
+    <div data-auth-panel="login">
+      <div class="field" style="margin-bottom:16px;"><label>شماره موبایل</label><input type="text" placeholder="۰۹xxxxxxxxx"></div>
+      <div class="field" style="margin-bottom:8px;"><label>رمز عبور</label><input type="password" placeholder="••••••••"></div>
+      <div class="flex between" style="margin-bottom:18px;"><label class="checkline" style="padding:0;"><input type="checkbox"> مرا به خاطر بسپار</label><a href="#" class="faint" style="font-size:.8rem;">فراموشی رمز؟</a></div>
+      <a href="dashboard.html" class="btn btn-primary btn-block btn-lg">ورود به حساب</a>
+    </div>
+
+    <div data-auth-panel="signup" hidden>
+      <div class="field" style="margin-bottom:16px;"><label>نام و نام‌خانوادگی</label><input type="text" placeholder="نام شما"></div>
+      <div class="field" style="margin-bottom:16px;"><label>شماره موبایل</label><input type="text" placeholder="۰۹xxxxxxxxx"></div>
+      <div class="field" style="margin-bottom:18px;"><label>رمز عبور</label><input type="password" placeholder="••••••••"></div>
+      <a href="dashboard.html" class="btn btn-primary btn-block btn-lg">ساخت حساب کاربری</a>
+    </div>
+
+    <div class="auth-sep">یا ادامه با</div>
+    <div class="auth-social">
+      <a href="#"><svg class="icon"><use href="#icon-mail"/></svg> گوگل</a>
+      <a href="#"><svg class="icon"><use href="#icon-phone"/></svg> پیامک</a>
+    </div>
+    <p class="faint center" style="font-size:.8rem; margin-top:20px;">با ورود، <a href="#" style="color:var(--green-600)">قوانین و مقررات</a> را می‌پذیرید.</p>
   </div>
-</section>
+</div>
+
 </main>
 
 <footer class="site-footer">
@@ -225,6 +243,22 @@
   </div>
 </footer>
 
+<button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
 <script src="assets/js/main.js"></script>
+<script>
+  var b=document.getElementById('toTopBtn');
+  window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+</script>
+<script>
+  document.querySelectorAll('[data-auth]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('[data-auth]').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      var k=b.getAttribute('data-auth');
+      document.querySelectorAll('[data-auth-panel]').forEach(function(p){p.hidden=p.getAttribute('data-auth-panel')!==k;});
+    });
+  });
+</script>
 </body>
 </html>
