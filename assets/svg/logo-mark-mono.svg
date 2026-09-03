@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-hidden="true">
-  <path d="M8 45C8 45 8.5 27 21 16.5C27 11.5 37 11.5 43 16.5C55.5 27 56 45 56 45"
-        stroke="currentColor" stroke-width="4.6" stroke-linecap="round"/>
-  <path d="M17 41L29.5 30.5L37 36L47 24" stroke="currentColor" stroke-width="4.6"
-        stroke-linecap="round" stroke-linejoin="round" opacity="0.62"/>
-  <circle cx="17" cy="41" r="3.6" fill="currentColor" opacity="0.62"/>
-  <circle cx="29.5" cy="30.5" r="3.6" fill="currentColor" opacity="0.62"/>
-  <circle cx="37" cy="36" r="3.6" fill="currentColor" opacity="0.62"/>
-  <circle cx="47" cy="24" r="4.2" fill="currentColor" opacity="0.62"/>
-  <circle cx="32" cy="9" r="3.4" fill="currentColor"/>
+  <g stroke="currentColor" stroke-width="3.4">
+    <ellipse cx="32" cy="32" rx="12" ry="27" transform="rotate(60 32 32)"/>
+    <ellipse cx="32" cy="32" rx="12" ry="27" transform="rotate(-60 32 32)"/>
+    <ellipse cx="32" cy="32" rx="12" ry="27"/>
+  </g>
+  <circle cx="32" cy="32" r="6.4" fill="currentColor"/>
 </svg>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>پنل فروشندگی | ستاد مهدی‌آوران</title>
-<meta name="theme-color" content="#1B1D22">
+<title>پنل فروشندگی | ستاد مهدی‌یاوران</title>
+<meta name="theme-color" content="#149B3E">
 <link rel="icon" href="assets/svg/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,10 +13,10 @@
 <style>
   .bar-chart{ display:flex; align-items:stretch; gap:14px; height:220px; padding:10px 6px 0; }
   .bar-chart .col{ flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:10px; }
-  .bar-chart .bar{ width:100%; max-width:34px; border-radius:10px 10px 4px 4px; background:var(--grad-brand); box-shadow:0 8px 18px rgba(62,82,217,.22); transition:height 1s var(--ease-out); }
+  .bar-chart .bar{ width:100%; max-width:34px; border-radius:8px 8px 3px 3px; background:linear-gradient(180deg,#2BBE55,#149B3E); box-shadow:0 6px 14px rgba(20,155,62,.24); transition:height 1s var(--ease-out); }
   .bar-chart .lbl{ font-size:.72rem; color:var(--text-3); }
-  .donut{ width:150px; height:150px; border-radius:50%; background:conic-gradient(var(--indigo-500) 0% 42%, var(--teal-400) 42% 68%, var(--gold-400) 68% 86%, var(--bg-elevated) 86% 100%); position:relative; box-shadow:var(--shadow-raised-sm); margin:0 auto; }
-  .donut::after{ content:""; position:absolute; inset:18px; background:var(--surface); border-radius:50%; box-shadow:var(--shadow-inset-sm); }
+  .donut{ width:150px; height:150px; border-radius:50%; background:conic-gradient(#0E7A38 0% 42%, #22B14C 42% 68%, #37C463 68% 86%, var(--surface-2) 86% 100%); position:relative; margin:0 auto; }
+  .donut::after{ content:""; position:absolute; inset:20px; background:var(--surface); border-radius:50%; }
   .legend{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
   .legend div{ display:flex; align-items:center; gap:8px; font-size:.8rem; color:var(--text-2); }
   .legend i{ width:10px; height:10px; border-radius:3px; flex-shrink:0; }
@@ -144,9 +144,10 @@
 
 <header class="site-header">
   <div class="container header-row">
-    <a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" alt="" class="mark"><span class="word"><b>ستاد مهدی‌آوران</b><span>SETAD MAHDIAVARAN</span></span></a>
-    <nav class="nav-main"><a href="index.html">خانه</a><a href="product.html">محصولات</a><a href="seller.html">فروشندگان</a><a href="seller-dashboard.html" class="active">پنل فروشندگی</a></nav>
-    <div class="search-bar"><svg class="icon"><use href="#icon-search"/></svg><input type="text" placeholder="جستجو در محصولات من..."></div>
+    <a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" alt="" class="mark"><span class="word"><b>ستاد مهدی‌یاوران</b><span>SETAD MAHDIYAVARAN</span></span></a>
+<div class="search-bar"><svg class="icon"><use href="#icon-search"/></svg><input type="text" placeholder="جستجو در محصولات من...">
+      <span class="s-go"><svg class="icon"><use href="#icon-search"/></svg></span>
+    </div>
     <div class="header-actions">
       <button class="theme-toggle" data-theme-toggle><span class="thumb"><svg class="icon"><use href="#icon-sun"/></svg></span></button>
       <a href="#" class="btn-icon" style="position:relative"><svg class="icon"><use href="#icon-bell"/></svg><span class="badge-dot"></span></a>
@@ -154,11 +155,15 @@
       <button class="btn-icon menu-toggle" data-drawer-open><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
+  <div class="container nav-row">
+    <nav class="nav-main">
+      <a href="index.html#categories" class="all"><svg class="icon"><use href="#icon-grid"/></svg> همه دسته‌بندی‌ها</a><a href="index.html">خانه</a><a href="product.html">محصولات</a><a href="seller.html">فروشندگان</a><a href="seller-dashboard.html" class="active">پنل فروشندگی</a></nav>
+  </div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
 <aside class="mobile-drawer" data-drawer>
-  <div class="flex between"><a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" class="mark" alt=""><b>ستاد مهدی‌آوران</b></a><button class="btn-icon" data-drawer-close><svg class="icon"><use href="#icon-close"/></svg></button></div>
+  <div class="flex between"><a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" class="mark" alt=""><b>ستاد مهدی‌یاوران</b></a><button class="btn-icon" data-drawer-close><svg class="icon"><use href="#icon-close"/></svg></button></div>
   <nav class="nav-main" style="margin-top:20px;"><a href="index.html">خانه</a><a href="product.html">محصولات</a><a href="seller-dashboard.html">پنل فروشندگی</a></nav>
 </aside>
 
@@ -215,10 +220,10 @@
               <h3 class="h-3" style="margin-bottom:6px;">سهم فروش دسته‌ها</h3>
               <div class="donut" style="margin-top:20px;"></div>
               <div class="legend">
-                <div><i style="background:var(--indigo-500);"></i> کیف چرم — ۴۲٪</div>
-                <div><i style="background:var(--teal-400);"></i> کفش — ۲۶٪</div>
-                <div><i style="background:var(--gold-400);"></i> کمربند — ۱۸٪</div>
-                <div><i style="background:var(--bg-elevated); box-shadow:var(--shadow-inset-sm);"></i> سایر — ۱۴٪</div>
+                <div><i style="background:#0E7A38;"></i> کیف چرم — ۴۲٪</div>
+                <div><i style="background:#22B14C;"></i> کفش — ۲۶٪</div>
+                <div><i style="background:#37C463;"></i> کمربند — ۱۸٪</div>
+                <div><i style="background:var(--surface-2); border:1px solid var(--border);"></i> سایر — ۱۴٪</div>
               </div>
             </div>
           </div>
@@ -300,7 +305,7 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container"><div class="footer-bottom" style="border-top:none; padding-top:0;"><span>© ۱۴۰۴ ستاد مهدی‌آوران. تمامی حقوق محفوظ است.</span></div></div>
+  <div class="container"><div class="footer-bottom" style="border-top:none; padding-top:0;"><span>© ۱۴۰۴ ستاد مهدی‌یاوران. تمامی حقوق محفوظ است.</span></div></div>
 </footer>
 
 <script src="assets/js/main.js"></script>
