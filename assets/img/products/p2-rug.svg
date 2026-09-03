@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#CDE9F6"/>
+      <stop offset="1" stop-color="#8FBEE6"/>
+    </linearGradient>
+    <pattern id="p2p" x="0" y="0" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M17,4 L30,17 L17,30 L4,17 Z" fill="#254B7A" opacity=".22"/>
+      <circle cx="17" cy="17" r="3" fill="#E27350" opacity=".55"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="280" fill="url(#g2)"/>
+  <rect x="60" y="50" width="280" height="180" rx="10" fill="#254B7A" opacity=".82"/>
+  <rect x="72" y="62" width="256" height="156" rx="6" fill="url(#p2p)"/>
+  <rect x="72" y="62" width="256" height="156" rx="6" fill="none" stroke="#E27350" stroke-width="3"/>
+  <rect x="60" y="42" width="280" height="10" fill="#254B7A"/>
+  <rect x="60" y="228" width="280" height="10" fill="#254B7A"/>
+</svg>
