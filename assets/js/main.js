@@ -4,6 +4,14 @@
   var root = document.documentElement;
   var THEME_KEY = "sm-theme";
 
+  // Inject the animated starfield layer (only visible in dark mode, via CSS)
+  if(!document.querySelector(".sky")){
+    var sky = document.createElement("div");
+    sky.className = "sky";
+    sky.setAttribute("aria-hidden", "true");
+    if(document.body) document.body.insertBefore(sky, document.body.firstChild);
+  }
+
   function syncToggleIcons(t){
     document.querySelectorAll("[data-theme-toggle] use").forEach(function(u){
       u.setAttribute("href", t === "dark" ? "#icon-moon" : "#icon-sun");

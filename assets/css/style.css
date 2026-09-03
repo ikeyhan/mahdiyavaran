@@ -279,13 +279,17 @@ html[data-theme="dark"] .theme-toggle .thumb{ transform:translateX(-18px); }
 @keyframes floatY{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-12px); } }
 
 /* ---------- Trust strip ---------- */
-.trust-strip{ padding:18px 0; background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
-.marquee{ width:100%; overflow:hidden; }
-.trust-strip span{ font-size:.82rem; font-weight:700; color:var(--text-3); flex-shrink:0; white-space:nowrap; display:inline-flex; align-items:center; gap:9px; }
-.trust-strip span::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--green-400); flex-shrink:0; }
+.trust-strip{ padding:20px 0; background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+/* static feature strip (no scrolling) */
+.trust-static{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.trust-static .item{ display:flex; align-items:center; gap:10px; font-size:.85rem; font-weight:700; color:var(--text-2); transition:color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.trust-static .item:hover{ color:var(--green-600); transform:translateY(-2px); }
+.trust-static .item .ic{ width:38px; height:38px; border-radius:12px; background:var(--green-050); color:var(--green-600); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.trust-static .item:hover .ic{ background:var(--green-600); color:#fff; transform:scale(1.06); }
+.trust-static .item .ic .icon{ width:19px; height:19px; }
 
 /* ---------- Category cards ---------- */
-.cat-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; }
+.cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
 .cat-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:22px 14px; text-align:center; transition:transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), border-color var(--dur) var(--ease); }
 .cat-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-raised); border-color:var(--green-400); }
 .cat-card .ic{ width:60px; height:60px; margin:0 auto 14px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--green-050); color:var(--green-600); transition:background var(--dur) var(--ease), color var(--dur) var(--ease); }
@@ -667,3 +671,68 @@ table.dtable tr td:last-child{ border-radius:10px 0 0 10px; }
   .deal-banner{ padding:24px; }
   .countdown .box{ width:56px; height:56px; }
 }
+
+/* =========================================================
+   Enhancements: dark starfield, hover micro-interactions
+   ========================================================= */
+
+/* keep page content above the starfield */
+main, .site-footer{ position:relative; z-index:1; }
+
+/* Animated faint starfield — dark mode only */
+.sky{ position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0; transition:opacity .8s var(--ease); }
+html[data-theme="dark"] .sky{ opacity:1; }
+.sky::before, .sky::after{ content:""; position:absolute; inset:-20%; background-repeat:repeat; }
+.sky::before{
+  background-image:
+    radial-gradient(2px 2px at 40px 60px, rgba(255,255,255,.85), transparent),
+    radial-gradient(1.6px 1.6px at 180px 130px, rgba(255,255,255,.6), transparent),
+    radial-gradient(2px 2px at 300px 220px, rgba(90,220,130,.7), transparent),
+    radial-gradient(1.8px 1.8px at 120px 300px, rgba(255,255,255,.65), transparent),
+    radial-gradient(1.5px 1.5px at 380px 40px, rgba(255,255,255,.5), transparent),
+    radial-gradient(1.5px 1.5px at 240px 360px, rgba(255,255,255,.5), transparent);
+  background-size:420px 420px;
+  animation: skyDrift 120s linear infinite, skyTwinkle 5s ease-in-out infinite alternate;
+}
+.sky::after{
+  background-image:
+    radial-gradient(1px 1px at 90px 90px, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 250px 200px, rgba(255,255,255,.3), transparent),
+    radial-gradient(1.3px 1.3px at 340px 140px, rgba(55,196,99,.4), transparent),
+    radial-gradient(1px 1px at 60px 260px, rgba(255,255,255,.28), transparent);
+  background-size:300px 300px;
+  animation: skyDrift2 90s linear infinite, skyTwinkle 7s ease-in-out infinite alternate-reverse;
+}
+@keyframes skyDrift{ from{ transform:translateY(0);} to{ transform:translateY(-420px);} }
+@keyframes skyDrift2{ from{ transform:translate(0,0);} to{ transform:translate(-150px,-300px);} }
+@keyframes skyTwinkle{ 0%{ opacity:.5;} 100%{ opacity:.95;} }
+@media (prefers-reduced-motion: reduce){ .sky::before,.sky::after{ animation:none; } }
+
+/* Remove the two soft halos in the hero (esp. visible in dark) */
+html[data-theme="dark"] .hv-orb{ display:none; }
+html[data-theme="dark"] .hero::before{ display:none; }
+
+/* Broad hover micro-interactions — every section reacts to the mouse */
+.test-card, .stat-card, .dash-card, .app-badge, .hero-badge, .panel,
+.contact-info .row, .status-chip, .chip, .app-badge, .pay-icons div{
+  transition:transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.test-card:hover, .stat-card:hover, .app-badge:hover, .contact-info .row:hover{
+  transform:translateY(-4px); box-shadow:var(--shadow-raised); border-color:var(--green-400);
+}
+.dash-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-raised); border-color:var(--green-400); }
+.stat-card:hover b{ transform:scale(1.04); display:inline-block; transition:transform var(--dur-fast) var(--ease); }
+.hero-badge:hover{ transform:translateY(-2px); border-color:var(--green-400); color:var(--green-600); }
+.hero-badge:hover .icon{ transform:scale(1.15); }
+.chip:hover{ transform:translateY(-1px); }
+.pay-icons div:hover{ transform:translateY(-2px); border-color:var(--green-400); }
+.eyebrow{ transition:transform var(--dur-fast) var(--ease); }
+.section-head:hover .eyebrow{ transform:translateX(-4px); }
+.footer-social a:hover{ transform:translateY(-3px); color:var(--green-600); }
+.footer-social a{ transition:transform var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.tabbar button{ transition:all var(--dur-fast) var(--ease); }
+.tabbar button:hover:not(.active){ color:var(--green-600); }
+.crumbs a{ transition:color var(--dur-fast) var(--ease); }
+.dash-nav a:hover{ transform:translateX(-3px); }
+.filter-chip:hover{ transform:translateY(-1px); border-color:var(--green-400); }
+.pagination a{ transition:all var(--dur-fast) var(--ease); }
