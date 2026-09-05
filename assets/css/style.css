@@ -206,8 +206,8 @@ h1,h2,h3,h4{ margin:0; font-weight:800; letter-spacing:-.01em; color:var(--text-
 .logo{ display:flex; align-items:center; gap:11px; flex-shrink:0; }
 .logo .mark{ width:42px; height:42px; }
 .logo .word{ display:flex; flex-direction:column; line-height:1.2; }
-.logo .word b{ font-size:1.08rem; font-weight:800; }
-.logo .word span{ font-size:.62rem; color:var(--text-3); letter-spacing:.08em; font-weight:600; }
+.logo .word b{ font-size:1.6rem; font-weight:900; letter-spacing:-.01em; line-height:1; }
+.logo .word span{ display:none; }
 
 .search-bar{
   flex:1; max-width:560px; display:flex; align-items:center; gap:10px;
