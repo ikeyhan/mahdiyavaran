@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>داشبورد | پنل مدیریت اتم</title>
+<title>پشتیبان‌گیری | پنل مدیریت اتم</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,7 +238,7 @@
   </div>
   <nav class="admin-nav">
     <div class="admin-nav-label">مدیریت کل</div>
-    <a href="dashboard.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
+    <a href="dashboard.html"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
     <a href="admins.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">مدیران و نقش‌ها</span></a>
     <a href="reports.html"><span class="nav-ic"><svg class="icon"><use href="#i-report"/></svg></span><span class="nav-tx">گزارش‌ها و تحلیل</span></a>
     <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
@@ -258,7 +258,7 @@
     <a href="settings.html"><span class="nav-ic"><svg class="icon"><use href="#i-settings"/></svg></span><span class="nav-tx">تنظیمات</span></a>
     <a href="security.html"><span class="nav-ic"><svg class="icon"><use href="#i-key"/></svg></span><span class="nav-tx">امنیت و دسترسی</span></a>
     <a href="audit.html"><span class="nav-ic"><svg class="icon"><use href="#i-history"/></svg></span><span class="nav-tx">لاگ فعالیت</span></a>
-    <a href="backups.html"><span class="nav-ic"><svg class="icon"><use href="#i-database"/></svg></span><span class="nav-tx">پشتیبان‌گیری</span></a>
+    <a href="backups.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-database"/></svg></span><span class="nav-tx">پشتیبان‌گیری</span></a>
     <div class="divider"></div>
     <a href="../index.html" target="_blank"><span class="nav-ic"><svg class="icon"><use href="#i-external"/></svg></span><span class="nav-tx">مشاهده سایت</span></a>
     <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
@@ -269,8 +269,8 @@
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>داشبورد</h1>
-      <div class="crumb">پنل مدیریت · خانه</div>
+      <h1>پشتیبان‌گیری</h1>
+      <div class="crumb">پنل مدیریت · پایگاه داده</div>
     </div>
   </div>
   <div class="admin-user">
@@ -282,76 +282,69 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-dashboard"/></svg></span>نمای کلی سایت</div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-database"/></svg></span>پشتیبان‌گیری و بازیابی</div>
     
   </div>
-  <div class="actions"><a href="../index.html" target="_blank" class="abtn"><svg class="icon"><use href="#i-external"/></svg> مشاهده سایت</a></div>
+  <div class="actions"><button class="abtn"><svg class="icon"><use href="#i-external"/></svg> دانلود آخرین نسخه</button><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> پشتیبان جدید</button></div>
 </div>
 
 <div class="stat-grid">
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-coins"/></svg></div><span class="trend up">▲ ۱۸٪</span></div>
-  <b>۸۴٬۲۰۰٬۰۰۰ ت</b>
-  <span>درآمد این ماه</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-database"/></svg></div></div>
+  <b>۲.۴ GB</b>
+  <span>حجم پایگاه داده</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-cart"/></svg></div><span class="trend up">▲ ۱۲٪</span></div>
-  <b>۹۲</b>
-  <span>سفارش‌های جدید</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-check"/></svg></div></div>
+  <b>۱۴۰۴/۰۶/۱۲</b>
+  <span>آخرین پشتیبان</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-users"/></svg></div><span class="trend up">▲ ۸٪</span></div>
-  <b>۳٬۲۰۰</b>
-  <span>مشتریان فعال</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-history"/></svg></div></div>
+  <b>خودکار — روزانه</b>
+  <span>زمان‌بندی</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-store"/></svg></div><span class="trend up">▲ ۴٪</span></div>
-  <b>۴۸٬۰۰۰</b>
-  <span>فروشندگان</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-wallet"/></svg></div></div>
+  <b>۱۸</b>
+  <span>نسخه ذخیره‌شده</span>
 </div>
 </div>
 
 <div class="grid-2">
   <div class="card">
-    <div class="card-head"><h3>روند فروش هفتگی</h3><span class="chip info">۷ روز اخیر</span></div>
-    <div class="bar-chart">
-      <div class="col"><div class="bar" style="height:55%"></div><span class="lbl">شنبه</span></div>
-      <div class="col"><div class="bar" style="height:70%"></div><span class="lbl">یکشنبه</span></div>
-      <div class="col"><div class="bar" style="height:40%"></div><span class="lbl">دوشنبه</span></div>
-      <div class="col"><div class="bar" style="height:85%"></div><span class="lbl">سه‌شنبه</span></div>
-      <div class="col"><div class="bar" style="height:60%"></div><span class="lbl">چهارشنبه</span></div>
-      <div class="col"><div class="bar" style="height:95%"></div><span class="lbl">پنج‌شنبه</span></div>
-      <div class="col"><div class="bar" style="height:75%"></div><span class="lbl">جمعه</span></div>
+    <div class="card-head"><h3>زمان‌بندی خودکار</h3></div>
+    <div class="perm-list">
+      <label class="perm-toggle"><span>پشتیبان‌گیری خودکار روزانه</span><input type="checkbox" checked></label>
+      <label class="perm-toggle"><span>ذخیره روی فضای ابری</span><input type="checkbox" checked></label>
+      <label class="perm-toggle"><span>رمزنگاری فایل پشتیبان</span><input type="checkbox" checked></label>
+      <label class="perm-toggle"><span>نگهداری ۳۰ نسخه اخیر</span><input type="checkbox" checked></label>
     </div>
+    <div class="field" style="margin-top:14px;"><label>ساعت اجرا</label><select><option>۰۳:۰۰ بامداد</option><option>۰۰:۰۰</option><option>۰۶:۰۰</option></select></div>
   </div>
   <div class="card">
-    <div class="card-head"><h3>سهم فروش دسته‌ها</h3></div>
-    <div class="donut-wrap">
-      <div class="donut"></div>
-      <div class="legend">
-        <div><i style="background:#0E7A38"></i> پوشاک — ۴۲٪</div>
-        <div><i style="background:#22B14C"></i> صنایع‌دستی — ۲۶٪</div>
-        <div><i style="background:#37C463"></i> لوازم خانه — ۱۸٪</div>
-        <div><i style="background:#DCE8E0"></i> سایر — ۱۴٪</div>
-      </div>
+    <div class="card-head"><h3>بازیابی از فایل</h3></div>
+    <div class="dropzone">
+      <span class="dz-ic"><svg class="icon"><use href="#i-database"/></svg></span>
+      <b>فایل پشتیبان را اینجا رها کنید</b>
+      <span>یا برای انتخاب کلیک کنید — فرمت .sql / .zip</span>
+      <input type="file">
     </div>
+    <p class="warn-note">⚠ بازیابی، داده‌های فعلی را بازنویسی می‌کند. پیش از ادامه یک پشتیبان تازه بگیرید.</p>
   </div>
 </div>
 
 <div class="card">
-  <div class="card-head"><h3>آخرین سفارش‌ها</h3><a href="orders.html" class="abtn sm">مشاهده همه</a></div>
-  <div class="tbl-wrap flush">
-    <table class="tbl">
-      <thead><tr><th>کد</th><th>مشتری</th><th>محصول</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th></tr></thead>
-      <tbody>
-        <tr><td><b>#۱۰۸۴</b></td><td>سارا محمدی</td><td>کیف چرم رویا</td><td>۲٬۴۵۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip ok">تحویل شد</span></td></tr>
-        <tr><td><b>#۱۰۸۳</b></td><td>علی رضایی</td><td>کفش چرم کلاسیک</td><td>۱٬۶۵۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip pend">در حال ارسال</span></td></tr>
-        <tr><td><b>#۱۰۸۲</b></td><td>نگین کریمی</td><td>گلیم دستباف کرمان</td><td>۱٬۸۹۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۱</td><td><span class="chip ok">تحویل شد</span></td></tr>
-        <tr><td><b>#۱۰۸۱</b></td><td>محمد احمدی</td><td>فرش ماشینی ۶ متری</td><td>۳٬۹۰۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۱</td><td><span class="chip err">مرجوع</span></td></tr>
-        <tr><td><b>#۱۰۸۰</b></td><td>مریم حسینی</td><td>سرویس چای‌خوری</td><td>۱٬۲۴۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۰</td><td><span class="chip ok">تحویل شد</span></td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="card-head"><h3>نسخه‌های اخیر</h3></div>
+  <div class="tbl-wrap flush"><table class="tbl">
+    <thead><tr><th>نام فایل</th><th>حجم</th><th>نوع</th><th>تاریخ</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>atom-backup-14040612.zip</td><td>۲.۴ GB</td><td><span class="chip ok">کامل</span></td><td>۱۴۰۴/۰۶/۱۲ ۰۳:۰۰</td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
+      <tr><td>atom-backup-14040611.zip</td><td>۲.۳ GB</td><td><span class="chip ok">کامل</span></td><td>۱۴۰۴/۰۶/۱۱ ۰۳:۰۰</td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
+      <tr><td>atom-db-14040610.sql</td><td>۸۴۰ MB</td><td><span class="chip info">فقط دیتابیس</span></td><td>۱۴۰۴/۰۶/۱۰ ۰۳:۰۰</td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
+      <tr><td>atom-backup-14040609.zip</td><td>۲.۳ GB</td><td><span class="chip ok">کامل</span></td><td>۱۴۰۴/۰۶/۰۹ ۰۳:۰۰</td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
+    </tbody>
+  </table></div>
 </div>
 
   </main>

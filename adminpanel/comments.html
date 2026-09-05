@@ -13,166 +13,216 @@
 </head>
 <body>
 <script src="admin.js"></script>
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
 
 <symbol id="i-dashboard" viewBox="0 0 24 24">
-  <rect class="bg" x="3" y="3" width="8" height="10" rx="2"/>
-  <rect class="bg" x="13" y="11" width="8" height="10" rx="2"/>
-  <rect class="st" x="3" y="3" width="8" height="10" rx="2"/>
-  <rect class="st" x="13" y="3" width="8" height="6" rx="2"/>
-  <rect class="st" x="13" y="11" width="8" height="10" rx="2"/>
-  <rect class="st" x="3" y="15" width="8" height="6" rx="2"/>
+  <rect x="3" y="3" width="7.5" height="7.5" rx="2" fill="currentColor" fill-opacity=".16"/>
+  <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2" fill="currentColor" fill-opacity=".16"/>
+  <rect x="3" y="3" width="7.5" height="7.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="13.5" y="3" width="7.5" height="7.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="3" y="13.5" width="7.5" height="7.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-box" viewBox="0 0 24 24">
-  <path class="bg" d="M12 3l9 5v8l-9 5-9-5V8z"/>
-  <path class="st" d="M3 8l9-5 9 5v8l-9 5-9-5z"/>
-  <path class="st" d="M3 8l9 5 9-5M12 13v8"/>
-  <path class="st" d="M7.5 5.5l9 5"/>
+  <path d="M12 3l8.5 4.7v8.6L12 21l-8.5-4.7V7.7z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M3.5 7.7L12 12.4l8.5-4.7M12 12.4V21M3.5 7.7 12 3l8.5 4.7v8.6L12 21l-8.5-4.7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7.7 5.3l8.5 4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-cart" viewBox="0 0 24 24">
-  <path class="bg" d="M6.5 8.5h14.5l-1.7 6.9a2 2 0 0 1-1.94 1.5H9.2a2 2 0 0 1-1.96-1.62L6.5 8.5z"/>
-  <path class="st" d="M3 4h2l1 4.5M6 8.5h15L19.3 15.4a2 2 0 0 1-1.94 1.5H9.2a2 2 0 0 1-1.96-1.62L6 8.5z"/>
-  <circle class="fg" cx="9.5" cy="20.5" r="1.6"/>
-  <circle class="fg" cx="17.5" cy="20.5" r="1.6"/>
+  <path d="M6.4 8.5h14.2l-1.5 6.7a2 2 0 0 1-1.95 1.55H9.5a2 2 0 0 1-1.96-1.6z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M2.75 4h2.1l.9 4.5m0 0h14.7l-1.5 6.7a2 2 0 0 1-1.95 1.55H9.5a2 2 0 0 1-1.96-1.6L5.75 8.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="9.5" cy="20.4" r="1.55" fill="currentColor"/>
+  <circle cx="17.5" cy="20.4" r="1.55" fill="currentColor"/>
 </symbol>
 
 <symbol id="i-users" viewBox="0 0 24 24">
-  <circle class="bg" cx="9" cy="8" r="3.5"/>
-  <path class="bg" d="M3 20c.6-3.5 3.2-5.5 6-5.5s5.4 2 6 5.5z"/>
-  <circle class="st" cx="9" cy="8" r="3.5"/>
-  <path class="st" d="M3 20c.6-3.5 3.2-5.5 6-5.5s5.4 2 6 5.5"/>
-  <circle class="st" cx="17" cy="9.5" r="2.6"/>
-  <path class="st" d="M15.5 14.6c1.9.4 3.5 1.9 4.2 4.4"/>
+  <circle cx="9" cy="7.8" r="3.4" fill="currentColor" fill-opacity=".16"/>
+  <path d="M2.8 20c.6-3.6 3.2-5.6 6.2-5.6s5.6 2 6.2 5.6z" fill="currentColor" fill-opacity=".16"/>
+  <circle cx="9" cy="7.8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M2.8 20c.6-3.6 3.2-5.6 6.2-5.6s5.6 2 6.2 5.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.5 4.6a3 3 0 0 1 0 5.9M18.2 14.7c1.6.6 2.8 2 3.2 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-store" viewBox="0 0 24 24">
-  <path class="bg" d="M4 12v8h16v-8z"/>
-  <path class="bg" d="M4 5h16l1 4c0 1.6-1.4 3-3 3s-3-1.4-3-3c0 1.6-1.4 3-3 3s-3-1.4-3-3c0 1.6-1.4 3-3 3S3 10.6 3 9z"/>
-  <path class="st" d="M3 9l1-4h16l1 4"/>
-  <path class="st" d="M3 9c0 1.6 1.4 3 3 3s3-1.4 3-3M9 9c0 1.6 1.4 3 3 3s3-1.4 3-3M15 9c0 1.6 1.4 3 3 3s3-1.4 3-3"/>
-  <path class="st" d="M4 12v8h16v-8"/>
-  <path class="st" d="M10 20v-4h4v4"/>
+  <path d="M4.5 12.2V20h15v-7.8z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M3 9l1.2-4.2a1 1 0 0 1 .96-.72h13.68a1 1 0 0 1 .96.72L21 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M4.5 11.8V20h15v-8.2M9.5 20v-4.5h5V20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-tag" viewBox="0 0 24 24">
-  <path class="bg" d="M12 3.5H5.5c-1.1 0-2 .9-2 2V12l8.6 8.6a2 2 0 0 0 2.8 0l5.7-5.7a2 2 0 0 0 0-2.8L12 3.5z"/>
-  <path class="st" d="M12 3.5H5.5c-1.1 0-2 .9-2 2V12l8.6 8.6a2 2 0 0 0 2.8 0l5.7-5.7a2 2 0 0 0 0-2.8L12 3.5z"/>
-  <circle class="fg" cx="8" cy="8" r="1.5"/>
+  <path d="M11.6 3.5H6a2.5 2.5 0 0 0-2.5 2.5v5.6a2 2 0 0 0 .6 1.4l7.9 7.9a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8L13 4.1a2 2 0 0 0-1.4-.6z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M11.6 3.5H6a2.5 2.5 0 0 0-2.5 2.5v5.6a2 2 0 0 0 .6 1.4l7.9 7.9a2 2 0 0 0 2.8 0l5.2-5.2a2 2 0 0 0 0-2.8L13 4.1a2 2 0 0 0-1.4-.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
 </symbol>
 
 <symbol id="i-percent" viewBox="0 0 24 24">
-  <circle class="bg" cx="12" cy="12" r="9.5"/>
-  <circle class="st" cx="12" cy="12" r="9.5"/>
-  <path class="st" d="M16 8L8 16"/>
-  <circle class="fg" cx="9" cy="9" r="1.7"/>
-  <circle class="fg" cx="15" cy="15" r="1.7"/>
+  <circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity=".16"/>
+  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M15.5 8.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="9.2" cy="9.2" r="1.5" fill="currentColor"/>
+  <circle cx="14.8" cy="14.8" r="1.5" fill="currentColor"/>
 </symbol>
 
 <symbol id="i-blog" viewBox="0 0 24 24">
-  <path class="bg" d="M5 4h9l5 5v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
-  <path class="st" d="M5 4h9l5 5v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/>
-  <path class="st" d="M14 4v5h5"/>
-  <path class="st" d="M7 13h9M7 16h9M7 19h6"/>
+  <path d="M5 3.5h8.5L19 9v10.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M5 3.5h8.5L19 9v10.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13 3.7V9h5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7.5 13h8M7.5 16.3h8M7.5 9.7h3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-chat" viewBox="0 0 24 24">
-  <path class="bg" d="M4 5.5a1.5 1.5 0 0 1 1.5-1.5h13a1.5 1.5 0 0 1 1.5 1.5V15a1.5 1.5 0 0 1-1.5 1.5H10L5.5 20.5v-4H5.5A1.5 1.5 0 0 1 4 15z"/>
-  <path class="st" d="M4 5.5a1.5 1.5 0 0 1 1.5-1.5h13a1.5 1.5 0 0 1 1.5 1.5V15a1.5 1.5 0 0 1-1.5 1.5H10L5.5 20.5v-4H5.5A1.5 1.5 0 0 1 4 15z"/>
-  <circle class="fg" cx="9" cy="10.2" r="1.2"/>
-  <circle class="fg" cx="12.5" cy="10.2" r="1.2"/>
-  <circle class="fg" cx="16" cy="10.2" r="1.2"/>
+  <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-4.5 3.8V16H6a2 2 0 0 1-2-2z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-4.5 3.8V16H6a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="8.5" cy="10" r="1.15" fill="currentColor"/>
+  <circle cx="12" cy="10" r="1.15" fill="currentColor"/>
+  <circle cx="15.5" cy="10" r="1.15" fill="currentColor"/>
 </symbol>
 
 <symbol id="i-mail" viewBox="0 0 24 24">
-  <rect class="bg" x="3" y="5" width="18" height="14" rx="2"/>
-  <rect class="st" x="3" y="5" width="18" height="14" rx="2"/>
-  <path class="st" d="M4 7l7.4 5.5a1 1 0 0 0 1.2 0L20 7"/>
+  <rect x="3" y="5" width="18" height="14" rx="2.5" fill="currentColor" fill-opacity=".16"/>
+  <rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M4.5 7.5l6.4 4.8a1.8 1.8 0 0 0 2.2 0l6.4-4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-settings" viewBox="0 0 24 24">
-  <path class="bg" d="M12 4.5a2 2 0 0 1 1.94 1.5l.2.8a7.6 7.6 0 0 1 1.44.6l.78-.36a2 2 0 0 1 2.48.72l.7 1.22a2 2 0 0 1-.54 2.52l-.66.5a7.6 7.6 0 0 1 0 1.56l.66.5a2 2 0 0 1 .54 2.52l-.7 1.22a2 2 0 0 1-2.48.72l-.78-.36a7.6 7.6 0 0 1-1.44.6l-.2.8A2 2 0 0 1 12 19.5a2 2 0 0 1-1.94-1.5l-.2-.8a7.6 7.6 0 0 1-1.44-.6l-.78.36a2 2 0 0 1-2.48-.72l-.7-1.22a2 2 0 0 1 .54-2.52l.66-.5a7.6 7.6 0 0 1 0-1.56l-.66-.5a2 2 0 0 1-.54-2.52l.7-1.22a2 2 0 0 1 2.48-.72l.78.36a7.6 7.6 0 0 1 1.44-.6l.2-.8A2 2 0 0 1 12 4.5z"/>
-  <path class="st" d="M19.4 15.3l.66-.5a2 2 0 0 0 .54-2.52l-.7-1.22a2 2 0 0 0-2.48-.72l-.78.36a7.6 7.6 0 0 0-1.44-.6l-.2-.8A2 2 0 0 0 13.06 8h-2.12A2 2 0 0 0 9 9.3l-.2.8a7.6 7.6 0 0 0-1.44.6l-.78-.36a2 2 0 0 0-2.48.72"/>
-  <circle class="fg" cx="12" cy="12" r="2.8"/>
+  <path d="M10.6 3.5h2.8l.5 2.3a6.9 6.9 0 0 1 1.9.8l2.1-1 1.4 2.4-1.6 1.5a6.9 6.9 0 0 1 0 1.9l1.6 1.5-1.4 2.4-2.1-1a6.9 6.9 0 0 1-1.9.8l-.5 2.3h-2.8l-.5-2.3a6.9 6.9 0 0 1-1.9-.8l-2.1 1-1.4-2.4 1.6-1.5a6.9 6.9 0 0 1 0-1.9L4.2 8l1.4-2.4 2.1 1a6.9 6.9 0 0 1 1.9-.8z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M10.6 3.5h2.8l.5 2.3a6.9 6.9 0 0 1 1.9.8l2.1-1 1.4 2.4-1.6 1.5a6.9 6.9 0 0 1 0 1.9l1.6 1.5-1.4 2.4-2.1-1a6.9 6.9 0 0 1-1.9.8l-.5 2.3h-2.8l-.5-2.3a6.9 6.9 0 0 1-1.9-.8l-2.1 1-1.4-2.4 1.6-1.5a6.9 6.9 0 0 1 0-1.9L4.2 8l1.4-2.4 2.1 1a6.9 6.9 0 0 1 1.9-.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="2.7" fill="currentColor"/>
 </symbol>
 
 <symbol id="i-logout" viewBox="0 0 24 24">
-  <path class="bg" d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/>
-  <path class="st" d="M11 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H11"/>
-  <path class="st" d="M16 8l4 4-4 4M20 12H10"/>
+  <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M11 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 8l4 4-4 4M20 12H9.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-external" viewBox="0 0 24 24">
-  <path class="bg" d="M5 6h5v3H8v7h7v-2h3v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/>
-  <path class="st" d="M19 14v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
-  <path class="st" d="M14 5h5v5M19 5L11 13"/>
+  <path d="M5 7a1 1 0 0 1 1-1h5v3H8v6h6v-3h3v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M19 13.5V19a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14.5 4.5H20v5.5M20 4.5l-8 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-search" viewBox="0 0 24 24">
-  <circle class="bg" cx="11" cy="11" r="7"/>
-  <circle class="st" cx="11" cy="11" r="7"/>
-  <path class="st" d="M21 21l-4.4-4.4"/>
+  <circle cx="11" cy="11" r="7" fill="currentColor" fill-opacity=".16"/>
+  <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M20.5 20.5l-4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-bell" viewBox="0 0 24 24">
-  <path class="bg" d="M6 10a6 6 0 1 1 12 0v4.5l1.6 2.5H4.4L6 14.5z"/>
-  <path class="st" d="M6 10a6 6 0 1 1 12 0v4.5l1.6 2.5H4.4L6 14.5z"/>
-  <path class="st" d="M9.5 19.8a2.5 2.5 0 0 0 5 0"/>
+  <path d="M6 10.5a6 6 0 1 1 12 0v3.6l1.4 2.4a.7.7 0 0 1-.6 1.05H5.2a.7.7 0 0 1-.6-1.05L6 14.1z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M6 10.5a6 6 0 1 1 12 0v3.6l1.4 2.4a.7.7 0 0 1-.6 1.05H5.2a.7.7 0 0 1-.6-1.05L6 14.1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9.6 20.2a2.6 2.6 0 0 0 4.8 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-menu" viewBox="0 0 24 24">
-  <path class="st" d="M4 6h16M4 12h16M4 18h16" stroke-width="1.9"/>
+  <path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
 </symbol>
 
 <symbol id="i-plus" viewBox="0 0 24 24">
-  <circle class="bg" cx="12" cy="12" r="9"/>
-  <path class="st" d="M12 7v10M7 12h10" stroke-width="2"/>
+  <circle cx="12" cy="12" r="8.5" fill="currentColor" fill-opacity=".16"/>
+  <path d="M12 7.5v9M7.5 12h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </symbol>
 
 <symbol id="i-edit" viewBox="0 0 24 24">
-  <path class="bg" d="M4 20l.9-4L14 6.9l3.1 3.1L8 19.1z"/>
-  <path class="st" d="M4 20l.9-4L15.5 5.4a1.5 1.5 0 0 1 2.1 0l1 1a1.5 1.5 0 0 1 0 2.1L8 19.1 4 20z"/>
-  <path class="st" d="M13.5 7.5l3 3"/>
+  <path d="M4 20l.9-4L14.3 6.6l3.1 3.1L8 19.1z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M4 20l.9-4L15.4 5.5a1.6 1.6 0 0 1 2.2 0l.9.9a1.6 1.6 0 0 1 0 2.2L8 19.1 4 20z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13.7 7.2l3.1 3.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-trash" viewBox="0 0 24 24">
-  <path class="bg" d="M6.5 7h11l-.7 12a1.5 1.5 0 0 1-1.5 1.4H8.7a1.5 1.5 0 0 1-1.5-1.4z"/>
-  <path class="st" d="M4.5 7h15M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M6.5 7l.7 12a1.5 1.5 0 0 0 1.5 1.4h6.6a1.5 1.5 0 0 0 1.5-1.4L17.5 7"/>
-  <path class="st" d="M10 11v6M14 11v6"/>
+  <path d="M6.5 7.5h11l-.75 11.6a1.5 1.5 0 0 1-1.5 1.4H8.75a1.5 1.5 0 0 1-1.5-1.4z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M4.5 7h15M9.5 7V5.3a1.5 1.5 0 0 1 1.5-1.5h2a1.5 1.5 0 0 1 1.5 1.5V7M6.5 7.5l.75 11.6a1.5 1.5 0 0 0 1.5 1.4h6.5a1.5 1.5 0 0 0 1.5-1.4L17.5 7.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10.2 11v6M13.8 11v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-eye" viewBox="0 0 24 24">
-  <path class="bg" d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/>
-  <path class="st" d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/>
-  <circle class="fg" cx="12" cy="12" r="2.6"/>
+  <path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="2.6" fill="currentColor"/>
 </symbol>
 
 <symbol id="i-check" viewBox="0 0 24 24">
-  <circle class="bg" cx="12" cy="12" r="9"/>
-  <path class="st" d="M8 12.5l3 3 5-6" stroke-width="2"/>
+  <circle cx="12" cy="12" r="8.5" fill="currentColor" fill-opacity=".16"/>
+  <path d="M8 12.3l2.8 2.8L16 9.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-x" viewBox="0 0 24 24">
-  <circle class="bg" cx="12" cy="12" r="9"/>
-  <path class="st" d="M9 9l6 6M15 9l-6 6" stroke-width="1.9"/>
+  <circle cx="12" cy="12" r="8.5" fill="currentColor" fill-opacity=".16"/>
+  <path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
 </symbol>
 
 <symbol id="i-trend-up" viewBox="0 0 24 24">
-  <path class="bg" d="M3 20V4h18v16z"/>
-  <path class="st" d="M3.5 16.5l6-6 4 4 7-7"/>
-  <path class="st" d="M14.5 7.5h6v6"/>
+  <path d="M4 5h16v14H4z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M4 4.5v15h15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7.5 15.5l3.3-3.4 2.6 2.6 4.6-4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14.2 9.9h3.8v3.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-wallet" viewBox="0 0 24 24">
-  <rect class="bg" x="3" y="6" width="18" height="14" rx="2.5"/>
-  <rect class="st" x="3" y="6" width="18" height="14" rx="2.5"/>
-  <path class="st" d="M3 10h18"/>
-  <circle class="fg" cx="17" cy="15" r="1.6"/>
+  <rect x="3" y="6" width="18" height="13.5" rx="2.5" fill="currentColor" fill-opacity=".16"/>
+  <path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h13A2.5 2.5 0 0 1 21 8.5v8.5a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 12.5h5v3h-5a1.5 1.5 0 0 1 0-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M3.3 8.2l12-3.4a1.5 1.5 0 0 1 1.9 1.05L17.5 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 <symbol id="i-star" viewBox="0 0 24 24">
-  <path class="fg" d="M12 3.5l2.5 5.7 6.2.6-4.7 4.1 1.4 6.1L12 16.8l-5.4 3.2 1.4-6.1L3.3 9.8l6.2-.6z"/>
+  <path d="M12 3.5l2.6 5.7 6.2.6-4.7 4.1 1.4 6.1L12 16.9l-5.5 3.1 1.4-6.1-4.7-4.1 6.2-.6z" fill="currentColor"/>
+</symbol>
+
+<!-- high-access sections -->
+<symbol id="i-shield-user" viewBox="0 0 24 24">
+  <path d="M12 3l7 2.4v5.3c0 4.7-3 8-7 10.3-4-2.3-7-5.6-7-10.3V5.4z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M12 3l7 2.4v5.3c0 4.7-3 8-7 10.3-4-2.3-7-5.6-7-10.3V5.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="10" r="2.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8.7 15.3c.5-1.7 1.8-2.6 3.3-2.6s2.8.9 3.3 2.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+
+<symbol id="i-report" viewBox="0 0 24 24">
+  <path d="M6 3.5h7L18.5 9v10.5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M6 3.5h7L18.5 9v10.5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12.7 3.7V9h5.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8 17v-3M11.5 17v-5M15 17v-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="i-coins" viewBox="0 0 24 24">
+  <ellipse cx="9" cy="7" rx="5.5" ry="2.6" fill="currentColor" fill-opacity=".16"/>
+  <ellipse cx="9" cy="7" rx="5.5" ry="2.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M3.5 7v4c0 1.44 2.46 2.6 5.5 2.6s5.5-1.16 5.5-2.6V7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M3.5 11v4c0 1.44 2.46 2.6 5.5 2.6 1 0 1.95-.13 2.77-.35" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="16.5" cy="15.5" r="4.5" fill="currentColor" fill-opacity=".16"/>
+  <circle cx="16.5" cy="15.5" r="4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.5 13.6v3.8M15.1 15.5h2.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="i-megaphone" viewBox="0 0 24 24">
+  <path d="M4 9.5L16.5 5v14L4 14.5z" fill="currentColor" fill-opacity=".16"/>
+  <path d="M4 9.5a1.5 1.5 0 0 1 1-1.4L16.5 4.5v15L5 15.9a1.5 1.5 0 0 1-1-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.5 8.5a3.5 3.5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7 15.3V18a1.5 1.5 0 0 0 3 0v-1.9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+
+<symbol id="i-key" viewBox="0 0 24 24">
+  <circle cx="8" cy="8" r="4.5" fill="currentColor" fill-opacity=".16"/>
+  <circle cx="8" cy="8" r="4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11.2 11.2L19 19M16.5 16.5l2-2M14 14l1.5 1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="8" cy="8" r="1.3" fill="currentColor"/>
+</symbol>
+
+<symbol id="i-history" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="8.5" fill="currentColor" fill-opacity=".16"/>
+  <path d="M4.5 8A8.5 8.5 0 1 1 3.6 13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M3.5 4.5V8H7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 8v4.2l3 1.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+
+<symbol id="i-database" viewBox="0 0 24 24">
+  <ellipse cx="12" cy="6" rx="7" ry="2.8" fill="currentColor" fill-opacity=".16"/>
+  <path d="M5 6c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8-3.13-2.8-7-2.8S5 4.45 5 6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 6v6c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8V6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M5 12v6c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8v-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
 </svg>
@@ -180,41 +230,51 @@
 <div class="admin-layout">
 <aside class="admin-side">
   <div class="brand">
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div class="brand-id">
       <span class="mark"><img src="../assets/svg/logo-mark.svg" alt=""></span>
-      <div><b>اتم</b><span>پنل مدیریت</span></div>
+      <div class="brand-txt"><b>اتم</b><span>پنل مدیریت</span></div>
     </div>
     <button class="mobile-toggle" data-side-toggle aria-label="منو"><svg class="icon"><use href="#i-menu"/></svg></button>
   </div>
   <nav class="admin-nav">
-    <div class="admin-nav-label">اصلی</div>
-    <a href="dashboard.html"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span> <span>داشبورد</span></a>
+    <div class="admin-nav-label">مدیریت کل</div>
+    <a href="dashboard.html"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
+    <a href="admins.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">مدیران و نقش‌ها</span></a>
+    <a href="reports.html"><span class="nav-ic"><svg class="icon"><use href="#i-report"/></svg></span><span class="nav-tx">گزارش‌ها و تحلیل</span></a>
+    <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
     <div class="admin-nav-label">فروشگاه</div>
-    <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span> <span>محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
-    <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span> <span>سفارش‌ها</span><span class="cnt">۹۲</span></a>
-    <a href="customers.html"><span class="nav-ic"><svg class="icon"><use href="#i-users"/></svg></span> <span>مشتریان</span></a>
-    <a href="sellers.html"><span class="nav-ic"><svg class="icon"><use href="#i-store"/></svg></span> <span>فروشندگان</span></a>
-    <a href="categories.html"><span class="nav-ic"><svg class="icon"><use href="#i-tag"/></svg></span> <span>دسته‌بندی‌ها</span></a>
-    <a href="offers.html"><span class="nav-ic"><svg class="icon"><use href="#i-percent"/></svg></span> <span>تخفیف‌ها</span></a>
-    <div class="admin-nav-label">محتوا و پشتیبانی</div>
-    <a href="blog.html"><span class="nav-ic"><svg class="icon"><use href="#i-blog"/></svg></span> <span>بلاگ</span></a>
-    <a href="comments.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span> <span>نظرات</span><span class="cnt">۷</span></a>
-    <a href="messages.html"><span class="nav-ic"><svg class="icon"><use href="#i-mail"/></svg></span> <span>پیام‌ها</span><span class="cnt">۳</span></a>
-    <div class="admin-nav-label">پیکربندی</div>
-    <a href="settings.html"><svg class="icon"><use href="#i-settings"/></svg> <span>تنظیمات</span></a>
+    <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
+    <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span><span class="cnt">۹۲</span></a>
+    <a href="customers.html"><span class="nav-ic"><svg class="icon"><use href="#i-users"/></svg></span><span class="nav-tx">مشتریان</span></a>
+    <a href="sellers.html"><span class="nav-ic"><svg class="icon"><use href="#i-store"/></svg></span><span class="nav-tx">فروشندگان</span></a>
+    <a href="categories.html"><span class="nav-ic"><svg class="icon"><use href="#i-tag"/></svg></span><span class="nav-tx">دسته‌بندی‌ها</span></a>
+    <a href="offers.html"><span class="nav-ic"><svg class="icon"><use href="#i-percent"/></svg></span><span class="nav-tx">تخفیف‌ها</span></a>
+    <div class="admin-nav-label">محتوا و بازاریابی</div>
+    <a href="marketing.html"><span class="nav-ic"><svg class="icon"><use href="#i-megaphone"/></svg></span><span class="nav-tx">بازاریابی و کمپین</span></a>
+    <a href="blog.html"><span class="nav-ic"><svg class="icon"><use href="#i-blog"/></svg></span><span class="nav-tx">بلاگ</span></a>
+    <a href="comments.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span><span class="nav-tx">نظرات</span><span class="cnt">۷</span></a>
+    <a href="messages.html"><span class="nav-ic"><svg class="icon"><use href="#i-mail"/></svg></span><span class="nav-tx">پیام‌ها</span><span class="cnt">۳</span></a>
+    <div class="admin-nav-label">سیستم و امنیت</div>
+    <a href="settings.html"><span class="nav-ic"><svg class="icon"><use href="#i-settings"/></svg></span><span class="nav-tx">تنظیمات</span></a>
+    <a href="security.html"><span class="nav-ic"><svg class="icon"><use href="#i-key"/></svg></span><span class="nav-tx">امنیت و دسترسی</span></a>
+    <a href="audit.html"><span class="nav-ic"><svg class="icon"><use href="#i-history"/></svg></span><span class="nav-tx">لاگ فعالیت</span></a>
+    <a href="backups.html"><span class="nav-ic"><svg class="icon"><use href="#i-database"/></svg></span><span class="nav-tx">پشتیبان‌گیری</span></a>
     <div class="divider"></div>
-    <a href="../index.html" target="_blank"><svg class="icon"><use href="#i-external"/></svg> <span>مشاهده سایت</span></a>
-    <a href="#" data-logout><svg class="icon"><use href="#i-logout"/></svg> <span>خروج</span></a>
+    <a href="../index.html" target="_blank"><span class="nav-ic"><svg class="icon"><use href="#i-external"/></svg></span><span class="nav-tx">مشاهده سایت</span></a>
+    <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
   </nav>
 </aside>
   <main class="admin-main">
     <div class="admin-topbar">
-  <div>
-    <h1>نظرات</h1>
-    <div class="crumb">پنل مدیریت · بازخورد کاربران</div>
+  <div class="tb-start">
+    <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
+    <div class="tb-head">
+      <h1>نظرات</h1>
+      <div class="crumb">پنل مدیریت · بازخورد کاربران</div>
+    </div>
   </div>
   <div class="admin-user">
-    <div class="search"><svg class="icon"><use href="#i-search"/></svg><input type="text" placeholder="جستجو در پنل..."></div>
+    <label class="search"><svg class="icon"><use href="#i-search"/></svg><input type="text" placeholder="جستجو در پنل..."></label>
     <button class="icon-btn" aria-label="اعلان‌ها"><svg class="icon"><use href="#i-bell"/></svg><span class="dot"></span></button>
     <div class="me"><span class="ava">A</span><b>admin</b></div>
   </div>
@@ -233,58 +293,58 @@
   <thead><tr><th>کاربر</th><th>محصول</th><th>متن نظر</th><th>امتیاز</th><th>تاریخ</th><th>وضعیت</th><th></th></tr></thead>
   <tbody>
     <tr>
-  <td><div class="row-th"><span class="th-img" style="background:linear-gradient(135deg,#22B14C,#0E7A38);color:#fff;display:grid;place-items:center;font-weight:800;">م</span><b>مریم احمدی</b></div></td>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#22B14C,#0E7A38);">م</span><b>مریم احمدی</b></div></td>
   <td>کیف چرم رویا</td>
-  <td style="max-width:340px;color:var(--a-text-2);font-size:.82rem;">کیفیت چرم فوق‌العاده است و بسته‌بندی بسیار شیک بود. کاملاً راضی هستم.</td>
-  <td><span style="display:inline-flex;color:var(--a-gold);"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
+  <td class="cmt">کیفیت چرم فوق‌العاده است و بسته‌بندی بسیار شیک بود. کاملاً راضی هستم.</td>
+  <td><span class="rate stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
   <td>۱۴۰۴/۰۶/۱۲</td>
   <td><span class="chip pend">در انتظار</span></td>
-  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button title="رد" class="dl"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
+  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button class="dl" title="رد"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
 </tr>
     <tr>
-  <td><div class="row-th"><span class="th-img" style="background:linear-gradient(135deg,#22B14C,#0E7A38);color:#fff;display:grid;place-items:center;font-weight:800;">ح</span><b>حسین قاسمی</b></div></td>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#22B14C,#0E7A38);">ح</span><b>حسین قاسمی</b></div></td>
   <td>کفش چرم کلاسیک</td>
-  <td style="max-width:340px;color:var(--a-text-2);font-size:.82rem;">ارسال سریع بود و جنس با عکس‌ها مطابقت داشت.</td>
-  <td><span style="display:inline-flex;color:var(--a-gold);"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
+  <td class="cmt">ارسال سریع بود و جنس با عکس‌ها مطابقت داشت.</td>
+  <td><span class="rate stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
   <td>۱۴۰۴/۰۶/۱۱</td>
   <td><span class="chip pend">در انتظار</span></td>
-  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button title="رد" class="dl"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
+  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button class="dl" title="رد"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
 </tr>
     <tr>
-  <td><div class="row-th"><span class="th-img" style="background:linear-gradient(135deg,#22B14C,#0E7A38);color:#fff;display:grid;place-items:center;font-weight:800;">س</span><b>سارا محمدی</b></div></td>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#22B14C,#0E7A38);">س</span><b>سارا محمدی</b></div></td>
   <td>سرویس چای‌خوری</td>
-  <td style="max-width:340px;color:var(--a-text-2);font-size:.82rem;">کیفیت عالی و بسته‌بندی خوب. پیشنهاد می‌کنم.</td>
-  <td><span style="display:inline-flex;color:var(--a-gold);"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
+  <td class="cmt">کیفیت عالی و بسته‌بندی خوب. پیشنهاد می‌کنم.</td>
+  <td><span class="rate stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
   <td>۱۴۰۴/۰۶/۱۰</td>
   <td><span class="chip ok">تأییدشده</span></td>
-  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button title="رد" class="dl"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
+  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button class="dl" title="رد"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
 </tr>
     <tr>
-  <td><div class="row-th"><span class="th-img" style="background:linear-gradient(135deg,#22B14C,#0E7A38);color:#fff;display:grid;place-items:center;font-weight:800;">ع</span><b>علی رضایی</b></div></td>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#22B14C,#0E7A38);">ع</span><b>علی رضایی</b></div></td>
   <td>گلیم دستباف</td>
-  <td style="max-width:340px;color:var(--a-text-2);font-size:.82rem;">رنگ‌بندی زیبا و بافت مرغوب. ممنون از فروشنده.</td>
-  <td><span style="display:inline-flex;color:var(--a-gold);"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
+  <td class="cmt">رنگ‌بندی زیبا و بافت مرغوب. ممنون از فروشنده.</td>
+  <td><span class="rate stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
   <td>۱۴۰۴/۰۶/۱۰</td>
   <td><span class="chip ok">تأییدشده</span></td>
-  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button title="رد" class="dl"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
+  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button class="dl" title="رد"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
 </tr>
     <tr>
-  <td><div class="row-th"><span class="th-img" style="background:linear-gradient(135deg,#22B14C,#0E7A38);color:#fff;display:grid;place-items:center;font-weight:800;">ن</span><b>نگین کریمی</b></div></td>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#22B14C,#0E7A38);">ن</span><b>نگین کریمی</b></div></td>
   <td>شال ابریشم</td>
-  <td style="max-width:340px;color:var(--a-text-2);font-size:.82rem;">جنس ابریشم واقعی و طرح بی‌نظیر.</td>
-  <td><span style="display:inline-flex;color:var(--a-gold);"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
+  <td class="cmt">جنس ابریشم واقعی و طرح بی‌نظیر.</td>
+  <td><span class="rate stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
   <td>۱۴۰۴/۰۶/۰۹</td>
   <td><span class="chip pend">در انتظار</span></td>
-  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button title="رد" class="dl"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
+  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button class="dl" title="رد"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
 </tr>
     <tr>
-  <td><div class="row-th"><span class="th-img" style="background:linear-gradient(135deg,#22B14C,#0E7A38);color:#fff;display:grid;place-items:center;font-weight:800;">ر</span><b>رضا موسوی</b></div></td>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#22B14C,#0E7A38);">ر</span><b>رضا موسوی</b></div></td>
   <td>بسته ادویه</td>
-  <td style="max-width:340px;color:var(--a-text-2);font-size:.82rem;">بسته‌بندی ضعیف بود، کیفیت خود ادویه خوب است.</td>
-  <td><span style="display:inline-flex;color:var(--a-gold);"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
+  <td class="cmt">بسته‌بندی ضعیف بود، کیفیت خود ادویه خوب است.</td>
+  <td><span class="rate stars"><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg></span></td>
   <td>۱۴۰۴/۰۶/۰۸</td>
   <td><span class="chip err">رد شده</span></td>
-  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button title="رد" class="dl"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
+  <td><div class="act-icons"><button title="تأیید"><svg class="icon"><use href="#i-check"/></svg></button><button class="dl" title="رد"><svg class="icon"><use href="#i-x"/></svg></button></div></td>
 </tr>
   </tbody>
 </table>
@@ -292,5 +352,6 @@
 
   </main>
 </div>
+<div class="side-scrim" data-side-toggle hidden></div>
 </body>
 </html>

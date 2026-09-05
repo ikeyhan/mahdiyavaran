@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>داشبورد | پنل مدیریت اتم</title>
+<title>مدیران و نقش‌ها | پنل مدیریت اتم</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,8 +238,8 @@
   </div>
   <nav class="admin-nav">
     <div class="admin-nav-label">مدیریت کل</div>
-    <a href="dashboard.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
-    <a href="admins.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">مدیران و نقش‌ها</span></a>
+    <a href="dashboard.html"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
+    <a href="admins.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">مدیران و نقش‌ها</span></a>
     <a href="reports.html"><span class="nav-ic"><svg class="icon"><use href="#i-report"/></svg></span><span class="nav-tx">گزارش‌ها و تحلیل</span></a>
     <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
     <div class="admin-nav-label">فروشگاه</div>
@@ -269,8 +269,8 @@
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>داشبورد</h1>
-      <div class="crumb">پنل مدیریت · خانه</div>
+      <h1>مدیران و نقش‌ها</h1>
+      <div class="crumb">پنل مدیریت · دسترسی سطح بالا</div>
     </div>
   </div>
   <div class="admin-user">
@@ -282,76 +282,106 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-dashboard"/></svg></span>نمای کلی سایت</div>
-    
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-shield-user"/></svg></span>مدیران و نقش‌ها</div>
+    <div class="tabs"><button class="active">همه مدیران</button><button>نقش‌ها</button><button>دسترسی‌ها</button></div>
   </div>
-  <div class="actions"><a href="../index.html" target="_blank" class="abtn"><svg class="icon"><use href="#i-external"/></svg> مشاهده سایت</a></div>
+  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> افزودن مدیر</button></div>
 </div>
 
 <div class="stat-grid">
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-coins"/></svg></div><span class="trend up">▲ ۱۸٪</span></div>
-  <b>۸۴٬۲۰۰٬۰۰۰ ت</b>
-  <span>درآمد این ماه</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-shield-user"/></svg></div></div>
+  <b>۶</b>
+  <span>کل مدیران</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-cart"/></svg></div><span class="trend up">▲ ۱۲٪</span></div>
-  <b>۹۲</b>
-  <span>سفارش‌های جدید</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-key"/></svg></div></div>
+  <b>۴</b>
+  <span>نقش تعریف‌شده</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-users"/></svg></div><span class="trend up">▲ ۸٪</span></div>
-  <b>۳٬۲۰۰</b>
-  <span>مشتریان فعال</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-check"/></svg></div></div>
+  <b>۵</b>
+  <span>فعال اکنون</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-store"/></svg></div><span class="trend up">▲ ۴٪</span></div>
-  <b>۴۸٬۰۰۰</b>
-  <span>فروشندگان</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-history"/></svg></div></div>
+  <b>۱۲۸</b>
+  <span>اقدام امروز</span>
 </div>
 </div>
 
 <div class="grid-2">
   <div class="card">
-    <div class="card-head"><h3>روند فروش هفتگی</h3><span class="chip info">۷ روز اخیر</span></div>
-    <div class="bar-chart">
-      <div class="col"><div class="bar" style="height:55%"></div><span class="lbl">شنبه</span></div>
-      <div class="col"><div class="bar" style="height:70%"></div><span class="lbl">یکشنبه</span></div>
-      <div class="col"><div class="bar" style="height:40%"></div><span class="lbl">دوشنبه</span></div>
-      <div class="col"><div class="bar" style="height:85%"></div><span class="lbl">سه‌شنبه</span></div>
-      <div class="col"><div class="bar" style="height:60%"></div><span class="lbl">چهارشنبه</span></div>
-      <div class="col"><div class="bar" style="height:95%"></div><span class="lbl">پنج‌شنبه</span></div>
-      <div class="col"><div class="bar" style="height:75%"></div><span class="lbl">جمعه</span></div>
+    <div class="card-head"><h3>سطوح دسترسی (نقش‌ها)</h3></div>
+    <div class="perm-list">
+      <div class="perm"><div><b>مدیر کل</b><span>دسترسی کامل به همه بخش‌ها و تنظیمات حساس</span></div><span class="chip err">Full Access</span></div>
+      <div class="perm"><div><b>مدیر فروش</b><span>محصولات، سفارش‌ها، فروشندگان، تخفیف‌ها</span></div><span class="chip ok">۱۲ مجوز</span></div>
+      <div class="perm"><div><b>پشتیبان</b><span>پیام‌ها، نظرات، مشتریان (فقط مشاهده)</span></div><span class="chip info">۶ مجوز</span></div>
+      <div class="perm"><div><b>نویسنده محتوا</b><span>بلاگ و بازاریابی</span></div><span class="chip info">۴ مجوز</span></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-head"><h3>سهم فروش دسته‌ها</h3></div>
-    <div class="donut-wrap">
-      <div class="donut"></div>
-      <div class="legend">
-        <div><i style="background:#0E7A38"></i> پوشاک — ۴۲٪</div>
-        <div><i style="background:#22B14C"></i> صنایع‌دستی — ۲۶٪</div>
-        <div><i style="background:#37C463"></i> لوازم خانه — ۱۸٪</div>
-        <div><i style="background:#DCE8E0"></i> سایر — ۱۴٪</div>
-      </div>
+    <div class="card-head"><h3>ماتریس دسترسی — مدیر فروش</h3></div>
+    <div class="perm-list">
+      <label class="perm-toggle"><span>محصولات — ایجاد/ویرایش/حذف</span><input type="checkbox" checked></label>
+      <label class="perm-toggle"><span>سفارش‌ها — مدیریت وضعیت</span><input type="checkbox" checked></label>
+      <label class="perm-toggle"><span>مالی و تسویه</span><input type="checkbox"></label>
+      <label class="perm-toggle"><span>مدیران و نقش‌ها</span><input type="checkbox"></label>
+      <label class="perm-toggle"><span>تنظیمات سایت</span><input type="checkbox"></label>
+      <label class="perm-toggle"><span>پشتیبان‌گیری و بازیابی</span><input type="checkbox"></label>
     </div>
   </div>
 </div>
 
-<div class="card">
-  <div class="card-head"><h3>آخرین سفارش‌ها</h3><a href="orders.html" class="abtn sm">مشاهده همه</a></div>
-  <div class="tbl-wrap flush">
-    <table class="tbl">
-      <thead><tr><th>کد</th><th>مشتری</th><th>محصول</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th></tr></thead>
-      <tbody>
-        <tr><td><b>#۱۰۸۴</b></td><td>سارا محمدی</td><td>کیف چرم رویا</td><td>۲٬۴۵۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip ok">تحویل شد</span></td></tr>
-        <tr><td><b>#۱۰۸۳</b></td><td>علی رضایی</td><td>کفش چرم کلاسیک</td><td>۱٬۶۵۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip pend">در حال ارسال</span></td></tr>
-        <tr><td><b>#۱۰۸۲</b></td><td>نگین کریمی</td><td>گلیم دستباف کرمان</td><td>۱٬۸۹۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۱</td><td><span class="chip ok">تحویل شد</span></td></tr>
-        <tr><td><b>#۱۰۸۱</b></td><td>محمد احمدی</td><td>فرش ماشینی ۶ متری</td><td>۳٬۹۰۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۱</td><td><span class="chip err">مرجوع</span></td></tr>
-        <tr><td><b>#۱۰۸۰</b></td><td>مریم حسینی</td><td>سرویس چای‌خوری</td><td>۱٬۲۴۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۰</td><td><span class="chip ok">تحویل شد</span></td></tr>
-      </tbody>
-    </table>
-  </div>
+<div class="tbl-wrap">
+<table class="tbl">
+  <thead><tr><th>مدیر</th><th>نقش</th><th>آخرین ورود</th><th>وضعیت</th><th></th></tr></thead>
+  <tbody>
+    <tr>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">م</span><div><b>مدیر اصلی</b><span>admin@atom.ir</span></div></div></td>
+  <td><span class="chip err">مدیر کل</span></td>
+  <td>هم‌اکنون آنلاین</td>
+  <td><span class="chip ok">فعال</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ر</span><div><b>رضا کاظمی</b><span>reza@atom.ir</span></div></div></td>
+  <td><span class="chip ok">مدیر فروش</span></td>
+  <td>۱۴۰۴/۰۶/۱۲ — ۰۹:۲۰</td>
+  <td><span class="chip ok">فعال</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">س</span><div><b>سمیرا نادری</b><span>samira@atom.ir</span></div></div></td>
+  <td><span class="chip info">پشتیبان</span></td>
+  <td>۱۴۰۴/۰۶/۱۲ — ۰۸:۴۵</td>
+  <td><span class="chip ok">فعال</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ا</span><div><b>امیر توکلی</b><span>amir@atom.ir</span></div></div></td>
+  <td><span class="chip info">نویسنده محتوا</span></td>
+  <td>۱۴۰۴/۰۶/۱۱ — ۱۷:۰۰</td>
+  <td><span class="chip ok">فعال</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ل</span><div><b>لیلا شریفی</b><span>leila@atom.ir</span></div></div></td>
+  <td><span class="chip ok">مدیر فروش</span></td>
+  <td>۱۴۰۴/۰۶/۰۹ — ۱۱:۳۰</td>
+  <td><span class="chip pend">معلق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ک</span><div><b>کاربر آزمایشی</b><span>test@atom.ir</span></div></div></td>
+  <td><span class="chip info">پشتیبان</span></td>
+  <td>۱۴۰۴/۰۵/۲۰</td>
+  <td><span class="chip err">مسدود</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
+</tr>
+  </tbody>
+</table>
 </div>
 
   </main>

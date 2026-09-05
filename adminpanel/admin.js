@@ -41,17 +41,27 @@
     }
   };
 
-  // Mobile sidebar toggle
+  // Mobile sidebar drawer + scrim
+  function setDrawer(open){
+    var side  = document.querySelector(".admin-side");
+    var scrim = document.querySelector(".side-scrim");
+    if (side)  side.classList.toggle("open", open);
+    if (scrim) scrim.hidden = !open;
+  }
   document.addEventListener("click", function(e){
     var t = e.target.closest("[data-side-toggle]");
     if (t){
+      e.preventDefault();
       var side = document.querySelector(".admin-side");
-      if (side) side.classList.toggle("open");
+      var isOpen = side && side.classList.contains("open");
+      setDrawer(!isOpen);
     }
     var lo = e.target.closest("[data-logout]");
     if (lo){
       e.preventDefault();
-      if (confirm("خروج از پنل مدیریت؟")) window.atomAdmin.logout();
+      if (confirm("از حساب مدیریت خارج می‌شوید؟")) window.atomAdmin.logout();
     }
   });
+  // Close drawer with Escape
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") setDrawer(false); });
 })();

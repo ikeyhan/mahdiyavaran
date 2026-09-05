@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>داشبورد | پنل مدیریت اتم</title>
+<title>مالی و تسویه | پنل مدیریت اتم</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,10 +238,10 @@
   </div>
   <nav class="admin-nav">
     <div class="admin-nav-label">مدیریت کل</div>
-    <a href="dashboard.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
+    <a href="dashboard.html"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
     <a href="admins.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">مدیران و نقش‌ها</span></a>
     <a href="reports.html"><span class="nav-ic"><svg class="icon"><use href="#i-report"/></svg></span><span class="nav-tx">گزارش‌ها و تحلیل</span></a>
-    <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
+    <a href="finance.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
     <div class="admin-nav-label">فروشگاه</div>
     <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
     <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span><span class="cnt">۹۲</span></a>
@@ -269,8 +269,8 @@
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>داشبورد</h1>
-      <div class="crumb">پنل مدیریت · خانه</div>
+      <h1>مالی و تسویه</h1>
+      <div class="crumb">پنل مدیریت · مدیریت مالی</div>
     </div>
   </div>
   <div class="admin-user">
@@ -282,77 +282,106 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-dashboard"/></svg></span>نمای کلی سایت</div>
-    
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-coins"/></svg></span>مالی و تسویه</div>
+    <div class="tabs"><button class="active">تراکنش‌ها</button><button>تسویه فروشندگان</button><button>برداشت‌ها</button><button>درگاه‌ها</button></div>
   </div>
-  <div class="actions"><a href="../index.html" target="_blank" class="abtn"><svg class="icon"><use href="#i-external"/></svg> مشاهده سایت</a></div>
+  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> تسویه دستی</button></div>
 </div>
 
 <div class="stat-grid">
+  <div class="stat">
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-wallet"/></svg></div></div>
+  <b>۳۲۰٬۵۰۰٬۰۰۰ ت</b>
+  <span>موجودی کیف پول</span>
+</div>
   <div class="stat">
   <div class="head"><div class="ic"><svg class="icon"><use href="#i-coins"/></svg></div><span class="trend up">▲ ۱۸٪</span></div>
   <b>۸۴٬۲۰۰٬۰۰۰ ت</b>
   <span>درآمد این ماه</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-cart"/></svg></div><span class="trend up">▲ ۱۲٪</span></div>
-  <b>۹۲</b>
-  <span>سفارش‌های جدید</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-trend-up"/></svg></div><span class="trend up">▲ ۶٪</span></div>
+  <b>۱۲٬۴۰۰٬۰۰۰ ت</b>
+  <span>کارمزد پلتفرم</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-users"/></svg></div><span class="trend up">▲ ۸٪</span></div>
-  <b>۳٬۲۰۰</b>
-  <span>مشتریان فعال</span>
-</div>
-  <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-store"/></svg></div><span class="trend up">▲ ۴٪</span></div>
-  <b>۴۸٬۰۰۰</b>
-  <span>فروشندگان</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-history"/></svg></div></div>
+  <b>۱۸٬۹۰۰٬۰۰۰ ت</b>
+  <span>در انتظار تسویه</span>
 </div>
 </div>
 
-<div class="grid-2">
-  <div class="card">
-    <div class="card-head"><h3>روند فروش هفتگی</h3><span class="chip info">۷ روز اخیر</span></div>
-    <div class="bar-chart">
-      <div class="col"><div class="bar" style="height:55%"></div><span class="lbl">شنبه</span></div>
-      <div class="col"><div class="bar" style="height:70%"></div><span class="lbl">یکشنبه</span></div>
-      <div class="col"><div class="bar" style="height:40%"></div><span class="lbl">دوشنبه</span></div>
-      <div class="col"><div class="bar" style="height:85%"></div><span class="lbl">سه‌شنبه</span></div>
-      <div class="col"><div class="bar" style="height:60%"></div><span class="lbl">چهارشنبه</span></div>
-      <div class="col"><div class="bar" style="height:95%"></div><span class="lbl">پنج‌شنبه</span></div>
-      <div class="col"><div class="bar" style="height:75%"></div><span class="lbl">جمعه</span></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head"><h3>سهم فروش دسته‌ها</h3></div>
-    <div class="donut-wrap">
-      <div class="donut"></div>
-      <div class="legend">
-        <div><i style="background:#0E7A38"></i> پوشاک — ۴۲٪</div>
-        <div><i style="background:#22B14C"></i> صنایع‌دستی — ۲۶٪</div>
-        <div><i style="background:#37C463"></i> لوازم خانه — ۱۸٪</div>
-        <div><i style="background:#DCE8E0"></i> سایر — ۱۴٪</div>
-      </div>
-    </div>
-  </div>
+<div class="tbl-wrap">
+<table class="tbl">
+  <thead><tr><th>کد</th><th>طرف حساب</th><th>نوع</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th></th></tr></thead>
+  <tbody>
+    <tr>
+  <td><b>#TX-9042</b></td>
+  <td>سارا محمدی</td>
+  <td><span class="chip kind-in">فروش</span></td>
+  <td class="amt-in">+۲٬۴۵۰٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۲</td>
+  <td><span class="chip ok">موفق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><b>#TX-9041</b></td>
+  <td>تسویه آترا چرم</td>
+  <td><span class="chip kind-out">برداشت</span></td>
+  <td class="amt-out">−۱۸٬۲۰۰٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۲</td>
+  <td><span class="chip ok">موفق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><b>#TX-9040</b></td>
+  <td>علی رضایی</td>
+  <td><span class="chip kind-in">فروش</span></td>
+  <td class="amt-in">+۱٬۶۵۰٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۲</td>
+  <td><span class="chip ok">موفق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><b>#TX-9039</b></td>
+  <td>کارمزد پلتفرم</td>
+  <td><span class="chip kind-fee">کارمزد</span></td>
+  <td class="amt-in">+۱۲۳٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۱</td>
+  <td><span class="chip ok">موفق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><b>#TX-9038</b></td>
+  <td>محمد احمدی</td>
+  <td><span class="chip kind-out">بازگشت وجه</span></td>
+  <td class="amt-out">−۳٬۹۰۰٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۱</td>
+  <td><span class="chip pend">در حال بررسی</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><b>#TX-9037</b></td>
+  <td>تسویه هنرکده پارسیان</td>
+  <td><span class="chip kind-out">برداشت</span></td>
+  <td class="amt-out">−۹٬۴۰۰٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۰</td>
+  <td><span class="chip err">ناموفق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+    <tr>
+  <td><b>#TX-9036</b></td>
+  <td>نگین کریمی</td>
+  <td><span class="chip kind-in">فروش</span></td>
+  <td class="amt-in">+۱٬۸۹۰٬۰۰۰ ت</td>
+  <td>۱۴۰۴/۰۶/۱۰</td>
+  <td><span class="chip ok">موفق</span></td>
+  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
+</tr>
+  </tbody>
+</table>
 </div>
-
-<div class="card">
-  <div class="card-head"><h3>آخرین سفارش‌ها</h3><a href="orders.html" class="abtn sm">مشاهده همه</a></div>
-  <div class="tbl-wrap flush">
-    <table class="tbl">
-      <thead><tr><th>کد</th><th>مشتری</th><th>محصول</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th></tr></thead>
-      <tbody>
-        <tr><td><b>#۱۰۸۴</b></td><td>سارا محمدی</td><td>کیف چرم رویا</td><td>۲٬۴۵۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip ok">تحویل شد</span></td></tr>
-        <tr><td><b>#۱۰۸۳</b></td><td>علی رضایی</td><td>کفش چرم کلاسیک</td><td>۱٬۶۵۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip pend">در حال ارسال</span></td></tr>
-        <tr><td><b>#۱۰۸۲</b></td><td>نگین کریمی</td><td>گلیم دستباف کرمان</td><td>۱٬۸۹۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۱</td><td><span class="chip ok">تحویل شد</span></td></tr>
-        <tr><td><b>#۱۰۸۱</b></td><td>محمد احمدی</td><td>فرش ماشینی ۶ متری</td><td>۳٬۹۰۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۱</td><td><span class="chip err">مرجوع</span></td></tr>
-        <tr><td><b>#۱۰۸۰</b></td><td>مریم حسینی</td><td>سرویس چای‌خوری</td><td>۱٬۲۴۰٬۰۰۰ ت</td><td>۱۴۰۴/۰۶/۱۰</td><td><span class="chip ok">تحویل شد</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<div class="pgn"><a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">…</a><a href="#">۲۴</a></div>
 
   </main>
 </div>
