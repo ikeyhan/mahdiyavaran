@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورود مدیریت | اتم</title>
+<meta name="theme-color" content="#149B3E">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<script src="admin.js"></script>
+
+<div class="login-wrap">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <div class="brand">
+      <div class="mark"><img src="../assets/svg/logo-mark.svg" alt=""></div>
+      <b>اتم</b>
+      <span>پنل مدیریت</span>
+    </div>
+
+    <div class="login-err" id="err">نام کاربری یا رمز عبور اشتباه است.</div>
+
+    <div class="field">
+      <label for="u">نام کاربری</label>
+      <input type="text" id="u" placeholder="admin" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="p">رمز عبور</label>
+      <input type="password" id="p" placeholder="••••••••" autocomplete="current-password" required>
+    </div>
+
+    <button type="submit" class="abtn primary" style="width:100%;padding:12px;font-size:.92rem;margin-top:6px;">
+      ورود به پنل مدیریت
+    </button>
+
+    <div class="login-note">
+      این پنل فقط برای مدیر سایت است. تلاش‌های غیرمجاز ثبت می‌شود.
+    </div>
+  </form>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var u = document.getElementById('u').value.trim();
+  var p = document.getElementById('p').value;
+  var err = document.getElementById('err');
+  if (window.atomAdmin && window.atomAdmin.login(u, p)) {
+    // success handled by redirect
+  } else {
+    err.classList.add('show');
+    document.getElementById('p').value = '';
+    document.getElementById('p').focus();
+  }
+});
+</script>
+</body>
+</html>
