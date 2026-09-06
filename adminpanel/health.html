@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>گزارش‌ها و تحلیل | پنل مدیریت اتم</title>
+<title>سلامت سیستم | پنل مدیریت اتم</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -332,7 +332,7 @@
     <div class="admin-nav-label">مدیریت کل</div>
     <a href="dashboard.html"><span class="nav-ic"><svg class="icon"><use href="#i-dashboard"/></svg></span><span class="nav-tx">داشبورد</span></a>
     <a href="admins.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">مدیران و نقش‌ها</span></a>
-    <a href="reports.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-report"/></svg></span><span class="nav-tx">گزارش‌ها و تحلیل</span></a>
+    <a href="reports.html"><span class="nav-ic"><svg class="icon"><use href="#i-report"/></svg></span><span class="nav-tx">گزارش‌ها و تحلیل</span></a>
     <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
     <a href="accounting.html"><span class="nav-ic"><svg class="icon"><use href="#i-calculator"/></svg></span><span class="nav-tx">حسابداری</span></a>
     <div class="admin-nav-label">فروشگاه</div>
@@ -361,7 +361,7 @@
     <div class="admin-nav-label">زیرساخت و نگهداری</div>
     <a href="backups.html"><span class="nav-ic"><svg class="icon"><use href="#i-database"/></svg></span><span class="nav-tx">پشتیبان‌گیری</span></a>
     <a href="dbmanage.html"><span class="nav-ic"><svg class="icon"><use href="#i-server"/></svg></span><span class="nav-tx">پایگاه داده</span></a>
-    <a href="health.html"><span class="nav-ic"><svg class="icon"><use href="#i-activity"/></svg></span><span class="nav-tx">سلامت سیستم</span></a>
+    <a href="health.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-activity"/></svg></span><span class="nav-tx">سلامت سیستم</span></a>
     <a href="cache.html"><span class="nav-ic"><svg class="icon"><use href="#i-bolt"/></svg></span><span class="nav-tx">کش و کارایی</span></a>
     <a href="jobs.html"><span class="nav-ic"><svg class="icon"><use href="#i-refresh"/></svg></span><span class="nav-tx">صف و کران‌ها</span></a>
     <div class="divider"></div>
@@ -374,8 +374,8 @@
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>گزارش‌ها و تحلیل</h1>
-      <div class="crumb">پنل مدیریت · تحلیل داده</div>
+      <h1>سلامت سیستم</h1>
+      <div class="crumb">پنل مدیریت · مانیتورینگ</div>
     </div>
   </div>
   <div class="admin-user">
@@ -387,78 +387,71 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-report"/></svg></span>گزارش‌ها و تحلیل</div>
-    <div class="tabs"><button class="active">فروش</button><button>ترافیک</button><button>محصولات</button><button>مشتریان</button></div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-activity"/></svg></span>سلامت سیستم</div>
+    
   </div>
-  <div class="actions"><button class="abtn"><svg class="icon"><use href="#i-external"/></svg> خروجی PDF</button><button class="abtn"><svg class="icon"><use href="#i-external"/></svg> خروجی Excel</button></div>
+  <div class="actions"><button class="abtn" data-refresh><svg class="icon"><use href="#i-refresh"/></svg> بررسی مجدد</button></div>
 </div>
 
 <div class="stat-grid">
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-coins"/></svg></div><span class="trend up">▲ ۲۲٪</span></div>
-  <b>۱٬۲۴۰٬۰۰۰٬۰۰۰ ت</b>
-  <span>فروش کل (سال)</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-activity"/></svg></div></div>
+  <b>۹۹.۹۸٪</b>
+  <span>آپ‌تایم (۳۰ روز)</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-cart"/></svg></div><span class="trend up">▲ ۱۵٪</span></div>
-  <b>۱۸٬۴۲۰</b>
-  <span>تعداد سفارش</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-database"/></svg></div></div>
+  <b>۲۸٪</b>
+  <span>مصرف دیسک</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-trend-up"/></svg></div><span class="trend up">▲ ۰.۶٪</span></div>
-  <b>۳.۸٪</b>
-  <span>نرخ تبدیل</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-bolt"/></svg></div></div>
+  <b>۳۴٪</b>
+  <span>بار CPU</span>
 </div>
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-users"/></svg></div><span class="trend up">▲ ۳٪</span></div>
-  <b>۱٬۲۸۰٬۰۰۰ ت</b>
-  <span>میانگین سبد</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-x"/></svg></div></div>
+  <b>۲</b>
+  <span>خطای باز</span>
 </div>
-</div>
-
-<div class="card">
-  <div class="card-head"><h3>روند فروش ۱۲ ماه اخیر</h3><span class="chip info">۱۴۰۳ تا ۱۴۰۴</span></div>
-  <div class="bar-chart tall">
-    <div class="col"><div class="bar" style="height:40%"></div><span class="lbl">فرو</span></div>
-    <div class="col"><div class="bar" style="height:52%"></div><span class="lbl">ارد</span></div>
-    <div class="col"><div class="bar" style="height:48%"></div><span class="lbl">خرد</span></div>
-    <div class="col"><div class="bar" style="height:63%"></div><span class="lbl">تیر</span></div>
-    <div class="col"><div class="bar" style="height:58%"></div><span class="lbl">مرد</span></div>
-    <div class="col"><div class="bar" style="height:72%"></div><span class="lbl">شهر</span></div>
-    <div class="col"><div class="bar" style="height:80%"></div><span class="lbl">مهر</span></div>
-    <div class="col"><div class="bar" style="height:68%"></div><span class="lbl">آبا</span></div>
-    <div class="col"><div class="bar" style="height:88%"></div><span class="lbl">آذر</span></div>
-    <div class="col"><div class="bar" style="height:100%"></div><span class="lbl">دی</span></div>
-    <div class="col"><div class="bar" style="height:76%"></div><span class="lbl">بهم</span></div>
-    <div class="col"><div class="bar" style="height:92%"></div><span class="lbl">اسف</span></div>
-  </div>
 </div>
 
 <div class="grid-2">
   <div class="card">
-    <div class="card-head"><h3>پرفروش‌ترین محصولات</h3></div>
+    <div class="card-head"><h3>وضعیت سرویس‌ها</h3></div>
     <div class="tbl-wrap flush"><table class="tbl">
-      <thead><tr><th>محصول</th><th>فروش</th><th>درآمد</th></tr></thead>
+      <thead><tr><th>سرویس</th><th>وضعیت</th><th>تأخیر</th></tr></thead>
       <tbody>
-        <tr><td>کیف چرم رویا</td><td>۸۴۰</td><td>۲٬۰۵۸٬۰۰۰٬۰۰۰ ت</td></tr>
-        <tr><td>کفش چرم کلاسیک</td><td>۷۱۰</td><td>۱٬۱۷۱٬۵۰۰٬۰۰۰ ت</td></tr>
-        <tr><td>گلیم دستباف کرمان</td><td>۵۲۰</td><td>۹۸۲٬۸۰۰٬۰۰۰ ت</td></tr>
-        <tr><td>شال ابریشم اصفهان</td><td>۴۹۰</td><td>۳۵۲٬۸۰۰٬۰۰۰ ت</td></tr>
+        <tr><td><b>وب‌سرور (Nginx)</b></td><td><span class="chip ok">سالم</span></td><td>۱۲ms</td></tr>
+        <tr><td><b>پایگاه داده (MySQL)</b></td><td><span class="chip ok">سالم</span></td><td>۸ms</td></tr>
+        <tr><td><b>کش (Redis)</b></td><td><span class="chip ok">سالم</span></td><td>۲ms</td></tr>
+        <tr><td><b>صف (Queue Worker)</b></td><td><span class="chip ok">سالم</span></td><td>—</td></tr>
+        <tr><td><b>درگاه پرداخت</b></td><td><span class="chip ok">سالم</span></td><td>۲۴۰ms</td></tr>
+        <tr><td><b>سرویس ایمیل</b></td><td><span class="chip pend">کندی</span></td><td>۱٬۸۰۰ms</td></tr>
+        <tr><td><b>CDN</b></td><td><span class="chip ok">سالم</span></td><td>۱۸ms</td></tr>
       </tbody>
     </table></div>
   </div>
   <div class="card">
-    <div class="card-head"><h3>منابع ورودی ترافیک</h3></div>
-    <div class="donut-wrap">
-      <div class="donut"></div>
-      <div class="legend">
-        <div><i style="background:#0E7A38"></i> جستجوی گوگل — ۴۸٪</div>
-        <div><i style="background:#22B14C"></i> مستقیم — ۲۴٪</div>
-        <div><i style="background:#37C463"></i> شبکه‌های اجتماعی — ۱۹٪</div>
-        <div><i style="background:#DCE8E0"></i> ارجاع — ۹٪</div>
-      </div>
-    </div>
+    <div class="card-head"><h3>منابع سرور</h3></div>
+    <div class="meter"><div class="meter-h"><span>پردازنده (CPU)</span><b>۳۴٪</b></div><div class="meter-bar"><i style="width:34%"></i></div></div>
+    <div class="meter"><div class="meter-h"><span>حافظه (RAM)</span><b>۶۲٪</b></div><div class="meter-bar"><i style="width:62%"></i></div></div>
+    <div class="meter"><div class="meter-h"><span>دیسک</span><b>۲۸٪</b></div><div class="meter-bar"><i style="width:28%"></i></div></div>
+    <div class="meter"><div class="meter-h"><span>پهنای باند</span><b>۴۱٪</b></div><div class="meter-bar"><i style="width:41%"></i></div></div>
   </div>
+</div>
+
+<div class="card">
+  <div class="card-head"><h3>خطاهای اخیر سیستم</h3><span class="chip err">۲ خطای باز</span></div>
+  <div class="tbl-wrap flush"><table class="tbl">
+    <thead><tr><th>کد</th><th>مسیر</th><th>پیام</th><th>تعداد</th><th>زمان</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip err">۵۰۰</span></td><td class="mono">/api/checkout</td><td class="preview">Timeout در درگاه پرداخت</td><td>۳</td><td>۱۴۰۴/۰۶/۱۲ ۱۳:۰۲</td></tr>
+      <tr><td><span class="chip pend">۴۰۴</span></td><td class="mono">/products/old-item</td><td class="preview">صفحه یافت نشد</td><td>۴۸</td><td>۱۴۰۴/۰۶/۱۲ ۱۱:۴۰</td></tr>
+      <tr><td><span class="chip pend">۴۰۴</span></td><td class="mono">/blog/deleted-post</td><td class="preview">صفحه یافت نشد</td><td>۱۲</td><td>۱۴۰۴/۰۶/۱۱</td></tr>
+      <tr><td><span class="chip err">۵۰۰</span></td><td class="mono">/api/sms/send</td><td class="preview">اتصال به سرویس پیامک ناموفق</td><td>۱</td><td>۱۴۰۴/۰۶/۱۱</td></tr>
+    </tbody>
+  </table></div>
 </div>
 
   </main>

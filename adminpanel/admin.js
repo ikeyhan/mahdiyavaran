@@ -61,6 +61,13 @@
       e.preventDefault();
       if (confirm("از حساب مدیریت خارج می‌شوید؟")) window.atomAdmin.logout();
     }
+    // reveal/mask sensitive key fields
+    var mk = e.target.closest("[data-mask-toggle]");
+    if (mk){
+      e.preventDefault();
+      var inp = mk.parentElement.querySelector("input");
+      if (inp) inp.type = (inp.type === "password") ? "text" : "password";
+    }
   });
   // Close drawer with Escape
   document.addEventListener("keydown", function(e){ if (e.key === "Escape") setDrawer(false); });
