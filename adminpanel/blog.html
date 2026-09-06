@@ -385,27 +385,162 @@
   </div>
 </div>
     
-<div class="section-bar">
-  <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-blog"/></svg></span>مقالات بلاگ</div>
-    <div class="tabs"><button class="active">همه</button><button>منتشرشده</button><button>پیش‌نویس</button></div>
+<!-- ============ LIST VIEW ============ -->
+<section data-blog-view="list">
+  <div class="section-bar">
+    <div class="left">
+      <div class="title"><span class="ic"><svg class="icon"><use href="#i-blog"/></svg></span>مقالات بلاگ</div>
+      <div class="tabs" id="blogFilter">
+        <button class="active" data-filter="all">همه</button>
+        <button data-filter="published">منتشرشده</button>
+        <button data-filter="draft">پیش‌نویس</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="abtn primary" data-new-post><svg class="icon"><use href="#i-plus"/></svg> مقاله جدید</button>
+    </div>
   </div>
-  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> مقاله جدید</button></div>
+
+  <div class="stat-grid" id="blogStats"></div>
+
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>مقاله</th><th>دسته</th><th>نویسنده</th><th>بازدید</th><th>تاریخ</th><th>وضعیت</th><th></th></tr></thead>
+      <tbody id="blogList"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ EDITOR VIEW ============ -->
+<section data-blog-view="editor" hidden>
+  <div class="editor-bar">
+    <div class="eb-start">
+      <button class="abtn" data-blog-back><svg class="icon"><use href="#i-external"/></svg> بازگشت به فهرست</button>
+      <div class="eb-title" id="editorHeading">نوشتن مقاله جدید</div>
+      <span class="chip info" id="editorStatusChip">پیش‌نویس</span>
+    </div>
+    <div class="eb-actions">
+      <button class="abtn" data-blog-preview><svg class="icon"><use href="#i-eye"/></svg> پیش‌نمایش</button>
+      <button class="abtn" data-blog-savedraft><svg class="icon"><use href="#i-check"/></svg> ذخیره پیش‌نویس</button>
+      <button class="abtn primary" data-blog-publish><svg class="icon"><use href="#i-megaphone"/></svg> انتشار مقاله</button>
+    </div>
+  </div>
+
+  <div class="editor-grid">
+    <div class="editor-main card">
+      <input id="postTitle" class="post-title-input" placeholder="عنوان مقاله را بنویسید…">
+      <div class="post-slug-row">
+        <span>atom313.ir/blog/</span><input id="postSlug" placeholder="نشانی-مقاله">
+      </div>
+
+      <div class="editor-toolbar" id="toolbar">
+        <span class="tb-group">
+          <select class="tb-select" data-block>
+            <option value="p">متن معمولی</option>
+            <option value="h2">تیتر بزرگ (H2)</option>
+            <option value="h3">تیتر متوسط (H3)</option>
+            <option value="blockquote">نقل‌قول</option>
+          </select>
+        </span>
+        <span class="tb-group">
+          <button type="button" class="tb-btn" data-cmd="bold" title="درشت"><b>B</b></button>
+          <button type="button" class="tb-btn" data-cmd="italic" title="کج"><i>I</i></button>
+          <button type="button" class="tb-btn" data-cmd="underline" title="زیرخط"><u>U</u></button>
+          <button type="button" class="tb-btn" data-cmd="strikeThrough" title="خط‌خورده"><s>S</s></button>
+        </span>
+        <span class="tb-group">
+          <button type="button" class="tb-btn" data-cmd="insertUnorderedList" title="فهرست نقطه‌ای">•</button>
+          <button type="button" class="tb-btn" data-cmd="insertOrderedList" title="فهرست شماره‌دار">۱.</button>
+        </span>
+        <span class="tb-group">
+          <button type="button" class="tb-btn" data-cmd="justifyRight" title="راست‌چین"><svg class="icon"><use href="#i-menu"/></svg></button>
+          <button type="button" class="tb-btn" data-cmd="justifyCenter" title="وسط‌چین"><svg class="icon"><use href="#i-menu"/></svg></button>
+        </span>
+        <span class="tb-group">
+          <button type="button" class="tb-btn" data-action="link" title="درج لینک"><svg class="icon"><use href="#i-external"/></svg> لینک</button>
+          <button type="button" class="tb-btn" data-action="image" title="درج تصویر"><svg class="icon"><use href="#i-image"/></svg> تصویر</button>
+        </span>
+        <span class="tb-group">
+          <button type="button" class="tb-btn" data-cmd="removeFormat" title="حذف قالب"><svg class="icon"><use href="#i-x"/></svg></button>
+        </span>
+      </div>
+
+      <div class="editor-body" id="postBody" contenteditable="true" spellcheck="false"></div>
+      <div class="editor-hint">💡 برای درج لینک، ابتدا متن موردنظر را انتخاب و سپس روی «لینک» بزنید. تصاویر در سه اندازه (کوچک، متوسط، تمام‌عرض) قابل درج‌اند.</div>
+    </div>
+
+    <aside class="editor-side">
+      <div class="card">
+        <div class="card-head"><h3>تصویر شاخص</h3></div>
+        <div class="cover-drop" id="coverDrop">
+          <div class="cover-empty" id="coverEmpty">
+            <span class="dz-ic"><svg class="icon"><use href="#i-image"/></svg></span>
+            <b>افزودن تصویر شاخص</b>
+            <span>اندازه پیشنهادی ۱۲۰۰×۶۳۰ پیکسل</span>
+          </div>
+          <img id="coverPreview" hidden alt="تصویر شاخص">
+          <button class="cover-remove" id="coverRemove" hidden type="button"><svg class="icon"><use href="#i-trash"/></svg></button>
+          <input type="file" id="coverInput" accept="image/*" hidden>
+        </div>
+        <div class="cover-note">تصویر به‌صورت خودکار به اندازه استاندارد سایت (۱۲۰۰×۶۳۰) برش داده می‌شود.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>تنظیمات انتشار</h3></div>
+        <div class="field"><label>دسته‌بندی</label>
+          <select id="postCat">
+            <option>راهنمای خرید</option><option>راهنمای فروش</option><option>کسب‌وکار</option>
+            <option>دیجیتال مارکتینگ</option><option>صنایع‌دستی</option><option>اخبار</option>
+          </select>
+        </div>
+        <div class="field"><label>نویسنده</label><input id="postAuthor" value="مدیر اصلی"></div>
+        <div class="field"><label>خلاصه مقاله (چکیده)</label><textarea id="postExcerpt" placeholder="خلاصه‌ای کوتاه برای نمایش در فهرست و نتایج جستجو…"></textarea></div>
+        <div class="field"><label>وضعیت</label>
+          <select id="postStatus"><option value="draft">پیش‌نویس</option><option value="published">منتشرشده</option></select>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- Link dialog -->
+<div class="mini-modal" id="linkModal" hidden>
+  <div class="mini-card">
+    <div class="mini-head"><h3>درج لینک</h3><button class="icon-btn" data-link-cancel><svg class="icon"><use href="#i-x"/></svg></button></div>
+    <div class="field"><label>متن نمایشی</label><input id="linkText" placeholder="متن لینک"></div>
+    <div class="field"><label>آدرس (URL)</label><input id="linkUrl" placeholder="https://…" dir="ltr"></div>
+    <label class="perm-toggle" style="border:0;padding:6px 0;"><span>باز شدن در تب جدید</span><input type="checkbox" id="linkBlank" checked></label>
+    <div class="mini-foot"><button class="abtn" data-link-cancel>انصراف</button><button class="abtn primary" id="linkInsert">درج لینک</button></div>
+  </div>
 </div>
 
-<div class="tbl-wrap">
-<table class="tbl">
-  <thead><tr><th>عنوان</th><th>دسته</th><th>نویسنده</th><th>بازدید</th><th>تاریخ انتشار</th><th>وضعیت</th><th></th></tr></thead>
-  <tbody>
-    <tr><td><b>چگونه یک فروشگاه آنلاین موفق در بازارگاه بسازیم؟</b></td><td>راهنمای فروش</td><td>تیم محتوا</td><td>۱۲٬۴۰۸</td><td>۱۴۰۴/۰۶/۱۲</td><td><span class="chip ok">منتشرشده</span></td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-    <tr><td><b>۷ نکته برای تشخیص چرم طبیعی از مصنوعی</b></td><td>راهنمای خرید</td><td>سارا محمدی</td><td>۸٬۹۴۰</td><td>۱۴۰۴/۰۶/۱۰</td><td><span class="chip ok">منتشرشده</span></td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-    <tr><td><b>داستان موفقیت فروشگاه آترا چرم</b></td><td>کسب‌وکار</td><td>تیم محتوا</td><td>۶٬۲۱۰</td><td>۱۴۰۴/۰۶/۰۸</td><td><span class="chip ok">منتشرشده</span></td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-    <tr><td><b>اصول عکاسی حرفه‌ای از محصول با موبایل</b></td><td>دیجیتال مارکتینگ</td><td>علی رضایی</td><td>۴٬۸۹۰</td><td>۱۴۰۴/۰۶/۰۵</td><td><span class="chip ok">منتشرشده</span></td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-    <tr><td><b>معرفی هنر میناکاری اصفهان</b></td><td>صنایع‌دستی</td><td>نگین کریمی</td><td>۳٬۱۲۰</td><td>۱۴۰۴/۰۶/۰۲</td><td><span class="chip ok">منتشرشده</span></td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-    <tr><td><b>راهنمای انتخاب فرش دستباف</b></td><td>راهنمای خرید</td><td>تیم محتوا</td><td>-</td><td>-</td><td><span class="chip pend">پیش‌نویس</span></td><td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-  </tbody>
-</table>
+<!-- Image size dialog -->
+<div class="mini-modal" id="imgModal" hidden>
+  <div class="mini-card">
+    <div class="mini-head"><h3>درج تصویر</h3><button class="icon-btn" data-img-cancel><svg class="icon"><use href="#i-x"/></svg></button></div>
+    <div class="imgpick-drop" id="imgDrop"><span class="dz-ic"><svg class="icon"><use href="#i-image"/></svg></span><b>انتخاب تصویر</b><input type="file" id="imgInput" accept="image/*"></div>
+    <img id="imgPreview" class="imgpick-preview" hidden alt="">
+    <div class="field"><label>اندازه نمایش در مقاله</label>
+      <div class="seg" id="imgSize">
+        <label class="seg-op"><input type="radio" name="imgsz" value="img-sm"><span>کوچک</span></label>
+        <label class="seg-op"><input type="radio" name="imgsz" value="img-md" checked><span>متوسط</span></label>
+        <label class="seg-op"><input type="radio" name="imgsz" value="img-full"><span>تمام‌عرض</span></label>
+      </div>
+    </div>
+    <div class="field"><label>متن جایگزین (alt)</label><input id="imgAlt" placeholder="توضیح تصویر"></div>
+    <div class="mini-foot"><button class="abtn" data-img-cancel>انصراف</button><button class="abtn primary" id="imgInsert">درج تصویر</button></div>
+  </div>
 </div>
+
+<!-- Preview modal -->
+<div class="acc-modal" id="previewModal" hidden>
+  <div class="acc-modal-card preview-card">
+    <div class="acc-modal-head"><h3>پیش‌نمایش مقاله</h3><button class="icon-btn" data-preview-close><svg class="icon"><use href="#i-x"/></svg></button></div>
+    <div class="acc-modal-body"><article class="article-view" id="previewBody"></article></div>
+  </div>
+</div>
+
+<script src="blog.js"></script>
 
   </main>
 </div>
