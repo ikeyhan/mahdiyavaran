@@ -10,13 +10,19 @@ router.use(requireAuth);
 // آمار داشبورد — از داده واقعی محاسبه می‌شود
 router.get('/stats', (req, res) => {
   const revenue = db.prepare("SELECT COALESCE(SUM(amount),0) s FROM orders WHERE status IN ('delivered','shipping')").get().s;
+  const cnt = (t) => db.prepare(`SELECT COUNT(*) c FROM ${t}`).get().c;
   res.json({
     revenue,
-    orders: db.prepare('SELECT COUNT(*) c FROM orders').get().c,
-    customers: db.prepare('SELECT COUNT(*) c FROM customers').get().c,
-    products: db.prepare('SELECT COUNT(*) c FROM products').get().c,
-    articles: db.prepare('SELECT COUNT(*) c FROM articles').get().c,
+    orders: cnt('orders'),
+    customers: cnt('customers'),
+    products: cnt('products'),
+    sellers: cnt('sellers'),
+    categories: cnt('categories'),
+    articles: cnt('articles'),
     published: db.prepare("SELECT COUNT(*) c FROM articles WHERE status='published'").get().c,
+    pendingComments: db.prepare("SELECT COUNT(*) c FROM comments WHERE status='pending'").get().c,
+    openMessages: db.prepare("SELECT COUNT(*) c FROM messages WHERE status='open'").get().c,
+    recentOrders: db.prepare('SELECT * FROM orders ORDER BY id DESC LIMIT 5').all(),
     ordersByStatus: db.prepare('SELECT status, COUNT(*) c FROM orders GROUP BY status').all(),
   });
 });

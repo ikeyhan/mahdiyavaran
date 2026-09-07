@@ -97,4 +97,47 @@ const customers = makeResource({
   ],
 });
 
-module.exports = { products, orders, customers };
+const categories = makeResource({
+  table: 'categories', label: 'دسته‌بندی', writeRoles: ['admin', 'editor'],
+  fields: [
+    { name: 'title', max: 120 }, { name: 'slug', max: 80 }, { name: 'parent', max: 120 },
+    { name: 'count', type: 'int' }, { name: 'status', allowed: ['active', 'draft'], def: 'active' },
+  ],
+});
+
+const sellers = makeResource({
+  table: 'sellers', label: 'فروشنده', writeRoles: ['admin'],
+  fields: [
+    { name: 'name', max: 120 }, { name: 'category', max: 120 }, { name: 'city', max: 60 },
+    { name: 'rating', type: 'int' }, { name: 'sales', type: 'int' },
+    { name: 'status', allowed: ['active', 'pending', 'blocked'], def: 'active' },
+  ],
+});
+
+const offers = makeResource({
+  table: 'offers', label: 'تخفیف', writeRoles: ['admin', 'editor'],
+  fields: [
+    { name: 'code', max: 40 }, { name: 'title', max: 160 },
+    { name: 'kind', allowed: ['percent', 'amount'], def: 'percent' },
+    { name: 'amount', type: 'int' }, { name: 'used', type: 'int' }, { name: 'quota', type: 'int' },
+    { name: 'expires', max: 40 }, { name: 'status', allowed: ['active', 'expired'], def: 'active' },
+  ],
+});
+
+const comments = makeResource({
+  table: 'comments', label: 'نظر', writeRoles: ['admin', 'support', 'editor'],
+  fields: [
+    { name: 'author', max: 120 }, { name: 'product', max: 200 }, { name: 'body', max: 2000 },
+    { name: 'rating', type: 'int' }, { name: 'status', allowed: ['pending', 'approved', 'rejected'], def: 'pending' },
+  ],
+});
+
+const messages = makeResource({
+  table: 'messages', label: 'پیام', writeRoles: ['admin', 'support'],
+  fields: [
+    { name: 'sender', max: 120 }, { name: 'subject', max: 200 }, { name: 'body', max: 4000 },
+    { name: 'status', allowed: ['open', 'pending', 'closed'], def: 'open' },
+  ],
+});
+
+module.exports = { products, orders, customers, categories, sellers, offers, comments, messages };

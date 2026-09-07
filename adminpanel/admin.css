@@ -682,7 +682,18 @@ ul{margin:0;padding:0;list-style:none;}
 /* toast */
 .atom-toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);z-index:80;background:var(--a-green-700);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;font-size:.86rem;display:flex;align-items:center;gap:8px;box-shadow:0 12px 30px rgba(14,110,48,.4);opacity:0;transition:all .3s var(--a-ease);}
 .atom-toast.show{opacity:1;transform:translate(-50%,0);}
+.atom-toast.bad{background:var(--a-red);box-shadow:0 12px 30px rgba(229,72,77,.4);}
 .atom-toast .icon{width:18px;height:18px;}
+
+/* generic form modal body */
+.mini-body{max-height:60vh;overflow:auto;margin:2px 0;}
+.mini-body .field{margin-bottom:12px;}
+.mini-body select,.mini-body input,.mini-body textarea{width:100%;border:1px solid var(--a-border);border-radius:9px;padding:9px 12px;font-size:.85rem;font-family:inherit;outline:none;background:var(--a-surface);}
+.mini-body input:focus,.mini-body select:focus,.mini-body textarea:focus{border-color:var(--a-green-500);box-shadow:0 0 0 3px rgba(27,178,75,.14);}
+
+/* «متصل به بک‌اند» نقطهٔ زنده */
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--a-green-500);box-shadow:0 0 0 3px rgba(27,178,75,.2);flex-shrink:0;animation:livePulse 2s infinite;}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 @media (max-width:980px){ .editor-grid{grid-template-columns:1fr;} }
 

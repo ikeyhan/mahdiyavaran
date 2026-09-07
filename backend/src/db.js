@@ -100,6 +100,59 @@ CREATE TABLE IF NOT EXISTS login_attempts (
   success INTEGER NOT NULL DEFAULT 0,
   created_at TEXT DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  slug TEXT,
+  parent TEXT,
+  count INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS sellers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  category TEXT,
+  city TEXT,
+  rating REAL NOT NULL DEFAULT 5,
+  sales INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS offers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  code TEXT NOT NULL,
+  title TEXT,
+  kind TEXT DEFAULT 'percent',
+  amount INTEGER NOT NULL DEFAULT 0,
+  used INTEGER NOT NULL DEFAULT 0,
+  quota INTEGER NOT NULL DEFAULT 0,
+  expires TEXT,
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author TEXT,
+  product TEXT,
+  body TEXT,
+  rating INTEGER NOT NULL DEFAULT 5,
+  status TEXT NOT NULL DEFAULT 'pending',   -- pending | approved | rejected
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sender TEXT,
+  subject TEXT,
+  body TEXT,
+  status TEXT NOT NULL DEFAULT 'open',       -- open | pending | closed
+  created_at TEXT DEFAULT (datetime('now'))
+);
 `);
 
 module.exports = db;

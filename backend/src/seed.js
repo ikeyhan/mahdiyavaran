@@ -92,6 +92,70 @@ function seed() {
     ['registration','1'], ['online_payment','1'],
   ].forEach(r => setDef.run(r));
 
+  // دسته‌بندی‌ها
+  if (db.prepare('SELECT COUNT(*) c FROM categories').get().c === 0) {
+    const c = db.prepare('INSERT INTO categories (title,slug,parent,count,status) VALUES (?,?,?,?,?)');
+    [
+      ['صنایع‌دستی','handicraft','',12400,'active'],
+      ['پوشاک و مد','fashion','',38100,'active'],
+      ['خدمات دیجیتال','digital','',7950,'active'],
+      ['لوازم خانه','home','',21300,'active'],
+      ['سوپرمارکت','grocery','',16800,'active'],
+      ['بیمه','insurance','',3100,'active'],
+      ['طلا و جواهر','gold','',4800,'active'],
+      ['حمل و نقل','logistics','',1900,'draft'],
+    ].forEach(r => c.run(r));
+  }
+
+  // فروشندگان
+  if (db.prepare('SELECT COUNT(*) c FROM sellers').get().c === 0) {
+    const s = db.prepare('INSERT INTO sellers (name,category,city,rating,sales,status) VALUES (?,?,?,?,?,?)');
+    [
+      ['آترا چرم','محصولات چرم طبیعی','تهران',4.9,3200,'active'],
+      ['هنرکده پارسیان','صنایع‌دستی اصیل','اصفهان',4.8,1800,'active'],
+      ['استودیو نگاره','طراحی و برندینگ','تهران',5.0,980,'active'],
+      ['سفال سبز','سرامیک و سفال','لالجین',4.7,1400,'active'],
+      ['چرم گالری','کفش چرم','تبریز',4.7,2100,'active'],
+      ['باغ طبیعت','خشکبار و ادویه','مشهد',4.6,2100,'active'],
+      ['فرش ایران','فرش و موکت','کاشان',4.5,4500,'pending'],
+    ].forEach(r => s.run(r));
+  }
+
+  // تخفیف‌ها
+  if (db.prepare('SELECT COUNT(*) c FROM offers').get().c === 0) {
+    const o = db.prepare('INSERT INTO offers (code,title,kind,amount,used,quota,expires,status) VALUES (?,?,?,?,?,?,?,?)');
+    [
+      ['ATOM40','فروش شگفت‌انگیز','percent',40,218,500,'۱۴۰۴/۰۶/۲۰','active'],
+      ['NEWUSER','خوش‌آمدگویی','amount',100000,942,0,'-','active'],
+      ['LEATHER25','ویژه محصولات چرم','percent',25,67,200,'۱۴۰۴/۰۷/۰۱','active'],
+      ['SUMMER20','تخفیف تابستانه','percent',20,500,500,'۱۴۰۴/۰۶/۰۵','expired'],
+      ['VIP15','مشتریان ویژه','percent',15,30,100,'۱۴۰۴/۱۲/۲۹','active'],
+    ].forEach(r => o.run(r));
+  }
+
+  // نظرات
+  if (db.prepare('SELECT COUNT(*) c FROM comments').get().c === 0) {
+    const cm = db.prepare('INSERT INTO comments (author,product,body,rating,status) VALUES (?,?,?,?,?)');
+    [
+      ['مریم احمدی','کیف چرم رویا','کیفیت چرم فوق‌العاده است و بسته‌بندی بسیار شیک بود.',5,'pending'],
+      ['حسین قاسمی','کفش چرم کلاسیک','ارسال سریع بود و جنس با عکس‌ها مطابقت داشت.',5,'pending'],
+      ['سارا محمدی','سرویس چای‌خوری','کیفیت عالی و بسته‌بندی خوب. پیشنهاد می‌کنم.',4,'approved'],
+      ['علی رضایی','گلیم دستباف','رنگ‌بندی زیبا و بافت مرغوب.',5,'approved'],
+      ['رضا موسوی','بسته ادویه','بسته‌بندی ضعیف بود.',2,'rejected'],
+    ].forEach(r => cm.run(r));
+  }
+
+  // پیام‌ها/تیکت‌ها
+  if (db.prepare('SELECT COUNT(*) c FROM messages').get().c === 0) {
+    const m = db.prepare('INSERT INTO messages (sender,subject,body,status) VALUES (?,?,?,?)');
+    [
+      ['سارا محمدی','مشکل در ارسال سفارش','سلام، سفارش من چهار روز پیش ثبت شده ولی هنوز ارسال نشده…','open'],
+      ['علی رضایی','درخواست بازگشت وجه','محصول ایراد داشت، لطفاً راهنمایی کنید…','open'],
+      ['نگین کریمی','سؤال درباره ضمانت','آیا این محصول شامل ضمانت هست؟','pending'],
+      ['محمد احمدی','تشکر از پشتیبانی','بابت پاسخگویی سریع سپاسگزارم!','closed'],
+    ].forEach(r => m.run(r));
+  }
+
   // فیچرفلگ‌ها
   if (db.prepare('SELECT COUNT(*) c FROM feature_flags').get().c === 0) {
     const f = db.prepare('INSERT INTO feature_flags (key,name,enabled,description) VALUES (?,?,?,?)');

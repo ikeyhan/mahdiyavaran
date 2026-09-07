@@ -50,10 +50,15 @@ app.use('/api/uploads', require('./src/routes/uploads'));
 app.use('/api/settings', require('./src/routes/settings'));
 app.use('/api', require('./src/routes/insights'));           // stats, activity, logins, loyalty
 
-const { products, orders, customers } = require('./src/routes/resources');
-app.use('/api/products', products);
-app.use('/api/orders', orders);
-app.use('/api/customers', customers);
+const R = require('./src/routes/resources');
+app.use('/api/products', R.products);
+app.use('/api/orders', R.orders);
+app.use('/api/customers', R.customers);
+app.use('/api/categories', R.categories);
+app.use('/api/sellers', R.sellers);
+app.use('/api/offers', R.offers);
+app.use('/api/comments', R.comments);
+app.use('/api/messages', R.messages);
 
 /* ---------- فایل‌های آپلودشده ---------- */
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d' }));

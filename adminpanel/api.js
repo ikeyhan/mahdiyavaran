@@ -78,6 +78,12 @@
     orders: crud("/orders"),
     customers: crud("/customers"),
     admins: crud("/admins"),
+    categories: crud("/categories"),
+    sellers: crud("/sellers"),
+    offers: crud("/offers"),
+    comments: crud("/comments"),
+    messages: crud("/messages"),
+    resource: function (name) { return crud("/" + name); },
 
     articlesPublic: function () { return req("/articles/public"); },
     stats: function () { return req("/stats"); },
