@@ -36,37 +36,47 @@
         excerpt:"", cover:"", body:"<p>پیش‌نویس…</p>" }
     ];
   }
-  function load(){
+  // نگاشت رکورد سرور → مدل نمایش
+  function fromServer(a){
+    return { id:a.id, title:a.title, slug:a.slug, cat:a.category, author:a.author,
+             views:a.views, date:(a.status==="published"? (a.created_at||"").slice(0,10).replace(/-/g,"/") : "—"),
+             status:a.status, excerpt:a.excerpt, cover:a.cover||"", body:a.body||"" };
+  }
+  async function load(){
+    if (online && window.AtomAPI){
+      try { var d = await window.AtomAPI.articles.list(); posts = (d.items||[]).map(fromServer); return; }
+      catch(e){ /* افت به حالت محلی */ }
+    }
     try { posts = JSON.parse(localStorage.getItem(LS_KEY)) || seed(); }
     catch(e){ posts = seed(); }
     if (!Array.isArray(posts) || !posts.length) posts = seed();
   }
-  function save(){
+  function saveLocal(){
     try { localStorage.setItem(LS_KEY, JSON.stringify(posts)); return true; }
-    catch(e){ alert("فضای ذخیره‌سازی مرورگر پر شد. برای ذخیره تصاویر بیشتر، برخی مقالات قدیمی را حذف کنید."); return false; }
+    catch(e){ alert("فضای ذخیره‌سازی مرورگر پر شد. برخی مقالات قدیمی را حذف کنید."); return false; }
   }
   function nextId(){ return posts.reduce(function(m,p){return Math.max(m,p.id||0);},0)+1; }
 
-  /* ---------- image resize via canvas ---------- */
-  function fileToCover(file, cb){
+  /* ---------- image resize via canvas → canvas element ---------- */
+  var online = false; // آیا بک‌اند واقعی در دسترس است؟
+  function coverCanvas(file, cb){
     var r = new FileReader();
     r.onload = function(){
       var img = new Image();
       img.onload = function(){
         var c = document.createElement("canvas"); c.width=COVER_W; c.height=COVER_H;
         var ctx = c.getContext("2d");
-        // cover-fit crop
         var sr = img.width/img.height, dr = COVER_W/COVER_H, sx,sy,sw,sh;
         if (sr > dr){ sh=img.height; sw=sh*dr; sx=(img.width-sw)/2; sy=0; }
         else { sw=img.width; sh=sw/dr; sx=0; sy=(img.height-sh)/2; }
         ctx.drawImage(img, sx,sy,sw,sh, 0,0,COVER_W,COVER_H);
-        cb(c.toDataURL("image/jpeg", 0.82));
+        cb(c);
       };
       img.src = r.result;
     };
     r.readAsDataURL(file);
   }
-  function fileToInline(file, cb){
+  function inlineCanvas(file, cb){
     var r = new FileReader();
     r.onload = function(){
       var img = new Image();
@@ -75,11 +85,26 @@
         if (w > INLINE_MAX){ h = Math.round(h*INLINE_MAX/w); w = INLINE_MAX; }
         var c = document.createElement("canvas"); c.width=w; c.height=h;
         c.getContext("2d").drawImage(img,0,0,w,h);
-        cb(c.toDataURL("image/jpeg", 0.82));
+        cb(c);
       };
       img.src = r.result;
     };
     r.readAsDataURL(file);
+  }
+  // خروجی تصویر: آنلاین → آپلود روی سرور و بازگرداندن URL؛ آفلاین → dataURL
+  function processImage(file, mode, done){
+    var make = (mode === "cover") ? coverCanvas : inlineCanvas;
+    make(file, function(canvas){
+      if (online && window.AtomAPI){
+        canvas.toBlob(function(blob){
+          var f = new File([blob], "image.jpg", { type: "image/jpeg" });
+          window.AtomAPI.upload(f).then(function(res){ done(res.url); })
+            .catch(function(){ done(canvas.toDataURL("image/jpeg", 0.82)); });
+        }, "image/jpeg", 0.82);
+      } else {
+        done(canvas.toDataURL("image/jpeg", 0.82));
+      }
+    });
   }
 
   /* ---------- views ---------- */
@@ -125,8 +150,11 @@
     }).join("");
     tb.querySelectorAll("[data-edit]").forEach(function(b){ b.onclick=function(){ openEditor(+b.getAttribute("data-edit")); }; });
     tb.querySelectorAll("[data-view]").forEach(function(b){ b.onclick=function(){ var p=byId(+b.getAttribute("data-view")); if(p) openPreview(p); }; });
-    tb.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var id=+b.getAttribute("data-del");
-      if(confirm("حذف این مقاله؟")){ posts=posts.filter(function(p){return p.id!==id;}); save(); renderList(); } }; });
+    tb.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=async function(){ var id=+b.getAttribute("data-del");
+      if(!confirm("حذف این مقاله؟")) return;
+      if (online && window.AtomAPI){ try{ await window.AtomAPI.articles.remove(id); await load(); renderList(); }catch(e){ alert("خطا: "+e.message); } }
+      else { posts=posts.filter(function(p){return p.id!==id;}); saveLocal(); renderList(); }
+    }; });
   }
   function statCard(ic,v,l){ return '<div class="stat"><div class="head"><div class="ic">'+icon(ic)+'</div></div><b style="font-size:1.5rem;">'+v+'</b><span>'+l+'</span></div>'; }
   function icon(n){ return '<svg class="icon"><use href="#i-'+n+'"/></svg>'; }
@@ -178,12 +206,23 @@
       date: status==="published" ? today() : ((editingId && byId(editingId) && byId(editingId).date) || "—")
     };
   }
-  function store(status){
+  async function store(status){
     var a = collect(status); if(!a) return;
+    var okMsg = status==="published" ? "مقاله با موفقیت منتشر شد ✓" : "پیش‌نویس ذخیره شد ✓";
+    if (online && window.AtomAPI){
+      var payload = { title:a.title, slug:a.slug, category:a.cat, author:a.author,
+                      excerpt:a.excerpt, cover:a.cover, body:a.body, status:a.status };
+      try {
+        if (editingId) await window.AtomAPI.articles.update(editingId, payload);
+        else await window.AtomAPI.articles.create(payload);
+        await load(); renderList(); showView("list"); toast(okMsg);
+      } catch(e){ alert("خطا در ذخیره: " + e.message); }
+      return;
+    }
+    // حالت محلی
     var i = posts.findIndex(function(p){return p.id===a.id;});
     if (i>=0) posts[i]=a; else posts.push(a);
-    if (save()){ renderList(); showView("list");
-      toast(status==="published" ? "مقاله با موفقیت منتشر شد ✓" : "پیش‌نویس ذخیره شد ✓"); }
+    if (saveLocal()){ renderList(); showView("list"); toast(okMsg); }
   }
 
   /* ---------- toolbar / formatting ---------- */
@@ -236,7 +275,8 @@
   function closeImg(){ id("imgModal").hidden=true; }
   id("imgInput").onchange = function(){
     if(!this.files[0]) return;
-    fileToInline(this.files[0], function(data){ pendingImg=data; var pv=id("imgPreview"); pv.src=data; pv.hidden=false; });
+    var drop=id("imgDrop"); drop.style.opacity=".6";
+    processImage(this.files[0], "inline", function(src){ drop.style.opacity="1"; pendingImg=src; var pv=id("imgPreview"); pv.src=src; pv.hidden=false; });
   };
   id("imgInsert").onclick = function(){
     if(!pendingImg){ alert("ابتدا یک تصویر انتخاب کنید."); return; }
@@ -250,7 +290,8 @@
 
   /* ---------- cover upload ---------- */
   id("coverDrop").addEventListener("click", function(e){ if(e.target.closest("#coverRemove")) return; id("coverInput").click(); });
-  id("coverInput").onchange = function(){ if(this.files[0]) fileToCover(this.files[0], function(d){ setCover(d); }); };
+  id("coverInput").onchange = function(){ if(this.files[0]){ var drop=id("coverDrop"); drop.style.opacity=".6";
+    processImage(this.files[0], "cover", function(src){ drop.style.opacity="1"; setCover(src); }); } };
   id("coverRemove").onclick = function(e){ e.stopPropagation(); setCover(""); id("coverInput").value=""; };
 
   /* ---------- preview ---------- */
@@ -288,5 +329,8 @@
       b.classList.add("active"); curFilter=b.getAttribute("data-filter"); renderList(); };
   });
 
-  load(); renderList(); showView("list");
+  (async function init(){
+    if (window.AtomAPI){ try { online = await window.AtomAPI.available(); } catch(e){ online = false; } }
+    await load(); renderList(); showView("list");
+  })();
 })();

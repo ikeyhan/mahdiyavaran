@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
+<script src="api.js"></script>
 <script src="admin.js"></script>
 
 <div class="login-wrap">
@@ -44,18 +45,23 @@
 </div>
 
 <script>
-document.getElementById('loginForm').addEventListener('submit', function(e){
+document.getElementById('loginForm').addEventListener('submit', async function(e){
   e.preventDefault();
   var u = document.getElementById('u').value.trim();
   var p = document.getElementById('p').value;
   var err = document.getElementById('err');
-  if (window.atomAdmin && window.atomAdmin.login(u, p)) {
-    // success handled by redirect
-  } else {
+  var btn = this.querySelector('button[type="submit"]');
+  err.classList.remove('show');
+  btn.disabled = true; var orig = btn.textContent; btn.textContent = 'در حال ورود…';
+  var ok = false;
+  try { ok = await window.atomAdmin.login(u, p); } catch (ex) { ok = false; }
+  if (!ok) {
     err.classList.add('show');
     document.getElementById('p').value = '';
     document.getElementById('p').focus();
+    btn.disabled = false; btn.textContent = orig;
   }
+  // در صورت موفقیت، ریدایرکت انجام می‌شود
 });
 </script>
 </body>
