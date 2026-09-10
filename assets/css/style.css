@@ -853,7 +853,7 @@ html[data-theme="dark"] .hero::before{ display:none; }
 .as-head .as-ava{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;overflow:hidden;flex-shrink:0;}
 .as-head .as-ava img{width:100%;height:100%;object-fit:cover;}
 .as-head .as-ava svg{width:24px;height:24px;color:#fff;}
-.as-head h4{margin:0;font-size:1rem;font-weight:800;}
+.as-head h4{margin:0;font-size:1rem;font-weight:800;color:#fff;}
 .as-head .as-status{font-size:.72rem;opacity:.9;display:flex;align-items:center;gap:5px;}
 .as-head .as-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#8EF0AE;box-shadow:0 0 0 2px rgba(255,255,255,.25);}
 .as-head .as-close{margin-inline-start:auto;width:32px;height:32px;border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:9px;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;}

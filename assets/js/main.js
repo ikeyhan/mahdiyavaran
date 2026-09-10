@@ -74,15 +74,18 @@
   if(toTop) toTop.addEventListener("click", function(){ window.scrollTo({top:0,behavior:"smooth"}); });
 
   var revealEls = document.querySelectorAll(".reveal");
+  function revealShow(el){ el.classList.add("in"); }
   if("IntersectionObserver" in window && revealEls.length){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+        if(en.isIntersecting){ revealShow(en.target); io.unobserve(en.target); }
       });
-    }, { threshold:.15 });
+    }, { threshold:0, rootMargin:"0px 0px -8% 0px" });
     revealEls.forEach(function(el){ io.observe(el); });
+    // شبکهٔ ایمنی: هیچ بخشی نباید نامرئی بماند (رفع فضای خالی «بهم‌ریخته»)
+    setTimeout(function(){ revealEls.forEach(revealShow); }, 1400);
   } else {
-    revealEls.forEach(function(el){ el.classList.add("in"); });
+    revealEls.forEach(revealShow);
   }
 
   document.querySelectorAll("[data-count]").forEach(function(el){
@@ -144,7 +147,7 @@
 
   var API = "/api";
   var cfg = {
-    enabled: true, title: "پشتیبانی اتم", welcome:
+    enabled: true, title: "پشتیبان سایت", welcome:
       "سلام! 👋 من دستیار پشتیبانی اتم هستم. می‌توانید یکی از سؤالات متداول را انتخاب کنید، با هوش مصنوعی گفتگو کنید، یا برای ما پیام بگذارید.",
     avatar: "", color: "#149B3E", aiEnabled: false,
     faqs: [

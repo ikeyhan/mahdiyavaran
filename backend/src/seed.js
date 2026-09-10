@@ -86,7 +86,7 @@ function seed() {
   // تنظیمات پیش‌فرض
   const setDef = db.prepare('INSERT OR IGNORE INTO settings (key,value) VALUES (?,?)');
   [
-    ['site_name','اتم'], ['site_title','اتم | بازارگاه دیجیتال'],
+    ['site_name','اتم ۳۱۳'], ['site_title','اتم ۳۱۳ | بازارگاه دیجیتال'],
     ['domain','atom313.ir'], ['contact_email','info@atom.ir'],
     ['seller_fee','5'], ['min_order','50000'], ['maintenance','0'],
     ['registration','1'], ['online_payment','1'],
@@ -180,7 +180,7 @@ function seed() {
   // تنظیمات چت‌بات و هوش مصنوعی
   [
     ['chat_enabled', '1'],
-    ['chat_title', 'پشتیبانی اتم'],
+    ['chat_title', 'پشتیبان سایت'],
     ['chat_welcome', 'سلام! 👋 من دستیار پشتیبانی اتم هستم. می‌توانید یکی از سؤالات متداول را انتخاب کنید، با هوش مصنوعی گفتگو کنید، یا برای ما پیام بگذارید.'],
     ['chat_avatar', ''],
     ['chat_color', '#149B3E'],
