@@ -691,6 +691,15 @@ ul{margin:0;padding:0;list-style:none;}
 .mini-body select,.mini-body input,.mini-body textarea{width:100%;border:1px solid var(--a-border);border-radius:9px;padding:9px 12px;font-size:.85rem;font-family:inherit;outline:none;background:var(--a-surface);}
 .mini-body input:focus,.mini-body select:focus,.mini-body textarea:focus{border-color:var(--a-green-500);box-shadow:0 0 0 3px rgba(27,178,75,.14);}
 
+/* چت‌بات: آواتار در پنل */
+.chat-avatar-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.chat-avatar{width:66px;height:66px;border-radius:50%;flex-shrink:0;background:var(--a-green-050);border:2px solid var(--a-border);display:grid;place-items:center;overflow:hidden;}
+.chat-avatar .dz-ic{color:var(--a-green-600);}
+.chat-avatar .dz-ic .icon{width:28px;height:28px;}
+.chat-avatar img{width:100%;height:100%;object-fit:cover;}
+.abtn.ghost{background:transparent;border-color:transparent;color:var(--a-text-3);}
+.abtn.ghost:hover{color:var(--a-red);background:var(--a-surface-2);}
+
 /* «متصل به بک‌اند» نقطهٔ زنده */
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--a-green-500);box-shadow:0 0 0 3px rgba(27,178,75,.2);flex-shrink:0;animation:livePulse 2s infinite;}
 @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}

@@ -59,6 +59,8 @@ app.use('/api/sellers', R.sellers);
 app.use('/api/offers', R.offers);
 app.use('/api/comments', R.comments);
 app.use('/api/messages', R.messages);
+app.use('/api/faqs', R.faqs);
+app.use('/api/support', require('./src/routes/support'));
 
 /* ---------- فایل‌های آپلودشده ---------- */
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d' }));

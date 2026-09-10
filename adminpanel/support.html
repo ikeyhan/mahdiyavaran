@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صف و کران‌ها | پنل مدیریت اتم</title>
+<title>پشتیبانی و چت‌بات | پنل مدیریت اتم</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -371,7 +371,7 @@
     <a href="blog.html"><span class="nav-ic"><svg class="icon"><use href="#i-blog"/></svg></span><span class="nav-tx">بلاگ</span></a>
     <a href="seo.html"><span class="nav-ic"><svg class="icon"><use href="#i-globe"/></svg></span><span class="nav-tx">سئو</span></a>
     <a href="notifications.html"><span class="nav-ic"><svg class="icon"><use href="#i-bell"/></svg></span><span class="nav-tx">اعلان‌ها</span></a>
-    <a href="support.html"><span class="nav-ic"><svg class="icon"><use href="#i-support"/></svg></span><span class="nav-tx">پشتیبانی و چت‌بات</span></a>
+    <a href="support.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-support"/></svg></span><span class="nav-tx">پشتیبانی و چت‌بات</span></a>
     <a href="comments.html"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span><span class="nav-tx">نظرات</span><span class="cnt">۷</span></a>
     <a href="messages.html"><span class="nav-ic"><svg class="icon"><use href="#i-mail"/></svg></span><span class="nav-tx">پیام‌ها</span><span class="cnt">۳</span></a>
     <div class="admin-nav-label">سیستم و امنیت</div>
@@ -385,19 +385,19 @@
     <a href="dbmanage.html"><span class="nav-ic"><svg class="icon"><use href="#i-server"/></svg></span><span class="nav-tx">پایگاه داده</span></a>
     <a href="health.html"><span class="nav-ic"><svg class="icon"><use href="#i-activity"/></svg></span><span class="nav-tx">سلامت سیستم</span></a>
     <a href="cache.html"><span class="nav-ic"><svg class="icon"><use href="#i-bolt"/></svg></span><span class="nav-tx">کش و کارایی</span></a>
-    <a href="jobs.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-refresh"/></svg></span><span class="nav-tx">صف و کران‌ها</span></a>
+    <a href="jobs.html"><span class="nav-ic"><svg class="icon"><use href="#i-refresh"/></svg></span><span class="nav-tx">صف و کران‌ها</span></a>
     <div class="divider"></div>
     <a href="../index.html" target="_blank"><span class="nav-ic"><svg class="icon"><use href="#i-external"/></svg></span><span class="nav-tx">مشاهده سایت</span></a>
     <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
   </nav>
 </aside>
-  <main class="admin-main" data-page="jobs">
+  <main class="admin-main" data-page="support">
     <div class="admin-topbar">
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>صف و کران‌ها</h1>
-      <div class="crumb">پنل مدیریت · کارهای زمان‌بندی</div>
+      <h1>پشتیبانی و چت‌بات</h1>
+      <div class="crumb">پنل مدیریت · چت‌بات هوش مصنوعی</div>
     </div>
   </div>
   <div class="admin-user">
@@ -409,61 +409,90 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-refresh"/></svg></span>صف و کران‌ها (Jobs & Queue)</div>
-    <div class="tabs"><button class="active">کران‌ها</button><button>صف کارها</button><button>کارهای شکست‌خورده</button></div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-support"/></svg></span>پشتیبانی و چت‌بات</div>
+    <div class="tabs"><button class="active">پیکربندی</button><button>سؤالات متداول</button><button>گفتگوها</button></div>
   </div>
-  <div class="actions"></div>
+  <div class="actions"><button class="abtn" data-open-widget><svg class="icon"><use href="#i-external"/></svg> مشاهده در سایت</button><button class="abtn primary" data-save-support><svg class="icon"><use href="#i-check"/></svg> ذخیره تغییرات</button></div>
 </div>
+
+<p class="info-note"><svg class="icon"><use href="#i-robot"/></svg> چت‌بات پشتیبانی در گوشهٔ پایین‌راست سایت اصلی نمایش داده می‌شود. کاربر می‌تواند سؤالات متداول را ببیند، با هوش مصنوعی گفتگو کند یا پیام بگذارد. کلید API فقط روی سرور نگهداری می‌شود و هرگز برای کاربر ارسال نمی‌شود.</p>
 
 <div class="stat-grid">
   <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-refresh"/></svg></div></div>
-  <b>۱۲</b>
-  <span>کران فعال</span>
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-robot"/></svg></div></div>
+  <b>—</b>
+  <span>وضعیت هوش مصنوعی</span>
+</div>
+  <div class="stat">
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-chat"/></svg></div></div>
+  <b>—</b>
+  <span>سؤالات متداول</span>
+</div>
+  <div class="stat">
+  <div class="head"><div class="ic"><svg class="icon"><use href="#i-support"/></svg></div></div>
+  <b>—</b>
+  <span>گفتگوهای امروز</span>
 </div>
   <div class="stat">
   <div class="head"><div class="ic"><svg class="icon"><use href="#i-check"/></svg></div></div>
-  <b>۸۴۰</b>
-  <span>اجرای موفق امروز</span>
-</div>
-  <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-history"/></svg></div></div>
-  <b>۶</b>
-  <span>در صف انتظار</span>
-</div>
-  <div class="stat">
-  <div class="head"><div class="ic"><svg class="icon"><use href="#i-x"/></svg></div></div>
-  <b>۲</b>
-  <span>شکست‌خورده</span>
+  <b>فعال</b>
+  <span>نمایش در سایت</span>
 </div>
 </div>
 
-<div class="card">
-  <div class="card-head"><h3>کران‌های زمان‌بندی‌شده</h3></div>
-  <div class="tbl-wrap flush"><table class="tbl">
-    <thead><tr><th>کار</th><th>زمان‌بندی</th><th>آخرین اجرا</th><th>وضعیت</th><th></th></tr></thead>
-    <tbody>
-      <tr><td><b>پشتیبان‌گیری روزانه</b></td><td class="mono">0 3 * * *</td><td>۱۴۰۴/۰۶/۱۲ ۰۳:۰۰</td><td><span class="chip ok">موفق</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>ارسال خبرنامه هفتگی</b></td><td class="mono">0 10 * * 6</td><td>۱۴۰۴/۰۶/۰۷ ۱۰:۰۰</td><td><span class="chip ok">موفق</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>محاسبه سطح باشگاه مشتریان</b></td><td class="mono">0 1 * * *</td><td>۱۴۰۴/۰۶/۱۲ ۰۱:۰۰</td><td><span class="chip ok">موفق</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>تسویه خودکار فروشندگان</b></td><td class="mono">0 0 * * 6</td><td>۱۴۰۴/۰۶/۰۷ ۰۰:۰۰</td><td><span class="chip ok">موفق</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>همگام‌سازی موجودی انبار</b></td><td class="mono">*/15 * * * *</td><td>۱۴۰۴/۰۶/۱۲ ۱۳:۱۵</td><td><span class="chip ok">موفق</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>پاک‌سازی نشست‌های منقضی</b></td><td class="mono">0 * * * *</td><td>۱۴۰۴/۰۶/۱۲ ۱۳:۰۰</td><td><span class="chip ok">موفق</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>ارسال یادآوری سبد خرید</b></td><td class="mono">0 */6 * * *</td><td>۱۴۰۴/۰۶/۱۲ ۱۲:۰۰</td><td><span class="chip info">در حال اجرا</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td><b>به‌روزرسانی نرخ ارز</b></td><td class="mono">0 */2 * * *</td><td>۱۴۰۴/۰۶/۱۲ ۱۲:۰۰</td><td><span class="chip err">شکست‌خورده</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-    </tbody>
-  </table></div>
+<div class="grid-2">
+  <div class="card">
+    <div class="card-head"><h3>ظاهر چت‌بات</h3></div>
+    <div class="chat-avatar-row">
+      <div class="chat-avatar" id="supAvatarBox"><span class="dz-ic"><svg class="icon"><use href="#i-support"/></svg></span><img id="supAvatarImg" hidden alt=""></div>
+      <div style="flex:1;">
+        <button class="abtn sm" id="supAvatarPick"><svg class="icon"><use href="#i-image"/></svg> آپلود تصویر</button>
+        <button class="abtn sm ghost" id="supAvatarClear">حذف</button>
+        <div class="pt-sub" style="margin-top:6px;">تصویر گرد پروفایل دستیار (اختیاری)</div>
+        <input type="file" id="supAvatarInput" accept="image/*" hidden>
+      </div>
+    </div>
+    <div class="field"><label>عنوان چت‌بات</label><input id="sup_chat_title" placeholder="پشتیبانی اتم"></div>
+    <div class="field"><label>پیام خوش‌آمد</label><textarea id="sup_chat_welcome" rows="3"></textarea></div>
+    <div class="field"><label>رنگ اصلی چت‌بات</label><div class="color-field"><input type="color" id="sup_chat_color" value="#149B3E"><span id="sup_color_hex">#149B3E</span></div></div>
+    <label class="perm-toggle"><span class="pt-main">نمایش چت‌بات در سایت<span class="pt-sub">خاموش‌کردن، ویجت را از سایت حذف می‌کند</span></span><input type="checkbox" id="sup_chat_enabled" checked></label>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h3>هوش مصنوعی (API Key)</h3><span class="chip pend" id="supAiState">پیکربندی نشده</span></div>
+    <div class="field"><label>ارائه‌دهنده</label>
+      <select id="sup_ai_provider">
+        <option value="openai">OpenAI / سازگار با OpenAI</option>
+        <option value="anthropic">Anthropic (Claude)</option>
+      </select>
+    </div>
+    <div class="field"><label>آدرس پایه (Base URL)</label><input id="sup_ai_base_url" dir="ltr" placeholder="https://api.openai.com/v1"></div>
+    <div class="field"><label>نام مدل</label><input id="sup_ai_model" dir="ltr" placeholder="gpt-4o-mini"></div>
+    <div class="field"><label>کلید API</label>
+      <div class="mask-field"><input type="password" id="sup_ai_api_key" dir="ltr" placeholder="کلید را وارد کنید (••••)">
+      <button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div>
+    </div>
+    <div class="field"><label>دستور سیستمی (نقش دستیار)</label><textarea id="sup_ai_system_prompt" rows="5"></textarea></div>
+    <p class="pt-sub">💡 برای درگاه‌های سازگار با OpenAI (مثل سرویس‌های داخلی)، فقط کافی است Base URL و کلید را تغییر دهید.</p>
+  </div>
 </div>
 
-<div class="card">
-  <div class="card-head"><h3>صف کارها (Queue)</h3><span class="chip info">۶ کار در انتظار</span></div>
-  <div class="tbl-wrap flush"><table class="tbl">
-    <thead><tr><th>کار</th><th>صف</th><th>تلاش</th><th>وضعیت</th><th></th></tr></thead>
-    <tbody>
-      <tr><td>ارسال ایمیل فاکتور #۱۰۸۴</td><td class="mono">emails</td><td>۱/۳</td><td><span class="chip info">در حال پردازش</span></td><td><div class="act-icons"><button><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td>پردازش تصویر محصول ۲۱۰۹</td><td class="mono">media</td><td>۰/۳</td><td><span class="chip pend">در صف</span></td><td><div class="act-icons"><button><svg class="icon"><use href="#i-eye"/></svg></button></div></td></tr>
-      <tr><td>ارسال پیامک کد تخفیف</td><td class="mono">sms</td><td>۲/۳</td><td><span class="chip err">شکست — تلاش مجدد</span></td><td><div class="act-icons"><button title="اجرای مجدد"><svg class="icon"><use href="#i-refresh"/></svg></button></div></td></tr>
-    </tbody>
+<div class="section-bar" style="margin-top:4px;">
+  <div class="left"><div class="title"><span class="ic"><svg class="icon"><use href="#i-chat"/></svg></span>سؤالات متداول</div></div>
+  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> افزودن سؤال</button></div>
+</div>
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead><tr><th>سؤال</th><th>پاسخ</th><th>ترتیب</th><th>وضعیت</th><th></th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="card" style="margin-top:18px;">
+  <div class="card-head"><h3>گفتگوهای اخیر با هوش مصنوعی</h3></div>
+  <div class="tbl-wrap flush"><table class="tbl" id="supConvos">
+    <thead><tr><th>نشست</th><th>نقش</th><th>متن</th><th>زمان</th></tr></thead>
+    <tbody><tr><td colspan="4" style="text-align:center;padding:24px;color:var(--a-text-3)">گفتگویی ثبت نشده است.</td></tr></tbody>
   </table></div>
 </div>
 

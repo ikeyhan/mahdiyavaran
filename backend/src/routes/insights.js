@@ -5,10 +5,12 @@ const { requireAuth } = require('../auth');
 const { int } = require('../validate');
 
 const router = express.Router();
-router.use(requireAuth);
+// نکته: این روتر روی مسیر /api سوار می‌شود؛ به‌جای router.use سراسری،
+// احراز هویت را روی هر مسیر جداگانه اعمال می‌کنیم تا روترهای دیگرِ /api
+// (مثل /api/support عمومی) مسدود نشوند.
 
 // آمار داشبورد — از داده واقعی محاسبه می‌شود
-router.get('/stats', (req, res) => {
+router.get('/stats', requireAuth, (req, res) => {
   const revenue = db.prepare("SELECT COALESCE(SUM(amount),0) s FROM orders WHERE status IN ('delivered','shipping')").get().s;
   const cnt = (t) => db.prepare(`SELECT COUNT(*) c FROM ${t}`).get().c;
   res.json({
@@ -28,7 +30,7 @@ router.get('/stats', (req, res) => {
 });
 
 // لاگ فعالیت مدیران (رهگیری اقدامات)
-router.get('/activity', (req, res) => {
+router.get('/activity', requireAuth, (req, res) => {
   const limit = Math.min(int(req.query.limit, 50), 200);
   res.json({
     items: db.prepare('SELECT * FROM activity_log ORDER BY id DESC LIMIT ?').all(limit),
@@ -36,7 +38,7 @@ router.get('/activity', (req, res) => {
 });
 
 // ورودهای اخیر و تلاش‌های ناموفق (امنیت)
-router.get('/logins', (req, res) => {
+router.get('/logins', requireAuth, (req, res) => {
   res.json({
     items: db.prepare('SELECT username,ip,success,created_at FROM login_attempts ORDER BY id DESC LIMIT 50').all(),
   });
@@ -52,7 +54,7 @@ const TIERS = [
 function tierOf(total) {
   return TIERS.find(t => total >= t.min) || TIERS[TIERS.length - 1];
 }
-router.get('/loyalty', (req, res) => {
+router.get('/loyalty', requireAuth, (req, res) => {
   const custs = db.prepare('SELECT id,name,total_spent FROM customers ORDER BY total_spent DESC').all();
   const counts = { bronze: 0, silver: 0, gold: 0, platinum: 0 };
   const members = custs.map(c => {

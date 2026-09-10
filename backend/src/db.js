@@ -153,6 +153,23 @@ CREATE TABLE IF NOT EXISTS messages (
   status TEXT NOT NULL DEFAULT 'open',       -- open | pending | closed
   created_at TEXT DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS faqs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  question TEXT NOT NULL,
+  answer TEXT,
+  sort INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'active',      -- active | hidden
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  session TEXT,
+  role TEXT,                                  -- user | assistant
+  content TEXT,
+  created_at TEXT DEFAULT (datetime('now'))
+);
 `);
 
 module.exports = db;

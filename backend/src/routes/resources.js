@@ -140,4 +140,12 @@ const messages = makeResource({
   ],
 });
 
-module.exports = { products, orders, customers, categories, sellers, offers, comments, messages };
+const faqs = makeResource({
+  table: 'faqs', label: 'سؤال متداول', writeRoles: ['admin', 'editor', 'support'],
+  fields: [
+    { name: 'question', max: 300 }, { name: 'answer', max: 4000 },
+    { name: 'sort', type: 'int' }, { name: 'status', allowed: ['active', 'hidden'], def: 'active' },
+  ],
+});
+
+module.exports = { products, orders, customers, categories, sellers, offers, comments, messages, faqs };

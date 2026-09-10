@@ -152,12 +152,13 @@
       };
     });
   }
-  function bindResource(cfg) {
-    listTable = findListTable(); if (!listTable) return;
+  function bindResource(cfg, tableEl) {
+    listTable = tableEl || findListTable(); if (!listTable) return;
     listCfg = cfg;
-    // دکمهٔ افزودن در نوار بخش
-    var addBtn = main.querySelector(".section-bar .actions .abtn.primary");
-    if (addBtn && /افزودن|جدید|تعریف/.test(addBtn.textContent)) addBtn.onclick = function (e) { e.preventDefault(); openForm(cfg, null); };
+    // دکمهٔ افزودن: در میان همهٔ نوارها، دکمهٔ «افزودن/جدید/تعریف» را پیدا کن
+    var addBtn = [].slice.call(main.querySelectorAll(".section-bar .actions .abtn.primary"))
+      .filter(function (b) { return /افزودن|جدید|تعریف/.test(b.textContent); })[0];
+    if (addBtn) addBtn.onclick = function (e) { e.preventDefault(); openForm(cfg, null); };
     reload(cfg);
   }
 
@@ -282,6 +283,15 @@
         { key: "status", label: "وضعیت", type: "chip", map: S.msgStatus, form: "select", options: { open: "باز", pending: "در حال بررسی", closed: "بسته" } },
       ],
     },
+    faqs: {
+      resource: "faqs", title: "سؤال متداول",
+      columns: [
+        { key: "question", label: "سؤال", type: "text", form: "text", required: true },
+        { key: "answer", label: "پاسخ", type: "long", form: "textarea" },
+        { key: "sort", label: "ترتیب", type: "int", form: "number" },
+        { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], hidden: ["مخفی", "pend"] }, form: "select", options: { active: "فعال", hidden: "مخفی" } },
+      ],
+    },
   };
 
   /* ---------- فعال‌سازهای خاص ---------- */
@@ -387,6 +397,98 @@
     } catch (e) {}
   }
 
+  async function activateSupport() {
+    // بارگذاری تنظیمات چت‌بات و هوش مصنوعی
+    var avatarData = null, avatarFile = null;
+    try {
+      var d = await window.AtomAPI.settings(); var s = d.settings || {};
+      setVal("sup_chat_title", s.chat_title);
+      setVal("sup_chat_welcome", s.chat_welcome);
+      setVal("sup_chat_color", s.chat_color || "#149B3E");
+      setVal("sup_ai_provider", s.ai_provider || "openai");
+      setVal("sup_ai_base_url", s.ai_base_url);
+      setVal("sup_ai_model", s.ai_model);
+      setVal("sup_ai_api_key", s.ai_api_key);
+      setVal("sup_ai_system_prompt", s.ai_system_prompt);
+      var en = document.getElementById("sup_chat_enabled"); if (en) en.checked = (s.chat_enabled !== "0");
+      avatarData = s.chat_avatar || "";
+      var hex = document.getElementById("sup_color_hex"); if (hex) hex.textContent = s.chat_color || "#149B3E";
+      var img = document.getElementById("supAvatarImg"), dz = document.querySelector("#supAvatarBox .dz-ic");
+      if (avatarData && img) { img.src = avatarData; img.hidden = false; if (dz) dz.style.display = "none"; }
+      // وضعیت هوش مصنوعی
+      var aiChip = document.getElementById("supAiState");
+      if (aiChip) { if (s.ai_api_key) { aiChip.textContent = "فعال"; aiChip.className = "chip ok"; } else { aiChip.textContent = "پیکربندی نشده"; aiChip.className = "chip pend"; } }
+      setStat(0, s.ai_api_key ? "فعال" : "غیرفعال");
+    } catch (e) {}
+
+    // رنگ زنده
+    var color = document.getElementById("sup_chat_color");
+    if (color) color.oninput = function () { var h = document.getElementById("sup_color_hex"); if (h) h.textContent = color.value; };
+
+    // آواتار
+    var pick = document.getElementById("supAvatarPick"), inp = document.getElementById("supAvatarInput");
+    if (pick && inp) {
+      pick.onclick = function () { inp.click(); };
+      inp.onchange = function () {
+        if (!inp.files[0]) return; avatarFile = inp.files[0];
+        var rd = new FileReader(); rd.onload = function () {
+          var img = document.getElementById("supAvatarImg"), dz = document.querySelector("#supAvatarBox .dz-ic");
+          if (img) { img.src = rd.result; img.hidden = false; } if (dz) dz.style.display = "none"; avatarData = rd.result;
+        }; rd.readAsDataURL(avatarFile);
+      };
+    }
+    var clr = document.getElementById("supAvatarClear");
+    if (clr) clr.onclick = function () { avatarFile = null; avatarData = ""; var img = document.getElementById("supAvatarImg"), dz = document.querySelector("#supAvatarBox .dz-ic"); if (img) img.hidden = true; if (dz) dz.style.display = ""; };
+
+    // ذخیره
+    var saveBtn = document.querySelector("[data-save-support]");
+    if (saveBtn) saveBtn.onclick = async function () {
+      var out = {
+        chat_title: val("sup_chat_title"), chat_welcome: val("sup_chat_welcome"),
+        chat_color: val("sup_chat_color"), chat_enabled: document.getElementById("sup_chat_enabled").checked ? "1" : "0",
+        ai_provider: val("sup_ai_provider"), ai_base_url: val("sup_ai_base_url"),
+        ai_model: val("sup_ai_model"), ai_system_prompt: val("sup_ai_system_prompt"),
+      };
+      var key = val("sup_ai_api_key"); if (key) out.ai_api_key = key;
+      try {
+        if (avatarFile) { var up = await window.AtomAPI.upload(avatarFile); out.chat_avatar = up.url; }
+        else out.chat_avatar = avatarData || "";
+        await window.AtomAPI.saveSettings(out);
+        toast("تنظیمات چت‌بات ذخیره شد ✓");
+        var aiChip = document.getElementById("supAiState");
+        if (aiChip && (key || (out.ai_api_key))) { aiChip.textContent = "فعال"; aiChip.className = "chip ok"; }
+      } catch (e) { toast(e.message, true); }
+    };
+
+    // «مشاهده در سایت»
+    var vw = document.querySelector("[data-open-widget]");
+    if (vw) vw.onclick = function (e) { e.preventDefault(); window.open("../index.html", "_blank"); };
+
+    // جدول سؤالات متداول (اولین جدول غیر-کارت)
+    bindResource(CONFIG.faqs, findListTable());
+
+    // گفتگوهای اخیر
+    try {
+      var r = await fetch("/api/support/conversations", { headers: { Authorization: "Bearer " + window.AtomAPI.token() } });
+      var cd = await r.json();
+      var tb = document.querySelector("#supConvos tbody");
+      if (tb && cd.items && cd.items.length) {
+        tb.innerHTML = cd.items.slice(0, 20).map(function (m) {
+          return "<tr><td class='mono'>" + esc((m.session || "").slice(0, 10)) + "</td>" +
+            "<td>" + (m.role === "user" ? chip("کاربر", "info") : chip("دستیار", "ok")) + "</td>" +
+            "<td class='preview' style='max-width:360px'>" + esc((m.content || "").slice(0, 90)) + "</td>" +
+            "<td>" + fa((m.created_at || "").replace("T", " ")) + "</td></tr>";
+        }).join("");
+        setStat(2, fa(cd.items.filter(function (m) { return m.role === "user"; }).length));
+      }
+    } catch (e) {}
+
+    // آمار سؤالات
+    try { var fd = await window.AtomAPI.faqs.list(); setStat(1, fa((fd.items || []).length)); } catch (e) {}
+  }
+  function val(id) { var el = document.getElementById(id); return el ? el.value : ""; }
+  function setVal(id, v) { var el = document.getElementById(id); if (el && v != null) el.value = v; }
+
   /* ---------- اجرا ---------- */
   (async function run() {
     var online = false;
@@ -404,5 +506,6 @@
     if (page === "security") return activateSecurity();
     if (page === "settings") return activateSettings();
     if (page === "flags") return activateFlags();
+    if (page === "support") return activateSupport();
   })();
 })();

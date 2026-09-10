@@ -83,6 +83,7 @@
     offers: crud("/offers"),
     comments: crud("/comments"),
     messages: crud("/messages"),
+    faqs: crud("/faqs"),
     resource: function (name) { return crud("/" + name); },
 
     articlesPublic: function () { return req("/articles/public"); },
