@@ -926,3 +926,28 @@ html[data-theme="dark"] .hero::before{ display:none; }
 .cat-cover.g6 .cover-ic{color:#9A6A0E;}
 .cat-cover.g5 .cover-ic{color:#5B3FA0;}
 .cat-cover.g2 .cover-ic{color:#2A5599;}
+
+/* ===== Real product photos (اتم ۳۱۳) =====
+   Drop the 5 .jpg files into assets/img/products/ (hero one anywhere under assets/img/products/).
+   The original SVG illustration is kept as a fallback layer, so slots never look broken
+   before the photos are added. Photo layer sits on top and fully covers it once present. */
+.hv-main .thumb.ph-photo{
+  background-image:url("../img/products/atra-leather-set.jpg"), url("../img/hero.svg");
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.prod-thumb .ph.ph-photo-kilim{
+  background-image:url("../img/products/kilim-rug.jpg"), url("../img/products/p1-bag.svg");
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.prod-thumb .ph.ph-photo-bag{
+  background-image:url("../img/products/leather-bag-roya.jpg"), url("../img/products/p2-rug.svg");
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.prod-thumb .ph.ph-photo-brand{
+  background-image:url("../img/products/brand-identity.jpg"), url("../img/products/p3-service.svg");
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.prod-thumb .ph.ph-photo-tea{
+  background-image:url("../img/products/ceramic-tea-set.jpg"), url("../img/products/p4-tea.svg");
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
