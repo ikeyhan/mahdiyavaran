@@ -1022,3 +1022,9 @@ html[data-theme="dark"] .hero::before{ display:none; }
 .cat-mega-panel.swap{ animation:megaSubsIn .32s ease; }
 @media (max-width:980px){ .cat-mega{ display:none!important; } }
 @media (prefers-reduced-motion:reduce){ .cat-mega{ transition:opacity .12s; transform:none; } .cat-mega-panel.swap{ animation:none; } }
+
+/* ===== Sample seller avatars (photos) — اتم ۳۱۳ ===== */
+.fill.sav-1{ background:#eceee9 url("../img/sellers/seller-1.jpg") center/cover no-repeat; }
+.fill.sav-2{ background:#eceee9 url("../img/sellers/seller-2.jpg") center/cover no-repeat; }
+.fill.sav-3{ background:#eceee9 url("../img/sellers/seller-3.jpg") center/cover no-repeat; }
+.fill.sav-4{ background:#eceee9 url("../img/sellers/seller-4.jpg") center/cover no-repeat; }
