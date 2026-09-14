@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سفارش‌ها | پنل مدیریت اتم ۳۱۳</title>
+<title>اسلاید تصویری | پنل مدیریت اتم ۳۱۳</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -358,7 +358,7 @@
     <a href="accounting.html"><span class="nav-ic"><svg class="icon"><use href="#i-calculator"/></svg></span><span class="nav-tx">حسابداری</span></a>
     <div class="admin-nav-label">فروشگاه</div>
     <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
-    <a href="orders.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span><span class="cnt">۹۲</span></a>
+    <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span><span class="cnt">۹۲</span></a>
     <a href="customers.html"><span class="nav-ic"><svg class="icon"><use href="#i-users"/></svg></span><span class="nav-tx">مشتریان</span></a>
     <a href="loyalty.html"><span class="nav-ic"><svg class="icon"><use href="#i-medal"/></svg></span><span class="nav-tx">باشگاه مشتریان</span></a>
     <a href="sellers.html"><span class="nav-ic"><svg class="icon"><use href="#i-store"/></svg></span><span class="nav-tx">فروشندگان</span></a>
@@ -366,7 +366,7 @@
     <a href="offers.html"><span class="nav-ic"><svg class="icon"><use href="#i-percent"/></svg></span><span class="nav-tx">تخفیف‌ها</span></a>
     <div class="admin-nav-label">محتوا و بازاریابی</div>
     <a href="content.html"><span class="nav-ic"><svg class="icon"><use href="#i-layers"/></svg></span><span class="nav-tx">مدیریت محتوا</span></a>
-    <a href="slideshow.html"><span class="nav-ic"><svg class="icon"><use href="#i-image"/></svg></span><span class="nav-tx">اسلاید تصویری</span></a>
+    <a href="slideshow.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-image"/></svg></span><span class="nav-tx">اسلاید تصویری</span></a>
     <a href="media.html"><span class="nav-ic"><svg class="icon"><use href="#i-image"/></svg></span><span class="nav-tx">رسانه و فایل‌ها</span></a>
     <a href="marketing.html"><span class="nav-ic"><svg class="icon"><use href="#i-megaphone"/></svg></span><span class="nav-tx">بازاریابی و کمپین</span></a>
     <a href="blog.html"><span class="nav-ic"><svg class="icon"><use href="#i-blog"/></svg></span><span class="nav-tx">بلاگ</span></a>
@@ -393,13 +393,13 @@
     <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
   </nav>
 </aside>
-  <main class="admin-main" data-page="orders">
+  <main class="admin-main" data-page="slideshow">
     <div class="admin-topbar">
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>سفارش‌ها</h1>
-      <div class="crumb">پنل مدیریت · مدیریت سفارش‌ها</div>
+      <h1>اسلاید تصویری</h1>
+      <div class="crumb">پنل مدیریت · بنر بخش اولیه</div>
     </div>
   </div>
   <div class="admin-user">
@@ -411,107 +411,19 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-cart"/></svg></span>سفارش‌ها</div>
-    <div class="tabs"><button class="active">همه</button><button>در انتظار</button><button>در حال ارسال</button><button>تحویل شده</button><button>مرجوع</button></div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-image"/></svg></span>اسلایدهای بخش اولیهٔ سایت</div>
+    
   </div>
-  <div class="actions"><button class="abtn"><svg class="icon"><use href="#i-external"/></svg> خروجی Excel</button></div>
+  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> افزودن اسلاید</button></div>
 </div>
-
-<div class="filter-row">
-  <div class="field"><input type="text" placeholder="جستجوی کد سفارش یا مشتری..."></div>
-  <div class="field"><input type="date"></div>
-  <div class="field"><select><option>همه فروشندگان</option></select></div>
-  <button class="abtn">اعمال</button>
-</div>
-
+<p style="margin:-4px 0 18px;color:var(--a-text-3);font-size:.88rem;line-height:1.9">
+تصویر، عنوان، برچسب، زیرعنوان و دکمهٔ هر اسلاید صفحهٔ اصلی سایت را از اینجا مدیریت کنید؛ تغییرات بلافاصله روی سایت اعمال می‌شود. ترتیب نمایش با فیلد «ترتیب» تعیین می‌شود.</p>
 <div class="tbl-wrap">
 <table class="tbl">
-  <thead><tr><th>کد</th><th>مشتری</th><th>محصول</th><th>فروشنده</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th></th></tr></thead>
-  <tbody>
-    <tr>
-  <td><b>#۱۰۸۴</b></td>
-  <td>سارا محمدی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p1-bag.svg');"></span><b class="sm">کیف چرم رویا</b></div></td>
-  <td>آترا چرم</td>
-  <td>۲٬۴۵۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۱۲</td>
-  <td><span class="chip ok">تحویل شد</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۸۳</b></td>
-  <td>علی رضایی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p6-shoes.svg');"></span><b class="sm">کفش چرم کلاسیک</b></div></td>
-  <td>چرم گالری</td>
-  <td>۱٬۶۵۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۱۲</td>
-  <td><span class="chip pend">در حال ارسال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۸۲</b></td>
-  <td>نگین کریمی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p2-rug.svg');"></span><b class="sm">گلیم دستباف کرمان</b></div></td>
-  <td>هنرکده پارسیان</td>
-  <td>۱٬۸۹۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۱۱</td>
-  <td><span class="chip ok">تحویل شد</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۸۱</b></td>
-  <td>محمد احمدی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p2-rug.svg');"></span><b class="sm">فرش ماشینی ۶ متری</b></div></td>
-  <td>فرش ایران</td>
-  <td>۳٬۹۰۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۱۱</td>
-  <td><span class="chip err">مرجوع</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۸۰</b></td>
-  <td>مریم حسینی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p4-tea.svg');"></span><b class="sm">سرویس چای‌خوری</b></div></td>
-  <td>سفال سبز</td>
-  <td>۱٬۲۴۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۱۰</td>
-  <td><span class="chip ok">تحویل شد</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۷۹</b></td>
-  <td>رضا موسوی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p3-service.svg');"></span><b class="sm">طراحی لوگو حرفه‌ای</b></div></td>
-  <td>استودیو نگاره</td>
-  <td>۹۵۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۱۰</td>
-  <td><span class="chip info">در حال بررسی</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۷۸</b></td>
-  <td>زهرا کریمی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p7-scarf.svg');"></span><b class="sm">شال ابریشم اصفهان</b></div></td>
-  <td>حریر نقش</td>
-  <td>۷۲۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۰۹</td>
-  <td><span class="chip ok">تحویل شد</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td><b>#۱۰۷۷</b></td>
-  <td>حسین قاسمی</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p5-spice.svg');"></span><b class="sm">بسته ادویه‌جات</b></div></td>
-  <td>باغ طبیعت</td>
-  <td>۳۸۰٬۰۰۰ ت</td>
-  <td>۱۴۰۴/۰۶/۰۹</td>
-  <td><span class="chip pend">در حال ارسال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button></div></td>
-</tr>
-  </tbody>
+  <thead><tr><th>#</th><th>تصویر</th><th>عنوان</th><th>برچسب</th><th>زیرعنوان</th><th>دکمه</th><th>لینک</th><th>ترتیب</th><th>وضعیت</th><th></th></tr></thead>
+  <tbody><tr><td colspan="10" style="text-align:center;padding:30px;color:var(--a-text-3)">برای مشاهدهٔ اسلایدها، بک‌اند باید در دسترس باشد…</td></tr></tbody>
 </table>
 </div>
-<div class="pgn"><a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">۴</a></div>
 
   </main>
 </div>

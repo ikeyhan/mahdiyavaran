@@ -298,10 +298,24 @@
 
 /* ===== Hero banner slider (اتم ۳۱۳) ===== */
 (function(){
-  function initSlider(){
+  function sesc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function slideHTML(s){
+    var eyebrow = s.eyebrow ? '<span class="hs-eyebrow"><svg class="icon"><use href="#icon-badge-check"/></svg> '+sesc(s.eyebrow)+'</span>' : '';
+    var sub = s.subtitle ? '<p class="hs-sub">'+sesc(s.subtitle)+'</p>' : '';
+    var cta = s.cta_label ? '<div class="hs-actions"><a href="'+sesc(s.cta_link||'products.html')+'" class="btn btn-primary btn-lg">'+sesc(s.cta_label)+' <svg class="icon"><use href="#icon-arrow-up-left"/></svg></a></div>' : '';
+    return '<div class="hs-slide"><img src="'+sesc(s.image)+'" alt="'+sesc(s.title)+'" loading="lazy">'+
+      '<div class="hs-cap"><div class="hs-inner">'+eyebrow+'<h2 class="hs-title">'+sesc(s.title)+'</h2>'+sub+cta+'</div></div></div>';
+  }
+  async function initSlider(){
     var root = document.querySelector("[data-slider]");
     if(!root) return;
     var track = root.querySelector("[data-slider-track]");
+    // بارگذاری اسلایدها از بک‌اند؛ در صورت نبود، اسلایدهای ثابت HTML می‌مانند
+    try {
+      var c = new AbortController(); var to = setTimeout(function(){ c.abort(); }, 1500);
+      var rs = await fetch("/api/public/slides", { signal:c.signal }); clearTimeout(to);
+      if(rs.ok){ var d = await rs.json(); if(d && d.items && d.items.length){ track.innerHTML = d.items.map(slideHTML).join(""); } }
+    } catch(e){ /* آفلاین */ }
     var slides = Array.prototype.slice.call(root.querySelectorAll(".hs-slide"));
     var dotsWrap = root.querySelector("[data-slider-dots]");
     var prevBtn = root.querySelector("[data-slider-prev]");

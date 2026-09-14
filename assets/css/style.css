@@ -1028,3 +1028,23 @@ html[data-theme="dark"] .hero::before{ display:none; }
 .fill.sav-2{ background:#eceee9 url("../img/sellers/seller-2.jpg") center/cover no-repeat; }
 .fill.sav-3{ background:#eceee9 url("../img/sellers/seller-3.jpg") center/cover no-repeat; }
 .fill.sav-4{ background:#eceee9 url("../img/sellers/seller-4.jpg") center/cover no-repeat; }
+
+/* ===== Auth error box ===== */
+.auth-err{ background:#FDECEC; color:#B42318; border:1px solid #F5C6C6; border-radius:12px; padding:11px 14px; font-size:.85rem; font-weight:600; margin-bottom:16px; }
+:root:not([data-theme="light"]) .auth-err, :root[data-theme="dark"] .auth-err{ background:rgba(180,35,24,.14); border-color:rgba(180,35,24,.4); color:#ff9b8f; }
+
+/* ===== Seller product modal (پنل فروشندگی) ===== */
+.sd-modal{ position:fixed; inset:0; z-index:1000; background:rgba(10,20,14,.5); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; padding:20px; }
+.sd-card{ width:100%; max-width:560px; max-height:92vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:20px; box-shadow:0 40px 80px -30px rgba(0,0,0,.5); }
+.sd-head{ display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--surface); z-index:1; }
+.sd-head h3{ margin:0; font-size:1.05rem; font-weight:800; }
+.sd-body{ padding:20px 22px; display:flex; flex-direction:column; gap:14px; }
+.sd-field{ display:flex; flex-direction:column; gap:6px; }
+.sd-field label{ font-size:.83rem; font-weight:700; color:var(--text-2); }
+.sd-field input, .sd-field select, .sd-field textarea{ width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:12px; background:var(--surface-2); font:inherit; color:var(--text-1); }
+.sd-field textarea{ min-height:80px; resize:vertical; }
+.sd-img{ display:flex; gap:14px; align-items:center; }
+.sd-prev{ width:96px; height:72px; border-radius:12px; border:1px solid var(--border); background:var(--surface-2) center/cover no-repeat; flex-shrink:0; }
+.sd-imgcol{ flex:1; }
+.sd-foot{ display:flex; gap:10px; justify-content:flex-start; padding:16px 22px; border-top:1px solid var(--border); position:sticky; bottom:0; background:var(--surface); }
+#myProdList .prod-manage-row .th{ width:52px; height:52px; border-radius:12px; background:var(--surface-2); flex-shrink:0; }

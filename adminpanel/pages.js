@@ -16,6 +16,7 @@
   function money(n) { n = Math.round(+n || 0); return fa(String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "٬")) + " ت"; }
   function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
   function icon(n) { return '<svg class="icon"><use href="#i-' + n + '"/></svg>'; }
+  function imgsrc(v) { v = String(v == null ? "" : v); return /^assets\//.test(v) ? "../" + v : v; }
   function chip(text, cls) { return '<span class="chip ' + (cls || "info") + '">' + esc(text) + "</span>"; }
   function initialBox(name, grad) {
     return '<span class="th-img av" style="background:linear-gradient(' + (grad || "135deg,#22B14C,#0E7A38") + ');">' + esc((name || "?")[0]) + "</span>";
@@ -45,6 +46,7 @@
       case "sub": return '<div class="row-th">' + initialBox(row[col.key], col.grad) +
         "<div><b>" + esc(v) + "</b><span>" + esc(row[col.sub] || "") + "</span></div></div>";
       case "long": return '<span class="preview" style="max-width:320px;display:inline-block">' + esc(String(v || "").slice(0, 90)) + "</span>";
+      case "img": return v ? '<span class="th-img" style="background-image:url(\'' + esc(imgsrc(v)) + '\');background-size:cover;background-position:center"></span>' : '<span class="th-img">' + icon("image") + "</span>";
       default: return esc(v == null ? "" : v);
     }
   }
@@ -81,9 +83,34 @@
       }
       if (c.form === "textarea")
         return field(c.label, '<textarea data-f="' + c.key + '">' + esc(val) + "</textarea>");
+      if (c.form === "image")
+        return field(c.label,
+          '<div class="img-field" data-imgfield>' +
+            '<div class="img-prev"' + (val ? ' style="background-image:url(\'' + esc(imgsrc(val)) + '\')"' : "") + ">" + (val ? "" : icon("image")) + "</div>" +
+            '<div class="img-col">' +
+              '<input type="text" data-f="' + c.key + '" value="' + esc(val) + '" placeholder="آدرس تصویر یا آپلود کنید">' +
+              '<button type="button" class="abtn sm" data-imgpick>' + icon("image") + " آپلود تصویر</button>" +
+              '<input type="file" accept="image/*" hidden data-imginput>' +
+            "</div>" +
+          "</div>");
       var t = c.form === "number" ? "number" : "text";
       return field(c.label, '<input type="' + t + '" data-f="' + c.key + '" value="' + esc(val) + '">');
     }).join("");
+    // فعال‌سازی فیلدهای تصویر (پیش‌نمایش + آپلود)
+    body.querySelectorAll("[data-imgfield]").forEach(function (w) {
+      var input = w.querySelector("[data-f]"), file = w.querySelector("[data-imginput]"),
+          pick = w.querySelector("[data-imgpick]"), prev = w.querySelector(".img-prev");
+      function setPrev(u) { prev.style.backgroundImage = u ? "url('" + imgsrc(u) + "')" : ""; prev.innerHTML = u ? "" : icon("image"); }
+      input.addEventListener("input", function () { setPrev(input.value.trim()); });
+      pick.onclick = function () { file.click(); };
+      file.onchange = async function () {
+        if (!file.files[0]) return;
+        var orig = pick.innerHTML; pick.textContent = "در حال آپلود…"; pick.disabled = true;
+        try { var up = await window.AtomAPI.upload(file.files[0]); input.value = up.url; setPrev(up.url); toast("تصویر آپلود شد ✓"); }
+        catch (e) { toast(e.message || "خطا در آپلود تصویر", true); }
+        pick.innerHTML = orig; pick.disabled = false;
+      };
+    });
     modal.querySelector("[data-save]").onclick = function () { submitForm(cfg, editing ? row.id : null); };
     modal.hidden = false;
     var first = body.querySelector("input,select,textarea"); if (first) first.focus();
@@ -290,6 +317,29 @@
         { key: "answer", label: "پاسخ", type: "long", form: "textarea" },
         { key: "sort", label: "ترتیب", type: "int", form: "number" },
         { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], hidden: ["مخفی", "pend"] }, form: "select", options: { active: "فعال", hidden: "مخفی" } },
+      ],
+    },
+    slideshow: {
+      resource: "slides", title: "اسلاید", query: "limit=50",
+      columns: [
+        { key: "id", label: "#", type: "id" },
+        { key: "image", label: "تصویر", type: "img", form: "image" },
+        { key: "title", label: "عنوان", type: "text", form: "text", required: true },
+        { key: "eyebrow", label: "برچسب", type: "text", form: "text" },
+        { key: "subtitle", label: "زیرعنوان", type: "long", form: "textarea" },
+        { key: "cta_label", label: "متن دکمه", type: "text", form: "text" },
+        { key: "cta_link", label: "لینک دکمه", type: "mono", form: "text" },
+        { key: "sort", label: "ترتیب", type: "int", form: "number" },
+        { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], hidden: ["مخفی", "pend"] }, form: "select", options: { active: "فعال", hidden: "مخفی" } },
+      ],
+    },
+    banned: {
+      resource: "bannedWords", title: "کلمهٔ ممنوعه", query: "limit=200",
+      columns: [
+        { key: "word", label: "کلمه", type: "text", form: "text", required: true },
+        { key: "note", label: "توضیح", type: "text", form: "text" },
+        { key: "created_at", label: "تاریخ", type: "date" },
+        { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], off: ["غیرفعال", "pend"] }, form: "select", options: { active: "فعال", off: "غیرفعال" } },
       ],
     },
   };

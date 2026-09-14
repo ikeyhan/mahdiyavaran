@@ -184,24 +184,34 @@
 
 <div class="auth-wrap">
   <div class="auth-card reveal">
-    <a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" class="mark" alt=""><b style="font-size:1.1rem;">اتم</b></a>
+    <a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" class="mark" alt=""><b style="font-size:1.1rem;">اتم ۳۱۳</b></a>
     <div class="auth-tabs" data-auth-tabs>
       <button class="active" data-auth="login">ورود</button>
-      <button data-auth="signup">ثبت‌نام</button>
+      <button data-auth="signup">ثبت‌نام فروشنده</button>
     </div>
 
+    <div class="auth-err" id="authErr" hidden></div>
+
     <div data-auth-panel="login">
-      <div class="field" style="margin-bottom:16px;"><label>شماره موبایل</label><input type="text" placeholder="۰۹xxxxxxxxx"></div>
-      <div class="field" style="margin-bottom:8px;"><label>رمز عبور</label><input type="password" placeholder="••••••••"></div>
+      <div class="field" style="margin-bottom:16px;"><label>نام کاربری</label><input type="text" id="loginUser" placeholder="نام کاربری" autocomplete="username"></div>
+      <div class="field" style="margin-bottom:8px;"><label>رمز عبور</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
       <div class="flex between" style="margin-bottom:18px;"><label class="checkline" style="padding:0;"><input type="checkbox"> مرا به خاطر بسپار</label><a href="#" class="faint" style="font-size:.8rem;">فراموشی رمز؟</a></div>
-      <a href="dashboard.html" class="btn btn-primary btn-block btn-lg">ورود به حساب</a>
+      <button type="button" id="loginBtn" class="btn btn-primary btn-block btn-lg">ورود به حساب</button>
+      <p class="faint center" style="font-size:.78rem; margin-top:12px;">حساب نمونهٔ فروشنده: <b style="direction:ltr;display:inline-block">atra / atra1234</b></p>
     </div>
 
     <div data-auth-panel="signup" hidden>
-      <div class="field" style="margin-bottom:16px;"><label>نام و نام‌خانوادگی</label><input type="text" placeholder="نام شما"></div>
-      <div class="field" style="margin-bottom:16px;"><label>شماره موبایل</label><input type="text" placeholder="۰۹xxxxxxxxx"></div>
-      <div class="field" style="margin-bottom:18px;"><label>رمز عبور</label><input type="password" placeholder="••••••••"></div>
-      <a href="dashboard.html" class="btn btn-primary btn-block btn-lg">ساخت حساب کاربری</a>
+      <p class="faint" style="font-size:.82rem; margin-bottom:14px; line-height:1.8;">با ثبت‌نام، فروشگاه شما ساخته می‌شود و می‌توانید بلافاصله محصولاتتان را بارگذاری کنید.</p>
+      <div class="field" style="margin-bottom:14px;"><label>نام فروشگاه</label><input type="text" id="suStore" placeholder="مثلاً گل‌سرام"></div>
+      <div class="field" style="margin-bottom:14px;"><label>نام و نام‌خانوادگی</label><input type="text" id="suName" placeholder="نام شما"></div>
+      <div class="field" style="margin-bottom:14px;"><label>نام کاربری (لاتین)</label><input type="text" id="suUser" placeholder="username" autocomplete="username" style="direction:ltr;text-align:left;"></div>
+      <div class="flex gap-8" style="margin-bottom:14px;">
+        <div class="field" style="flex:1;margin:0;"><label>شهر</label><input type="text" id="suCity" placeholder="شهر"></div>
+        <div class="field" style="flex:1;margin:0;"><label>دستهٔ کاری</label><input type="text" id="suCat" placeholder="مثلاً سرامیک"></div>
+      </div>
+      <div class="field" style="margin-bottom:14px;"><label>شماره موبایل</label><input type="text" id="suPhone" placeholder="۰۹xxxxxxxxx"></div>
+      <div class="field" style="margin-bottom:18px;"><label>رمز عبور</label><input type="password" id="suPass" placeholder="حداقل ۶ کاراکتر" autocomplete="new-password"></div>
+      <button type="button" id="signupBtn" class="btn btn-primary btn-block btn-lg">ثبت‌نام و ساخت فروشگاه</button>
     </div>
 
     <div class="auth-sep">یا ادامه با</div>
@@ -260,7 +270,44 @@
 </footer>
 
 <button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
+<script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
+<script>
+  // اگر فروشندهٔ واردشده روی صفحهٔ ورود آمد، به پنل خودش برود
+  if (window.SiteAuth && SiteAuth.isSeller()) location.replace('seller-dashboard.html');
+
+  function showErr(msg){ var e=document.getElementById('authErr'); if(!e) return; e.textContent=msg; e.hidden=false; }
+  function hideErr(){ var e=document.getElementById('authErr'); if(e) e.hidden=true; }
+  function afterAuth(user){ location.href = (user && user.role==='seller') ? 'seller-dashboard.html' : 'dashboard.html'; }
+
+  var loginBtn=document.getElementById('loginBtn');
+  if(loginBtn) loginBtn.addEventListener('click', async function(){
+    hideErr();
+    var u=document.getElementById('loginUser').value.trim(), p=document.getElementById('loginPass').value;
+    if(!u||!p){ showErr('نام کاربری و رمز عبور را وارد کنید.'); return; }
+    loginBtn.disabled=true; var t=loginBtn.textContent; loginBtn.textContent='در حال ورود…';
+    try { var user=await SiteAuth.login(u,p); afterAuth(user); }
+    catch(e){ showErr(e.message||'ورود ناموفق بود.'); loginBtn.disabled=false; loginBtn.textContent=t; }
+  });
+
+  var signupBtn=document.getElementById('signupBtn');
+  if(signupBtn) signupBtn.addEventListener('click', async function(){
+    hideErr();
+    var payload={
+      seller_name:document.getElementById('suStore').value.trim(),
+      name:document.getElementById('suName').value.trim(),
+      username:document.getElementById('suUser').value.trim(),
+      city:document.getElementById('suCity').value.trim(),
+      category:document.getElementById('suCat').value.trim(),
+      phone:document.getElementById('suPhone').value.trim(),
+      password:document.getElementById('suPass').value,
+    };
+    if(!payload.seller_name||!payload.username||!payload.password){ showErr('نام فروشگاه، نام کاربری و رمز عبور الزامی است.'); return; }
+    signupBtn.disabled=true; var t=signupBtn.textContent; signupBtn.textContent='در حال ثبت‌نام…';
+    try { var user=await SiteAuth.register(payload); afterAuth(user); }
+    catch(e){ showErr(e.message||'ثبت‌نام ناموفق بود.'); signupBtn.disabled=false; signupBtn.textContent=t; }
+  });
+</script>
 <script>
   var b=document.getElementById('toTopBtn');
   window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });

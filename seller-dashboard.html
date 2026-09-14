@@ -222,8 +222,8 @@
 
         <div data-dash-panel="overview">
           <div class="flex between" style="margin-bottom:20px; flex-wrap:wrap; gap:12px;">
-            <h1 class="h-2">پنل فروشندگی — آترا چرم</h1>
-            <button class="btn btn-primary"><svg class="icon"><use href="#icon-plus"/></svg> افزودن محصول جدید</button>
+            <h1 class="h-2" id="shopTitle">پنل فروشندگی</h1>
+            <button class="btn btn-primary" id="addProdBtn1"><svg class="icon"><use href="#icon-plus"/></svg> افزودن محصول جدید</button>
           </div>
 
           <div class="dash-cards reveal">
@@ -260,8 +260,8 @@
         </div>
 
         <div data-dash-panel="products" hidden>
-          <div class="flex between" style="margin-bottom:20px;"><h1 class="h-2">مدیریت محصولات</h1><button class="btn btn-primary"><svg class="icon"><use href="#icon-plus"/></svg> محصول جدید</button></div>
-          <div class="panel reveal">
+          <div class="flex between" style="margin-bottom:20px;"><h1 class="h-2">مدیریت محصولات</h1><button class="btn btn-primary" id="addProdBtn2"><svg class="icon"><use href="#icon-plus"/></svg> محصول جدید</button></div>
+          <div class="panel reveal" id="myProdList">
             <div class="prod-manage-row"><div class="th ph-2"></div><div class="info"><b style="font-size:.87rem;">کیف چرم طبیعی دست‌دوز مدل رویا</b><div class="faint" style="font-size:.76rem;">موجودی: ۲۴ عدد · ۲,۴۵۰,۰۰۰ ت</div></div><span class="status-chip ok">فعال</span><div class="actions"><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-edit"/></svg></button><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-trash"/></svg></button></div></div>
             <div class="prod-manage-row"><div class="th ph-1"></div><div class="info"><b style="font-size:.87rem;">کفش چرم دست‌دوز مردانه کلاسیک</b><div class="faint" style="font-size:.76rem;">موجودی: ۹ عدد · ۱,۶۵۰,۰۰۰ ت</div></div><span class="status-chip pending">موجودی کم</span><div class="actions"><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-edit"/></svg></button><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-trash"/></svg></button></div></div>
             <div class="prod-manage-row"><div class="th ph-6"></div><div class="info"><b style="font-size:.87rem;">کمربند چرم طبیعی کلاسیک</b><div class="faint" style="font-size:.76rem;">موجودی: ۴۰ عدد · ۶۸۰,۰۰۰ ت</div></div><span class="status-chip ok">فعال</span><div class="actions"><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-edit"/></svg></button><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-trash"/></svg></button></div></div>
@@ -318,13 +318,13 @@
           <h1 class="h-2" style="margin-bottom:20px;">تنظیمات فروشگاه</h1>
           <div class="panel reveal">
             <div class="grid grid-2">
-              <div class="field"><label>نام فروشگاه</label><input type="text" value="آترا چرم"></div>
-              <div class="field"><label>شماره تماس</label><input type="text" value="۰۹۱۲۱۱۱۲۲۳۳"></div>
-              <div class="field"><label>دسته‌بندی اصلی</label><select><option>پوشاک و چرم</option><option>صنایع‌دستی</option></select></div>
-              <div class="field"><label>شماره شبا</label><input type="text" value="IR-XXXXXXXXXXXXXXXXXXXXXX"></div>
+              <div class="field"><label>نام فروشگاه</label><input type="text" id="shopName" value=""></div>
+              <div class="field"><label>شماره تماس</label><input type="text" id="shopPhone" value=""></div>
+              <div class="field"><label>دسته‌بندی اصلی</label><input type="text" id="shopCat" placeholder="مثلاً چرم و پوشاک"></div>
+              <div class="field"><label>شهر</label><input type="text" id="shopCity" value=""></div>
             </div>
-            <div class="field" style="margin-top:20px;"><label>درباره فروشگاه</label><textarea>آترا چرم از سال ۱۴۰۰ محصولات چرم طبیعی و دست‌دوز عرضه می‌کند.</textarea></div>
-            <div class="flex gap-12" style="margin-top:22px;"><button class="btn btn-primary">ذخیره تغییرات</button><button class="btn btn-ghost">انصراف</button></div>
+            <div class="field" style="margin-top:20px;"><label>درباره فروشگاه</label><textarea id="shopBio"></textarea></div>
+            <div class="flex gap-12" style="margin-top:22px;"><button class="btn btn-primary" id="shopSaveBtn">ذخیره تغییرات</button><button class="btn btn-ghost" id="shopLogout">خروج از حساب</button></div>
           </div>
         </div>
 
@@ -378,6 +378,7 @@
   </div>
 </footer>
 
+<script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
   document.querySelectorAll('[data-dash-tab]').forEach(function(link){
@@ -390,6 +391,114 @@
       window.scrollTo({top:0,behavior:'smooth'});
     });
   });
+</script>
+<script>
+/* ===== پنل فروشندگی واقعی — محصولات و پروفایل ===== */
+(async function(){
+  if(!window.SiteAuth) return;
+  var online = await SiteAuth.available();
+  if(!online) return; // میزبانی استاتیک → دموی ثابت باقی می‌ماند
+  if(!SiteAuth.isSeller()){ location.replace('login.html'); return; }
+
+  var FAD="۰۱۲۳۴۵۶۷۸۹";
+  function faNum(s){ return String(s==null?'':s).replace(/[0-9]/g,function(d){return FAD[+d];}); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function money(n){ return faNum(String(Math.round(+n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'٬')); }
+  function v(id){ var e=document.getElementById(id); return e?e.value:''; }
+  var user=SiteAuth.user(), titleEl=document.getElementById('shopTitle');
+  var shop=null, myProducts=[], editId=null, imgUrl='';
+
+  // ---- مودال محصول ----
+  var modal=document.createElement('div'); modal.className='sd-modal'; modal.hidden=true;
+  modal.innerHTML=
+    '<div class="sd-card"><div class="sd-head"><h3 id="sd_title">محصول جدید</h3><button class="btn-icon" data-x aria-label="بستن"><svg class="icon"><use href="#icon-close"/></svg></button></div>'+
+    '<div class="sd-body">'+
+      '<div class="sd-field"><label>تصویر محصول</label><div class="sd-img"><div class="sd-prev" id="sd_prev"></div><div class="sd-imgcol"><button type="button" class="btn btn-sm" id="sd_pick"><svg class="icon"><use href="#icon-image"/></svg> آپلود تصویر</button><input type="file" accept="image/*" id="sd_file" hidden></div></div></div>'+
+      '<div class="sd-field"><label>عنوان محصول</label><input type="text" id="pf_title" placeholder="مثلاً کیف چرم دست‌دوز"></div>'+
+      '<div class="flex gap-8"><div class="sd-field" style="flex:1"><label>دسته</label><input type="text" id="pf_cat" placeholder="دسته"></div><div class="sd-field" style="flex:1"><label>قیمت (تومان)</label><input type="number" id="pf_price" placeholder="0"></div></div>'+
+      '<div class="flex gap-8"><div class="sd-field" style="flex:1"><label>موجودی</label><input type="number" id="pf_stock" placeholder="0"></div><div class="sd-field" style="flex:1"><label>وضعیت</label><select id="pf_status"><option value="active">فعال</option><option value="inactive">ناموجود</option></select></div></div>'+
+      '<div class="sd-field"><label>توضیحات</label><textarea id="pf_desc" placeholder="توضیح کوتاه محصول"></textarea></div>'+
+    '</div>'+
+    '<div class="sd-foot"><button class="btn btn-ghost" data-x>انصراف</button><button class="btn btn-primary" id="pf_save">ذخیره محصول</button></div></div>';
+  document.body.appendChild(modal);
+  modal.addEventListener('click',function(e){ if(e.target===modal||e.target.closest('[data-x]')) modal.hidden=true; });
+  document.getElementById('sd_pick').onclick=function(){ document.getElementById('sd_file').click(); };
+  document.getElementById('sd_file').onchange=async function(){
+    var f=this.files[0]; if(!f) return; var btn=document.getElementById('sd_pick'); var t=btn.innerHTML; btn.textContent='در حال آپلود…'; btn.disabled=true;
+    try{ var up=await SiteAuth.upload(f); imgUrl=up.url; document.getElementById('sd_prev').style.backgroundImage="url('"+imgUrl+"')"; }
+    catch(e){ alert(e.message||'خطا در آپلود'); }
+    btn.innerHTML=t; btn.disabled=false;
+  };
+  document.getElementById('pf_save').onclick=saveProduct;
+
+  function openProduct(p){
+    editId=p?p.id:null; imgUrl=p?(p.image||''):'';
+    document.getElementById('sd_title').textContent=p?'ویرایش محصول':'محصول جدید';
+    document.getElementById('pf_title').value=p?p.title||'':'';
+    document.getElementById('pf_cat').value=p?p.category||'':'';
+    document.getElementById('pf_price').value=p?p.price||'':'';
+    document.getElementById('pf_stock').value=p?p.stock||'':'';
+    document.getElementById('pf_status').value=p?p.status||'active':'active';
+    document.getElementById('pf_desc').value=p?p.description||'':'';
+    document.getElementById('sd_prev').style.backgroundImage=imgUrl?"url('"+imgUrl+"')":'';
+    modal.hidden=false;
+  }
+  async function saveProduct(){
+    var data={ title:v('pf_title').trim(), category:v('pf_cat'), price:v('pf_price'), stock:v('pf_stock'), status:v('pf_status'), description:v('pf_desc'), image:imgUrl };
+    if(!data.title){ alert('عنوان محصول را وارد کنید.'); return; }
+    var btn=document.getElementById('pf_save'); btn.disabled=true; var t=btn.textContent; btn.textContent='در حال ذخیره…';
+    try{ if(editId) await SiteAuth.products.update(editId,data); else await SiteAuth.products.create(data); modal.hidden=true; await loadProducts(); }
+    catch(e){ alert(e.message||'خطا در ذخیره محصول'); }
+    btn.disabled=false; btn.textContent=t;
+  }
+
+  function render(){
+    var list=document.getElementById('myProdList'); if(!list) return;
+    if(!myProducts.length){ list.innerHTML='<div style="text-align:center;padding:44px 16px;color:var(--text-3)">هنوز محصولی ثبت نکرده‌اید. با دکمهٔ «محصول جدید» اولین محصول را اضافه کنید.</div>'; return; }
+    list.innerHTML=myProducts.map(function(p){
+      var st=p.status==='active'?'<span class="status-chip ok">فعال</span>':'<span class="status-chip cancel">ناموجود</span>';
+      var th=p.image?'<div class="th" style="background:url(\''+esc(p.image)+'\') center/cover"></div>':'<div class="th ph-2"></div>';
+      return '<div class="prod-manage-row">'+th+'<div class="info"><b style="font-size:.87rem;">'+esc(p.title)+'</b><div class="faint" style="font-size:.76rem;">موجودی: '+faNum(p.stock||0)+' عدد · '+money(p.price)+' ت</div></div>'+st+
+        '<div class="actions"><button class="btn-icon btn-icon-sm" data-edit="'+p.id+'" aria-label="ویرایش"><svg class="icon"><use href="#icon-edit"/></svg></button><button class="btn-icon btn-icon-sm" data-del="'+p.id+'" aria-label="حذف"><svg class="icon"><use href="#icon-trash"/></svg></button></div></div>';
+    }).join('');
+    list.querySelectorAll('[data-edit]').forEach(function(b){ b.onclick=function(){ var p=myProducts.filter(function(x){return x.id==b.getAttribute('data-edit');})[0]; if(p) openProduct(p); }; });
+    list.querySelectorAll('[data-del]').forEach(function(b){ b.onclick=async function(){ if(!confirm('این محصول حذف شود؟')) return; try{ await SiteAuth.products.remove(+b.getAttribute('data-del')); await loadProducts(); }catch(e){ alert(e.message); } }; });
+  }
+  async function loadProducts(){ try{ var d=await SiteAuth.products.list(); myProducts=d.items||[]; render(); setCount(myProducts.length); }catch(e){} }
+  function setCount(n){ var el=document.querySelector('[data-my-count]'); if(el) el.textContent=faNum(n); }
+
+  function fillShop(s){
+    document.getElementById('shopName').value=s.name||'';
+    document.getElementById('shopPhone').value=s.phone||'';
+    document.getElementById('shopCat').value=s.category||'';
+    document.getElementById('shopCity').value=s.city||'';
+    document.getElementById('shopBio').value=s.bio||'';
+  }
+  async function loadShop(){
+    try{ shop=await SiteAuth.myShop(); }catch(e){}
+    var name=(shop&&shop.name)||(user&&(user.seller_name||user.name))||'فروشگاه من';
+    if(titleEl) titleEl.textContent='پنل فروشندگی — '+name;
+    if(shop) fillShop(shop);
+  }
+  var saveShopBtn=document.getElementById('shopSaveBtn');
+  if(saveShopBtn) saveShopBtn.onclick=async function(){
+    if(!shop){ alert('اطلاعات فروشگاه یافت نشد.'); return; }
+    var data={ name:v('shopName').trim(), phone:v('shopPhone'), category:v('shopCat'), city:v('shopCity'), bio:v('shopBio'), avatar:shop.avatar||'' };
+    saveShopBtn.disabled=true; var t=saveShopBtn.textContent; saveShopBtn.textContent='در حال ذخیره…';
+    try{ await SiteAuth.updateShop(shop.id,data); shop.name=data.name; if(titleEl) titleEl.textContent='پنل فروشندگی — '+data.name; alert('اطلاعات فروشگاه ذخیره شد ✓'); }
+    catch(e){ alert(e.message||'خطا در ذخیره'); }
+    saveShopBtn.disabled=false; saveShopBtn.textContent=t;
+  };
+  var logoutBtn=document.getElementById('shopLogout');
+  if(logoutBtn) logoutBtn.onclick=async function(){ await SiteAuth.logout(); location.href='login.html'; };
+
+  var a1=document.getElementById('addProdBtn1'), a2=document.getElementById('addProdBtn2');
+  if(a1) a1.onclick=function(){ openProduct(null); };
+  if(a2) a2.onclick=function(){ openProduct(null); };
+
+  await loadShop();
+  await loadProducts();
+})();
 </script>
 </body>
 </html>

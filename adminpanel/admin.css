@@ -766,3 +766,11 @@ ul{margin:0;padding:0;list-style:none;}
   .section-bar .title .ic{width:36px;height:36px;}
   .section-bar .title{font-size:.9rem;}
 }
+
+/* ===== فیلد تصویر در فرم‌ها (اسلاید/محصول) ===== */
+.img-field{ display:flex; gap:14px; align-items:flex-start; }
+.img-field .img-prev{ width:96px; height:64px; flex-shrink:0; border-radius:10px; border:1px solid var(--a-border,#e3e8e4); background:var(--a-surface-2,#f4f7f5) center/cover no-repeat; display:grid; place-items:center; color:var(--a-text-3,#9aa); overflow:hidden; }
+.img-field .img-prev .icon{ width:22px; height:22px; }
+.img-field .img-col{ flex:1; display:flex; flex-direction:column; gap:8px; min-width:0; }
+.img-field .img-col input[type="text"]{ width:100%; }
+.img-field .img-col .abtn.sm{ align-self:flex-start; }
