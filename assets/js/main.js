@@ -295,3 +295,63 @@
     render();
   })();
 })();
+
+/* ===== Hero banner slider (اتم ۳۱۳) ===== */
+(function(){
+  function initSlider(){
+    var root = document.querySelector("[data-slider]");
+    if(!root) return;
+    var track = root.querySelector("[data-slider-track]");
+    var slides = Array.prototype.slice.call(root.querySelectorAll(".hs-slide"));
+    var dotsWrap = root.querySelector("[data-slider-dots]");
+    var prevBtn = root.querySelector("[data-slider-prev]");
+    var nextBtn = root.querySelector("[data-slider-next]");
+    var n = slides.length;
+    if(!track || n === 0) return;
+    var i = 0, timer = null, DELAY = 5000;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+    var dots = [];
+    for(var k=0;k<n;k++){ (function(k){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "hs-dot" + (k===0 ? " active" : "");
+      b.setAttribute("aria-label", "اسلاید " + (k+1));
+      b.addEventListener("click", function(){ go(k); restart(); });
+      dotsWrap.appendChild(b); dots.push(b);
+    })(k); }
+
+    function go(idx){
+      i = (idx % n + n) % n;
+      track.style.transform = "translateX(" + (-i * root.clientWidth) + "px)";
+      for(var x=0;x<n;x++){
+        dots[x].classList.toggle("active", x===i);
+        slides[x].classList.toggle("is-active", x===i);
+      }
+    }
+    function nextS(){ go(i+1); }
+    function prevS(){ go(i-1); }
+    function start(){ if(reduce) return; stop(); timer = setInterval(nextS, DELAY); }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    function restart(){ stop(); start(); }
+
+    if(nextBtn) nextBtn.addEventListener("click", function(){ nextS(); restart(); });
+    if(prevBtn) prevBtn.addEventListener("click", function(){ prevS(); restart(); });
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    window.addEventListener("resize", function(){ go(i); });
+    document.addEventListener("visibilitychange", function(){ if(document.hidden){ stop(); } else { start(); } });
+
+    var x0 = null;
+    root.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; stop(); }, {passive:true});
+    root.addEventListener("touchend", function(e){
+      if(x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if(Math.abs(dx) > 40){ if(dx < 0) nextS(); else prevS(); }
+      restart();
+    }, {passive:true});
+
+    go(0); start();
+  }
+  if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", initSlider); }
+  else { initSlider(); }
+})();

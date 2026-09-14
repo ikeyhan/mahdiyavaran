@@ -951,3 +951,49 @@ html[data-theme="dark"] .hero::before{ display:none; }
   background-image:url("../img/products/ceramic-tea-set.jpg"), url("../img/products/p4-tea.svg");
   background-size:cover; background-position:center; background-repeat:no-repeat;
 }
+
+/* ===== Hero banner slider (Basalam-style) — اتم ۳۱۳ ===== */
+.sr-only{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.hero{ padding-top:30px; }
+.hero-slider{ position:relative; direction:ltr; border-radius:24px; overflow:hidden; box-shadow:0 24px 60px -30px rgba(9,60,30,.55), 0 4px 18px -8px rgba(0,0,0,.18); background:var(--surface-2); }
+.hs-track{ display:flex; transition:transform .65s cubic-bezier(.6,.02,.24,1); will-change:transform; }
+.hs-slide{ position:relative; min-width:100%; height:clamp(300px, 42vw, 460px); }
+.hs-slide img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.hs-cap{ position:absolute; inset:0; direction:rtl; }
+.hs-cap::before{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(6,26,15,0) 28%, rgba(6,22,12,.5) 58%, rgba(4,17,10,.86) 100%); }
+.hs-inner{ position:absolute; top:50%; right:clamp(20px,5%,64px); left:auto; transform:translateY(-50%); width:min(54%,580px); text-align:right; color:#fff; z-index:2; }
+.hs-eyebrow{ display:inline-flex; align-items:center; gap:7px; font-size:.8rem; font-weight:700; color:#fff; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); padding:6px 13px; border-radius:var(--radius-pill); margin-bottom:16px; }
+.hs-eyebrow .icon{ width:15px; height:15px; }
+.hs-title{ font-size:clamp(1.5rem, 3.4vw, 2.6rem); font-weight:800; line-height:1.22; margin:0; color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.35); }
+.hs-sub{ font-size:clamp(.9rem, 1.4vw, 1.06rem); line-height:1.85; color:rgba(255,255,255,.92); margin:14px 0 0; max-width:44ch; text-shadow:0 1px 10px rgba(0,0,0,.35); }
+.hs-actions{ margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; }
+.hs-slide .hs-inner{ opacity:0; transform:translateY(18px) translateY(-50%); transition:opacity .6s ease .15s, transform .6s cubic-bezier(.2,.7,.2,1) .15s; }
+.hs-slide.is-active .hs-inner{ opacity:1; transform:translateY(0) translateY(-50%); }
+/* arrows */
+.hs-arrow{ position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; border:0; background:rgba(255,255,255,.92); color:var(--green-700,#0E6E30); display:grid; place-items:center; cursor:pointer; z-index:3; box-shadow:0 6px 18px -6px rgba(0,0,0,.4); transition:background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.hs-arrow:hover{ background:#fff; transform:translateY(-50%) scale(1.08); }
+.hs-arrow .icon{ width:22px; height:22px; }
+.hs-prev{ right:16px; } .hs-next{ left:16px; }
+/* dots */
+.hs-dots{ position:absolute; left:0; right:0; bottom:16px; display:flex; justify-content:center; gap:8px; z-index:3; }
+.hs-dot{ width:9px; height:9px; border-radius:var(--radius-pill); border:0; padding:0; background:rgba(255,255,255,.55); cursor:pointer; transition:width var(--dur) var(--ease), background var(--dur) var(--ease); }
+.hs-dot.active{ width:28px; background:#fff; }
+/* stats band under slider */
+.hero-stats-band{ justify-content:center; gap:clamp(24px,6vw,64px); margin-top:24px; text-align:center; }
+.hero-stats-band .stat b{ color:var(--green-600); }
+@media (max-width:760px){
+  .hero-slider{ border-radius:18px; }
+  .hs-slide{ height:clamp(300px, 82vw, 420px); }
+  .hs-arrow{ display:none; }
+  .hs-cap::before{ background:linear-gradient(180deg, rgba(4,17,10,0) 34%, rgba(4,17,10,.5) 62%, rgba(3,14,8,.9) 100%); }
+  .hs-inner{ top:auto; bottom:52px; right:16px; left:16px; width:auto; transform:none; }
+  .hs-slide .hs-inner{ transform:translateY(14px); }
+  .hs-slide.is-active .hs-inner{ transform:translateY(0); }
+  .hs-title{ font-size:1.42rem; }
+  .hs-sub{ display:none; }
+  .hs-actions{ margin-top:16px; }
+  .hero-stats-band{ gap:22px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .hs-track{ transition:none; } .hs-slide .hs-inner{ transition:none; }
+}
