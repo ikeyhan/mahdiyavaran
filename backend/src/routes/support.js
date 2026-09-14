@@ -6,6 +6,7 @@
 const express = require('express');
 const db = require('../db');
 const { requireAuth, clientIp } = require('../auth');
+const banned = require('../banned');
 const { str } = require('../validate');
 
 const router = express.Router();
@@ -44,6 +45,8 @@ router.post('/chat', async (req, res) => {
   msgs = msgs.filter(m => m && (m.role === 'user' || m.role === 'assistant') && m.content)
              .map(m => ({ role: m.role, content: str(m.content, 4000) }));
   if (!msgs.length) return res.status(400).json({ error: 'پیامی ارسال نشد.' });
+  var lastUser = msgs.filter(m => m.role === 'user').slice(-1)[0];
+  if (lastUser && !banned.guard(res, lastUser.content)) return;
 
   if (!apiKey) {
     return res.status(503).json({
@@ -117,6 +120,7 @@ router.post('/message', (req, res) => {
   var subject = str(req.body.subject, 200).trim() || 'پیام از ویجت پشتیبانی';
   var body = str(req.body.body, 4000).trim();
   if (!body) return res.status(400).json({ error: 'متن پیام را وارد کنید.' });
+  if (!banned.guard(res, sender, subject, body)) return;
   db.prepare('INSERT INTO messages (sender,subject,body,status) VALUES (?,?,?,?)')
     .run(sender, subject, body, 'open');
   res.status(201).json({ ok: true });

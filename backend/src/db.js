@@ -170,6 +170,40 @@ CREATE TABLE IF NOT EXISTS chat_messages (
   content TEXT,
   created_at TEXT DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS slides (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  eyebrow TEXT,
+  title TEXT NOT NULL,
+  subtitle TEXT,
+  image TEXT,
+  cta_label TEXT,
+  cta_link TEXT,
+  sort INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'active',       -- active | hidden
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS banned_words (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  word TEXT NOT NULL,
+  note TEXT,
+  status TEXT NOT NULL DEFAULT 'active',        -- active | off
+  created_at TEXT DEFAULT (datetime('now'))
+);
 `);
+
+/* ---------- مهاجرت‌های سبک: افزودن ستون‌ها به جدول‌های موجود ---------- */
+function addColumn(table, col, def) {
+  try { db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`); } catch (e) { /* ستون از قبل هست */ }
+}
+addColumn('products', 'owner', 'TEXT');            // نام‌کاربری فروشندهٔ صاحب محصول
+addColumn('products', 'description', 'TEXT');      // توضیحات محصول
+addColumn('sellers', 'owner', 'TEXT');             // نام‌کاربری حساب فروشنده
+addColumn('sellers', 'bio', 'TEXT');
+addColumn('sellers', 'avatar', 'TEXT');
+addColumn('sellers', 'phone', 'TEXT');
+addColumn('admins', 'seller_name', 'TEXT');        // نام فروشگاه برای نقش فروشنده
+addColumn('admins', 'phone', 'TEXT');
 
 module.exports = db;

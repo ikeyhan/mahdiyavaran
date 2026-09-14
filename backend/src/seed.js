@@ -204,6 +204,44 @@ function seed() {
       ['feature.installment','خرید اقساطی',0,'پرداخت اقساطی'],
     ].forEach(r => f.run(r));
   }
+
+  // اسلایدهای بخش اولیهٔ سایت
+  if (db.prepare('SELECT COUNT(*) c FROM slides').get().c === 0) {
+    const sl = db.prepare('INSERT INTO slides (eyebrow,title,subtitle,image,cta_label,cta_link,sort,status) VALUES (?,?,?,?,?,?,?,?)');
+    [
+      ['فروشندهٔ طلایی','چرم دست‌دوز، اصالت در هر دوخت','کیف، کمربند و کیف‌پول چرم طبیعی — مستقیم از کارگاه آترا چرم، با ضمانت اصالت کالا.','assets/img/products/atra-leather-set.jpg','مشاهده محصولات چرم','products.html',1,'active'],
+      ['صنایع‌دستی اصیل','گلیم و دستبافته‌های اصیل ایرانی','نقش‌های سنتی، رنگ‌های گیاهی و بافت کاملاً دست — مستقیم از هنرمندان بومی.','assets/img/products/kilim-rug.jpg','خرید صنایع‌دستی','products.html',2,'active'],
+      ['ساخت دست','سرامیک دست‌ساز برای خانه‌ی گرم شما','سرویس چای‌خوری با لعاب طبیعی و طراحی مینیمال؛ گرمای دست‌ساز روی میز شما.','assets/img/products/ceramic-tea-set.jpg','لوازم خانه','products.html',3,'active'],
+      ['خدمات دیجیتال','هویت بصری حرفه‌ای برای کسب‌وکار شما','طراحی لوگو، برندینگ و ست اداری توسط استودیوهای منتخب اتم ۳۱۳.','assets/img/products/brand-identity.jpg','سفارش خدمات','products.html',4,'active'],
+      ['پرفروش‌ترین','کیف چرم طبیعی مدل رویا','طراحی مینیمال، دوخت کاملاً دستی و ضمانت اصالت ۱۸ ماهه.','assets/img/products/leather-bag-roya.jpg','خرید کیف رویا','product.html',5,'active'],
+    ].forEach(r => sl.run(r));
+  }
+
+  // کلمات ممنوعه (نمونه)
+  if (db.prepare('SELECT COUNT(*) c FROM banned_words').get().c === 0) {
+    const bw = db.prepare('INSERT INTO banned_words (word,note,status) VALUES (?,?,?)');
+    [
+      ['کلاهبرداری','نمونه','active'],
+      ['فحش','نمونه','active'],
+      ['اسپم','نمونه','active'],
+    ].forEach(r => bw.run(r));
+  }
+
+  // حساب نمونهٔ فروشنده برای ورود به پنل فروشندگی (username: atra / pass: atra1234)
+  if (!db.prepare("SELECT id FROM admins WHERE username='atra'").get()) {
+    const hash = bcrypt.hashSync('atra1234', 10);
+    db.prepare("INSERT INTO admins (username,password_hash,name,role,status,phone,seller_name) VALUES (?,?,?,?,?,?,?)")
+      .run('atra', hash, 'فروشگاه آترا چرم', 'seller', 'active', '09120000000', 'آترا چرم');
+    // اتصال فروشگاه موجود «آترا چرم» به این حساب
+    db.prepare("UPDATE sellers SET owner='atra', bio=COALESCE(bio,'آترا چرم از سال ۱۴۰۰ محصولات چرم طبیعی و دست‌دوز عرضه می‌کند.') WHERE name='آترا چرم'").run();
+    // چند محصول نمونه برای این فروشنده
+    const p = db.prepare("INSERT INTO products (title,category,seller,price,stock,status,owner) VALUES (?,?,?,?,?,?,?)");
+    [
+      ['کیف چرم طبیعی مدل رویا','کیف','آترا چرم',2450000,12,'active','atra'],
+      ['کمربند چرم دست‌دوز','کمربند','آترا چرم',680000,30,'active','atra'],
+      ['کیف‌پول چرم جیبی','کیف‌پول','آترا چرم',420000,45,'active','atra'],
+    ].forEach(r => p.run(r));
+  }
 }
 
 if (require.main === module) { seed(); console.log('✓ داده اولیه آماده شد.'); }

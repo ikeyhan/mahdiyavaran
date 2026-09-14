@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const db = require('../db');
 const { sign, requireAuth, logActivity, clientIp } = require('../auth');
 const { str } = require('../validate');
+const banned = require('../banned');
 
 const router = express.Router();
 
@@ -52,6 +53,47 @@ router.post('/login', loginLimiter, (req, res) => {
   res.json({
     token,
     user: { id: admin.id, username: admin.username, name: admin.name, role: admin.role, email: admin.email },
+  });
+});
+
+// ثبت‌نام فروشنده از سایت (عمومی) — حساب نقش seller + فروشگاه می‌سازد
+router.post('/register', loginLimiter, (req, res) => {
+  const name = str(req.body.name, 120).trim();
+  const store = str(req.body.seller_name, 120).trim();
+  const username = str(req.body.username, 60).trim().toLowerCase();
+  const password = str(req.body.password, 200);
+  const phone = str(req.body.phone, 20).trim();
+  const city = str(req.body.city, 60).trim();
+  const category = str(req.body.category, 120).trim();
+
+  if (!store || !username || !password)
+    return res.status(400).json({ error: 'نام فروشگاه، نام کاربری و رمز عبور الزامی است.' });
+  if (password.length < 6)
+    return res.status(400).json({ error: 'رمز عبور باید حداقل ۶ کاراکتر باشد.' });
+  if (!/^[a-zA-Z0-9_.]{3,}$/.test(username))
+    return res.status(400).json({ error: 'نام کاربری فقط حروف و عدد انگلیسی و حداقل ۳ کاراکتر باشد.' });
+
+  const w = banned.findBanned(name, store, username);
+  if (w) return res.status(400).json({ error: 'استفاده از کلمهٔ «' + w + '» مجاز نیست.' });
+
+  if (db.prepare('SELECT id FROM admins WHERE username=?').get(username))
+    return res.status(409).json({ error: 'این نام کاربری قبلاً ثبت شده است.' });
+
+  const hash = bcrypt.hashSync(password, 10);
+  const info = db.prepare(
+    "INSERT INTO admins (username,password_hash,name,role,status,phone,seller_name) VALUES (?,?,?,?,?,?,?)"
+  ).run(username, hash, name || store, 'seller', 'active', phone, store);
+  db.prepare(
+    "INSERT INTO sellers (name,category,city,rating,sales,status,owner,phone) VALUES (?,?,?,?,?,?,?,?)"
+  ).run(store, category || 'فروشگاه', city, 5, 0, 'active', username, phone);
+  db.prepare('INSERT INTO activity_log (actor,action,target,ip) VALUES (?,?,?,?)')
+    .run(username, 'ثبت‌نام فروشنده', store, clientIp(req));
+
+  const admin = db.prepare('SELECT * FROM admins WHERE id=?').get(info.lastInsertRowid);
+  const token = sign(admin);
+  res.status(201).json({
+    token,
+    user: { id: admin.id, username: admin.username, name: admin.name, role: admin.role, seller_name: store },
   });
 });
 
