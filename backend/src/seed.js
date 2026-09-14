@@ -220,8 +220,8 @@ function seed() {
   // تبلیغات نمونه (نوار بالا + مربع گوشهٔ چپ)
   if (db.prepare('SELECT COUNT(*) c FROM ads').get().c === 0) {
     const ad = db.prepare('INSERT INTO ads (placement,title,text,image,link,cta_label,bg,sort,status) VALUES (?,?,?,?,?,?,?,?,?)');
-    ad.run('top', 'جشنوارهٔ فروش اتم ۳۱۳', 'همین حالا با کد ATOM۲۰ روی همهٔ محصولات تخفیف بگیر!', '', 'offers.html', 'خرید کن', '#149B3E', 1, 'active');
-    ad.run('corner', 'پیشنهاد ویژهٔ چرم', 'تا ۳۰٪ تخفیف', 'assets/img/ads/promo-1.svg', 'products.html', 'مشاهده', '', 1, 'active');
+    ad.run('top', 'جشنواره فروش اتم ۳۱۳', 'همین حالا با کد ATOM۲۰ روی همهٔ محصولات تخفیف بگیر!', 'assets/img/ads/top-banner.jpg', 'offers.html', 'خرید کن', '#149B3E', 1, 'active');
+    ad.run('corner', 'پیشنهاد ویژهٔ چرم', 'تا ۲۰٪ تخفیف', 'assets/img/ads/corner-ad.jpg', 'products.html', 'مشاهده', '', 1, 'active');
   }
 
   // کلمات ممنوعه (نمونه)

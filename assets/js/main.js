@@ -461,15 +461,15 @@
 /* ===== تبلیغات سایت (نوار بالا + مربع گوشهٔ چپ) — مانند باسلام ===== */
 (function(){
   function aesc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  // مسیر تصویرهای آپلودی؛ اگر نبود، به نمونهٔ متنی/SVG برمی‌گردد
   var FALLBACK = {
-    top: [{ title:"جشنوارهٔ فروش اتم ۳۱۳", text:"همین حالا با کد ATOM۲۰ روی همهٔ محصولات تخفیف بگیر!", link:"offers.html", cta_label:"خرید کن", bg:"#149B3E" }],
-    corner: [{ title:"پیشنهاد ویژهٔ چرم", image:"assets/img/ads/promo-1.svg", link:"products.html" }]
+    top: [{ title:"جشنواره فروش اتم ۳۱۳", text:"همین حالا با کد ATOM۲۰ روی همهٔ محصولات تخفیف بگیر!", link:"offers.html", cta_label:"خرید کن", bg:"#149B3E", image:"assets/img/ads/top-banner.jpg" }],
+    corner: [{ title:"پیشنهاد ویژهٔ چرم", image:"assets/img/ads/corner-ad.jpg", link:"products.html" }]
   };
   function closed(key){ try{ return sessionStorage.getItem(key)==="1"; }catch(e){ return false; } }
   function close(key){ try{ sessionStorage.setItem(key,"1"); }catch(e){} }
 
-  function renderTop(ad){
-    if(!ad || closed("atom_ad_top")) return;
+  function renderStrip(ad){
     var bar=document.createElement("div"); bar.className="ad-strip";
     if(ad.bg) bar.style.background=ad.bg;
     var cta = ad.cta_label ? '<a class="ad-strip-cta" href="'+aesc(ad.link||"#")+'">'+aesc(ad.cta_label)+'</a>' : '';
@@ -481,15 +481,33 @@
     if(document.body) document.body.insertBefore(bar, document.body.firstChild);
     bar.querySelector(".ad-strip-x").onclick=function(){ bar.remove(); close("atom_ad_top"); };
   }
+  function renderTop(ad){
+    if(!ad || closed("atom_ad_top")) return;
+    if(ad.image){
+      // بنر تصویری متحرک و جذاب در بالای سایت
+      var wrap=document.createElement("div"); wrap.className="ad-banner";
+      wrap.innerHTML='<div class="container ad-banner-in">'+
+        '<a class="ad-banner-link" href="'+aesc(ad.link||"#")+'"><img src="'+aesc(ad.image)+'" alt="'+aesc(ad.title||"تبلیغ")+'"><span class="ad-sheen"></span></a>'+
+        '<button class="ad-banner-x" aria-label="بستن">&times;</button></div>';
+      if(document.body) document.body.insertBefore(wrap, document.body.firstChild);
+      var img=wrap.querySelector("img");
+      img.onerror=function(){ wrap.remove(); renderStrip(ad); }; // تصویر نبود → نوار متنی
+      wrap.querySelector(".ad-banner-x").onclick=function(e){ e.preventDefault(); wrap.remove(); close("atom_ad_top"); };
+      return;
+    }
+    renderStrip(ad);
+  }
   function renderCorner(ad){
     if(!ad || closed("atom_ad_corner")) return;
     var box=document.createElement("div"); box.className="ad-corner";
     var inner = ad.image
-      ? '<img src="'+aesc(ad.image)+'" alt="'+aesc(ad.title||"تبلیغ")+'">'
+      ? '<img src="'+aesc(ad.image)+'" alt="'+aesc(ad.title||"تبلیغ")+'"><span class="ad-sheen"></span>'
       : '<div class="ad-corner-txt"><b>'+aesc(ad.title||"")+'</b><span>'+aesc(ad.text||"")+'</span></div>';
     box.innerHTML='<a class="ad-corner-link" href="'+aesc(ad.link||"#")+'">'+inner+'</a>'+
       '<button class="ad-corner-x" aria-label="بستن">&times;</button>';
     if(document.body) document.body.appendChild(box);
+    var cim=box.querySelector("img");
+    if(cim) cim.onerror=function(){ cim.onerror=null; cim.src="assets/img/ads/promo-1.svg"; }; // fallback به نمونه
     box.querySelector(".ad-corner-x").onclick=function(e){ e.preventDefault(); box.remove(); close("atom_ad_corner"); };
   }
   function boot(data){

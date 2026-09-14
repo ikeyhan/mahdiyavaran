@@ -1074,3 +1074,32 @@ html[data-theme="dark"] .hero::before{ display:none; }
   .ad-strip-text{ display:none; }
   .ad-corner{ left:12px; bottom:12px; width:96px; }
 }
+
+/* ===== فونت یکان بخ برای بنرها (در صورت وجود فایل‌ها فعال می‌شود) ===== */
+@font-face{ font-family:"Yekan Bakh"; src:url("../fonts/YekanBakh-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
+@font-face{ font-family:"Yekan Bakh"; src:url("../fonts/YekanBakh-Bold.woff2") format("woff2"); font-weight:700 800; font-display:swap; }
+@font-face{ font-family:"Yekan Bakh"; src:url("../fonts/YekanBakh-ExtraBold.woff2") format("woff2"); font-weight:900; font-display:swap; }
+:root{ --font-banner:"Yekan Bakh","Vazirmatn",Tahoma,sans-serif; }
+.ad-strip, .ad-strip-title, .ad-strip-cta, .ad-corner-txt, .hs-title, .hs-eyebrow{ font-family:var(--font-banner); }
+
+/* ===== بنر تصویری متحرک بالای سایت ===== */
+.ad-banner{ width:100%; position:relative; z-index:60; animation:adDrop .6s cubic-bezier(.2,.8,.25,1); }
+.ad-banner-in{ position:relative; padding:12px 0 2px; }
+.ad-banner-link{ display:block; position:relative; overflow:hidden; border-radius:20px; transition:transform var(--dur) var(--ease); box-shadow:0 14px 34px -18px rgba(9,60,30,.5); }
+.ad-banner-link:hover{ transform:translateY(-2px); }
+.ad-banner-link img{ display:block; width:100%; height:auto; border-radius:20px; }
+.ad-banner .ad-sheen{ position:absolute; top:0; left:-65%; width:45%; height:100%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent); transform:skewX(-18deg); pointer-events:none; animation:adSheen 5s ease-in-out infinite; }
+.ad-banner-x{ position:absolute; top:50%; left:1.6%; transform:translateY(-50%); width:38px; height:38px; border-radius:50%; border:0; background:rgba(6,30,16,.45); color:#fff; font-size:1.25rem; line-height:1; cursor:pointer; display:grid; place-items:center; z-index:3; transition:background var(--dur-fast) var(--ease); backdrop-filter:blur(2px); }
+.ad-banner-x:hover{ background:rgba(6,30,16,.72); }
+@keyframes adDrop{ from{ opacity:0; transform:translateY(-18px); } to{ opacity:1; transform:none; } }
+@keyframes adSheen{ 0%,55%{ left:-65%; } 92%,100%{ left:130%; } }
+
+/* ===== مربع گوشه: شناور + درخشش نرم ===== */
+.ad-corner{ animation:adPop .6s cubic-bezier(.2,.8,.25,1), adFloat 3.8s ease-in-out .6s infinite; }
+.ad-corner .ad-corner-link{ position:relative; overflow:hidden; }
+.ad-corner .ad-sheen{ position:absolute; top:0; left:-70%; width:55%; height:100%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent); transform:skewX(-18deg); pointer-events:none; animation:adSheen 5s ease-in-out 1.5s infinite; }
+@keyframes adFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+@media (prefers-reduced-motion:reduce){
+  .ad-banner, .ad-corner{ animation:none; }
+  .ad-banner .ad-sheen, .ad-corner .ad-sheen{ animation:none; display:none; }
+}
