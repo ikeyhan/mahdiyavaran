@@ -396,9 +396,15 @@
 /* ===== پنل فروشندگی واقعی — محصولات و پروفایل ===== */
 (async function(){
   if(!window.SiteAuth) return;
-  var online = await SiteAuth.available();
-  if(!online) return; // میزبانی استاتیک → دموی ثابت باقی می‌ماند
   if(!SiteAuth.isSeller()){ location.replace('login.html'); return; }
+
+  if(SiteAuth.isDemo()){
+    var note=document.createElement('div');
+    note.style.cssText='background:#FFF7E6;border:1px solid #F5D48A;color:#8A5A00;padding:10px 16px;border-radius:12px;font-size:.82rem;font-weight:600;margin:0 0 16px;text-align:center;line-height:1.8';
+    note.textContent='حالت دمو: سرور در دسترس نیست؛ تغییرات فقط در همین مرورگر ذخیره می‌شود. برای حالت واقعی، بک‌اند را اجرا کنید (cd backend && npm start).';
+    var host=document.querySelector('[data-dash-panel="overview"]');
+    if(host) host.insertBefore(note, host.firstChild);
+  }
 
   var FAD="۰۱۲۳۴۵۶۷۸۹";
   function faNum(s){ return String(s==null?'':s).replace(/[0-9]/g,function(d){return FAD[+d];}); }
