@@ -86,6 +86,7 @@
     faqs: crud("/faqs"),
     slides: crud("/slides"),
     bannedWords: crud("/banned-words"),
+    ads: crud("/ads"),
     resource: function (name) { return crud("/" + name); },
 
     articlesPublic: function () { return req("/articles/public"); },

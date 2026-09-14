@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محصولات | پنل مدیریت اتم ۳۱۳</title>
+<title>تبلیغات سایت | پنل مدیریت اتم ۳۱۳</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -357,7 +357,7 @@
     <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
     <a href="accounting.html"><span class="nav-ic"><svg class="icon"><use href="#i-calculator"/></svg></span><span class="nav-tx">حسابداری</span></a>
     <div class="admin-nav-label">فروشگاه</div>
-    <a href="products.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
+    <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
     <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span><span class="cnt">۹۲</span></a>
     <a href="customers.html"><span class="nav-ic"><svg class="icon"><use href="#i-users"/></svg></span><span class="nav-tx">مشتریان</span></a>
     <a href="loyalty.html"><span class="nav-ic"><svg class="icon"><use href="#i-medal"/></svg></span><span class="nav-tx">باشگاه مشتریان</span></a>
@@ -367,7 +367,7 @@
     <div class="admin-nav-label">محتوا و بازاریابی</div>
     <a href="content.html"><span class="nav-ic"><svg class="icon"><use href="#i-layers"/></svg></span><span class="nav-tx">مدیریت محتوا</span></a>
     <a href="slideshow.html"><span class="nav-ic"><svg class="icon"><use href="#i-image"/></svg></span><span class="nav-tx">اسلاید تصویری</span></a>
-    <a href="ads.html"><span class="nav-ic"><svg class="icon"><use href="#i-megaphone"/></svg></span><span class="nav-tx">تبلیغات سایت</span></a>
+    <a href="ads.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-megaphone"/></svg></span><span class="nav-tx">تبلیغات سایت</span></a>
     <a href="media.html"><span class="nav-ic"><svg class="icon"><use href="#i-image"/></svg></span><span class="nav-tx">رسانه و فایل‌ها</span></a>
     <a href="marketing.html"><span class="nav-ic"><svg class="icon"><use href="#i-megaphone"/></svg></span><span class="nav-tx">بازاریابی و کمپین</span></a>
     <a href="blog.html"><span class="nav-ic"><svg class="icon"><use href="#i-blog"/></svg></span><span class="nav-tx">بلاگ</span></a>
@@ -394,13 +394,13 @@
     <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
   </nav>
 </aside>
-  <main class="admin-main" data-page="products">
+  <main class="admin-main" data-page="ads">
     <div class="admin-topbar">
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>محصولات</h1>
-      <div class="crumb">پنل مدیریت · مدیریت محصولات</div>
+      <h1>تبلیغات سایت</h1>
+      <div class="crumb">پنل مدیریت · بنر و تبلیغات</div>
     </div>
   </div>
   <div class="admin-user">
@@ -412,99 +412,19 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-box"/></svg></span>محصولات</div>
-    <div class="tabs"><button class="active">همه</button><button>فعال</button><button>موجودی کم</button><button>ناموجود</button></div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-megaphone"/></svg></span>تبلیغات سایت</div>
+    
   </div>
-  <div class="actions"><button class="abtn"><svg class="icon"><use href="#i-external"/></svg> خروجی</button><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> افزودن محصول</button></div>
+  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> افزودن تبلیغ</button></div>
 </div>
-
-<div class="filter-row">
-  <div class="field"><input type="text" placeholder="جستجو در محصولات..."></div>
-  <div class="field"><select><option>همه دسته‌ها</option><option>پوشاک</option><option>صنایع‌دستی</option><option>لوازم خانه</option></select></div>
-  <div class="field"><select><option>همه فروشندگان</option><option>آترا چرم</option><option>هنرکده پارسیان</option></select></div>
-  <button class="abtn">اعمال فیلتر</button>
-</div>
-
+<p style="margin:-4px 0 18px;color:var(--a-text-3);font-size:.88rem;line-height:1.9">
+دو جایگاه تبلیغاتی روی سایت: «نوار بالای سایت» (باریک، بالاترین بخش صفحه) و «مربع گوشهٔ چپ» (۱:۱، شناور). برای هر تبلیغ می‌توانید تصویر، عنوان، متن، دکمه، لینک و رنگ را تعیین کنید.</p>
 <div class="tbl-wrap">
 <table class="tbl">
-  <thead><tr><th>کد</th><th>محصول</th><th>فروشنده</th><th>قیمت</th><th>موجودی</th><th>وضعیت</th><th></th></tr></thead>
-  <tbody>
-    <tr>
-  <td>#۲۱۰۱</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p1-bag.svg');"></span><div><b>کیف چرم طبیعی دست‌دوز مدل رویا</b><span>پوشاک</span></div></div></td>
-  <td>آترا چرم</td>
-  <td>۲٬۴۵۰٬۰۰۰ ت</td>
-  <td>۲۴</td>
-  <td><span class="chip ok">فعال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۲</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p2-rug.svg');"></span><div><b>گلیم دستباف سنتی کرمان</b><span>صنایع‌دستی</span></div></div></td>
-  <td>هنرکده پارسیان</td>
-  <td>۱٬۸۹۰٬۰۰۰ ت</td>
-  <td>۸</td>
-  <td><span class="chip pend">موجودی کم</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۳</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p3-service.svg');"></span><div><b>طراحی هویت بصری و لوگو حرفه‌ای</b><span>خدمات دیجیتال</span></div></div></td>
-  <td>استودیو نگاره</td>
-  <td>۹۵۰٬۰۰۰ ت</td>
-  <td>∞</td>
-  <td><span class="chip ok">فعال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۴</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p4-tea.svg');"></span><div><b>سرویس چای‌خوری سرامیکی دست‌ساز</b><span>لوازم خانه</span></div></div></td>
-  <td>سفال سبز</td>
-  <td>۱٬۲۴۰٬۰۰۰ ت</td>
-  <td>۱۵</td>
-  <td><span class="chip ok">فعال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۵</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p5-spice.svg');"></span><div><b>بسته ادویه‌جات ارگانیک</b><span>سوپرمارکت</span></div></div></td>
-  <td>باغ طبیعت</td>
-  <td>۳۸۰٬۰۰۰ ت</td>
-  <td>۸۰</td>
-  <td><span class="chip ok">فعال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۶</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p6-shoes.svg');"></span><div><b>کفش چرم دست‌دوز مردانه کلاسیک</b><span>پوشاک</span></div></div></td>
-  <td>چرم گالری</td>
-  <td>۱٬۶۵۰٬۰۰۰ ت</td>
-  <td>۹</td>
-  <td><span class="chip pend">موجودی کم</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۷</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p7-scarf.svg');"></span><div><b>شال ابریشم طرح سنتی اصفهان</b><span>پوشاک</span></div></div></td>
-  <td>حریر نقش</td>
-  <td>۷۲۰٬۰۰۰ ت</td>
-  <td>۴۰</td>
-  <td><span class="chip ok">فعال</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-    <tr>
-  <td>#۲۱۰۸</td>
-  <td><div class="row-th"><span class="th-img" style="background-image:url('../assets/img/products/p8-mina.svg');"></span><div><b>میناکاری دستی روی مس</b><span>صنایع‌دستی</span></div></div></td>
-  <td>هنر اصفهان</td>
-  <td>۹۸۰٬۰۰۰ ت</td>
-  <td>۰</td>
-  <td><span class="chip err">ناموجود</span></td>
-  <td><div class="act-icons"><button title="مشاهده"><svg class="icon"><use href="#i-eye"/></svg></button><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td>
-</tr>
-  </tbody>
+  <thead><tr><th>#</th><th>تصویر</th><th>جایگاه</th><th>عنوان</th><th>متن</th><th>دکمه</th><th>لینک</th><th>رنگ</th><th>ترتیب</th><th>وضعیت</th><th></th></tr></thead>
+  <tbody><tr><td colspan="11" style="text-align:center;padding:30px;color:var(--a-text-3)">برای مشاهدهٔ تبلیغات، بک‌اند باید در دسترس باشد…</td></tr></tbody>
 </table>
 </div>
-<div class="pgn"><a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">۴</a><a href="#">…</a><a href="#">۱۲</a></div>
 
   </main>
 </div>

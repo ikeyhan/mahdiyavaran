@@ -214,4 +214,15 @@ const bannedWords = makeResource({
   ],
 });
 
-module.exports = { products, orders, customers, categories, sellers, offers, comments, messages, faqs, slides, bannedWords };
+const ads = makeResource({
+  table: 'ads', label: 'تبلیغ', writeRoles: ['admin', 'editor'],
+  fields: [
+    { name: 'placement', allowed: ['top', 'corner'], def: 'top' },
+    { name: 'title', max: 200 }, { name: 'text', max: 300 },
+    { name: 'image', max: 400 }, { name: 'link', max: 200 },
+    { name: 'cta_label', max: 60 }, { name: 'bg', max: 40 },
+    { name: 'sort', type: 'int' }, { name: 'status', allowed: ['active', 'hidden'], def: 'active' },
+  ],
+});
+
+module.exports = { products, orders, customers, categories, sellers, offers, comments, messages, faqs, slides, bannedWords, ads };

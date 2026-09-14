@@ -457,3 +457,53 @@
   if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", initMega); }
   else { initMega(); }
 })();
+
+/* ===== تبلیغات سایت (نوار بالا + مربع گوشهٔ چپ) — مانند باسلام ===== */
+(function(){
+  function aesc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  var FALLBACK = {
+    top: [{ title:"جشنوارهٔ فروش اتم ۳۱۳", text:"همین حالا با کد ATOM۲۰ روی همهٔ محصولات تخفیف بگیر!", link:"offers.html", cta_label:"خرید کن", bg:"#149B3E" }],
+    corner: [{ title:"پیشنهاد ویژهٔ چرم", image:"assets/img/ads/promo-1.svg", link:"products.html" }]
+  };
+  function closed(key){ try{ return sessionStorage.getItem(key)==="1"; }catch(e){ return false; } }
+  function close(key){ try{ sessionStorage.setItem(key,"1"); }catch(e){} }
+
+  function renderTop(ad){
+    if(!ad || closed("atom_ad_top")) return;
+    var bar=document.createElement("div"); bar.className="ad-strip";
+    if(ad.bg) bar.style.background=ad.bg;
+    var cta = ad.cta_label ? '<a class="ad-strip-cta" href="'+aesc(ad.link||"#")+'">'+aesc(ad.cta_label)+'</a>' : '';
+    bar.innerHTML='<div class="container ad-strip-in">'+
+      '<span class="ad-strip-ic"><svg class="icon"><use href="#icon-percent"/></svg></span>'+
+      '<b class="ad-strip-title">'+aesc(ad.title||"")+'</b>'+
+      (ad.text?'<span class="ad-strip-text">'+aesc(ad.text)+'</span>':'')+
+      cta+'<button class="ad-strip-x" aria-label="بستن">&times;</button></div>';
+    if(document.body) document.body.insertBefore(bar, document.body.firstChild);
+    bar.querySelector(".ad-strip-x").onclick=function(){ bar.remove(); close("atom_ad_top"); };
+  }
+  function renderCorner(ad){
+    if(!ad || closed("atom_ad_corner")) return;
+    var box=document.createElement("div"); box.className="ad-corner";
+    var inner = ad.image
+      ? '<img src="'+aesc(ad.image)+'" alt="'+aesc(ad.title||"تبلیغ")+'">'
+      : '<div class="ad-corner-txt"><b>'+aesc(ad.title||"")+'</b><span>'+aesc(ad.text||"")+'</span></div>';
+    box.innerHTML='<a class="ad-corner-link" href="'+aesc(ad.link||"#")+'">'+inner+'</a>'+
+      '<button class="ad-corner-x" aria-label="بستن">&times;</button>';
+    if(document.body) document.body.appendChild(box);
+    box.querySelector(".ad-corner-x").onclick=function(e){ e.preventDefault(); box.remove(); close("atom_ad_corner"); };
+  }
+  function boot(data){
+    renderTop((data.top||[])[0]);
+    renderCorner((data.corner||[])[0]);
+  }
+  async function init(){
+    var data = FALLBACK;
+    try {
+      var c=new AbortController(); var to=setTimeout(function(){c.abort();},1500);
+      var r=await fetch("/api/public/ads",{signal:c.signal}); clearTimeout(to);
+      if(r.ok){ var d=await r.json(); if(d && ((d.top&&d.top.length)||(d.corner&&d.corner.length))) data=d; }
+    } catch(e){ /* آفلاین → نمونهٔ پیش‌فرض */ }
+    boot(data);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();

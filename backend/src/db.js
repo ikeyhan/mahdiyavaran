@@ -191,6 +191,20 @@ CREATE TABLE IF NOT EXISTS banned_words (
   status TEXT NOT NULL DEFAULT 'active',        -- active | off
   created_at TEXT DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS ads (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  placement TEXT NOT NULL DEFAULT 'top',        -- top (نوار بالای سایت) | corner (مربع گوشهٔ چپ)
+  title TEXT,
+  text TEXT,
+  image TEXT,
+  link TEXT,
+  cta_label TEXT,
+  bg TEXT,
+  sort INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'active',         -- active | hidden
+  created_at TEXT DEFAULT (datetime('now'))
+);
 `);
 
 /* ---------- مهاجرت‌های سبک: افزودن ستون‌ها به جدول‌های موجود ---------- */

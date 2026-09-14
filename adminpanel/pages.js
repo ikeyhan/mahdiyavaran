@@ -333,6 +333,21 @@
         { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], hidden: ["مخفی", "pend"] }, form: "select", options: { active: "فعال", hidden: "مخفی" } },
       ],
     },
+    ads: {
+      resource: "ads", title: "تبلیغ", query: "limit=100",
+      columns: [
+        { key: "id", label: "#", type: "id" },
+        { key: "image", label: "تصویر", type: "img", form: "image" },
+        { key: "placement", label: "جایگاه", type: "chip", map: { top: ["نوار بالا", "info"], corner: ["مربع گوشه", "ok"] }, form: "select", options: { top: "نوار بالای سایت", corner: "مربع گوشهٔ چپ" } },
+        { key: "title", label: "عنوان", type: "text", form: "text", required: true },
+        { key: "text", label: "متن", type: "long", form: "text" },
+        { key: "cta_label", label: "متن دکمه", type: "text", form: "text" },
+        { key: "link", label: "لینک", type: "mono", form: "text" },
+        { key: "bg", label: "رنگ", type: "text", form: "text" },
+        { key: "sort", label: "ترتیب", type: "int", form: "number" },
+        { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], hidden: ["مخفی", "pend"] }, form: "select", options: { active: "فعال", hidden: "مخفی" } },
+      ],
+    },
     banned: {
       resource: "bannedWords", title: "کلمهٔ ممنوعه", query: "limit=200",
       columns: [
