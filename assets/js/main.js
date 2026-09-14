@@ -355,3 +355,91 @@
   if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", initSlider); }
   else { initSlider(); }
 })();
+
+/* ===== Category mega-menu (اتم ۳۱۳ — Basalam-style) ===== */
+(function(){
+  var CATS = [
+    { name:"خواروبار و سوپرمارکت", icon:"grocery", subs:["برنج و حبوبات","روغن و چاشنی","کنسرو و غذای آماده","خشکبار و آجیل","چای و قهوه","نوشیدنی"] },
+    { name:"لامپ و روشنایی", icon:"lamp", subs:["لامپ LED","لامپ حبابی","مهتابی و خطی","ریسه و نور تزئینی","سرپیچ و کلید","پروژکتور"] },
+    { name:"نبات و آبنبات", icon:"candy", subs:["نبات چوبی","آبنبات میوه‌ای","شکلات","پاستیل و ژله","سوهان و گز","عسل و شیرینی سنتی"] },
+    { name:"کیک و کلوچه", icon:"bakery", subs:["کیک خامه‌ای","کلوچه سنتی","شیرینی خشک","بیسکویت","دسر","نان شیرین"] },
+    { name:"پوشاک زنانه", icon:"dress", subs:["مانتو و پالتو","شومیز و بلوز","شلوار و دامن","شال و روسری","کیف و کفش","لباس مجلسی"] },
+    { name:"خدمات حمل و نقل", icon:"transport", subs:["باربری","پیک موتوری","اسباب‌کشی","حمل بار سنگین","کرایه وانت","پست و مرسولات"] },
+    { name:"طلا و سکه", icon:"gold", subs:["انگشتر","گردنبند و زنجیر","دستبند و النگو","گوشواره","سکه و شمش","ست طلا"] },
+    { name:"باطری‌سازی", icon:"battery", subs:["باطری خودرو","باطری موتور","شارژر و کابل","دینام و استارت","خدمات نصب","باطری یو‌پی‌اس"] },
+    { name:"وکالت و حقوقی", icon:"legal", subs:["مشاوره حقوقی","دعاوی ملکی","خانواده و طلاق","کیفری","تنظیم قرارداد","ثبت شرکت"] },
+    { name:"بیمه", icon:"insurance", subs:["شخص ثالث","بیمه بدنه","بیمه عمر","بیمه درمان","آتش‌سوزی","مسئولیت"] },
+    { name:"لوازم‌التحریر", icon:"stationery", subs:["دفتر و کاغذ","خودکار و مداد","لوازم رنگ‌آمیزی","لوازم مهندسی","کوله و جامدادی","چسب و کاتر"] },
+    { name:"رستوران", icon:"restaurant", subs:["غذای ایرانی","فست‌فود","کبابی","غذای دریایی","غذای گیاهی","صبحانه"] },
+    { name:"هتل و مهمانسرا", icon:"hotel", subs:["هتل","هتل‌آپارتمان","سوئیت و ویلا","بومگردی","مهمانسرا","رزرو آنلاین"] },
+    { name:"لوازم ورزشی", icon:"sports", subs:["بدنسازی","دوچرخه و اسکوتر","کوهنوردی","ورزش‌های توپی","پوشاک ورزشی","مکمل ورزشی"] },
+    { name:"ظروف", icon:"dishware", subs:["سرویس غذاخوری","ظروف پخت‌وپز","لیوان و ماگ","ظروف سرو","یکبار مصرف","سرامیک و چینی"] },
+    { name:"دوربین مداربسته", icon:"cctv", subs:["دوربین بولت","دوربین دام","دستگاه DVR/NVR","پکیج کامل","نصب و راه‌اندازی","لوازم جانبی"] },
+    { name:"شیرآلات", icon:"faucet", subs:["شیر روشویی","شیر آشپزخانه","شیر دوش و حمام","علم دوش","شیر توکار","لوازم یدکی"] }
+  ];
+  var LINK = "products.html";
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  function initMega(){
+    var trigger = document.querySelector('.site-header .nav-main a[href="categories.html"]');
+    var header = document.querySelector('.site-header');
+    if(!trigger || !header) return;
+
+    var mega = document.createElement("div");
+    mega.className = "cat-mega";
+    mega.setAttribute("data-cat-mega","");
+    var listHtml = CATS.map(function(c,i){
+      return '<li class="cat-mega-item'+(i===0?' active':'')+'" data-i="'+i+'" role="button" tabindex="0">'+
+        '<svg class="icon"><use href="#icon-cat-'+c.icon+'"/></svg>'+
+        '<span>'+esc(c.name)+'</span>'+
+        '<svg class="icon chev"><use href="#icon-chevron-left"/></svg></li>';
+    }).join("");
+    mega.innerHTML =
+      '<div class="container"><div class="cat-mega-inner">'+
+        '<ul class="cat-mega-list">'+listHtml+'</ul>'+
+        '<div class="cat-mega-panel" data-panel></div>'+
+      '</div></div>';
+    header.appendChild(mega);
+
+    var panel = mega.querySelector("[data-panel]");
+    var items = Array.prototype.slice.call(mega.querySelectorAll(".cat-mega-item"));
+
+    function renderPanel(i){
+      var c = CATS[i];
+      panel.innerHTML =
+        '<div class="cat-mega-phead"><b>'+esc(c.name)+'</b>'+
+          '<a href="'+LINK+'">مشاهده همه <svg class="icon"><use href="#icon-chevron-left"/></svg></a></div>'+
+        '<div class="cat-mega-subs">'+
+          c.subs.map(function(s){ return '<a class="cat-mega-sub" href="'+LINK+'">'+esc(s)+'</a>'; }).join("")+
+        '</div>';
+      panel.classList.remove("swap"); void panel.offsetWidth; panel.classList.add("swap");
+    }
+    function setActive(i){
+      items.forEach(function(it,x){ it.classList.toggle("active", x===i); });
+      renderPanel(i);
+    }
+    items.forEach(function(it){
+      var i = +it.getAttribute("data-i");
+      it.addEventListener("mouseenter", function(){ setActive(i); });
+      it.addEventListener("focus", function(){ setActive(i); });
+      it.addEventListener("click", function(){ window.location.href = LINK; });
+      it.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); window.location.href = LINK; } });
+    });
+    renderPanel(0);
+
+    // open/close with hover intent
+    var closeTimer = null;
+    function open(){ if(closeTimer){ clearTimeout(closeTimer); closeTimer=null; } mega.classList.add("open"); trigger.setAttribute("aria-expanded","true"); }
+    function scheduleClose(){ if(closeTimer) clearTimeout(closeTimer); closeTimer = setTimeout(function(){ mega.classList.remove("open"); trigger.setAttribute("aria-expanded","false"); }, 160); }
+    trigger.setAttribute("aria-haspopup","true"); trigger.setAttribute("aria-expanded","false");
+    trigger.addEventListener("mouseenter", open);
+    trigger.addEventListener("mouseleave", scheduleClose);
+    trigger.addEventListener("focus", open);
+    mega.addEventListener("mouseenter", open);
+    mega.addEventListener("mouseleave", scheduleClose);
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape") mega.classList.remove("open"); });
+  }
+  if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", initMega); }
+  else { initMega(); }
+})();
