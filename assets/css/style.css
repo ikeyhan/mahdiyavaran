@@ -1068,8 +1068,9 @@ html[data-theme="dark"] .hero::before{ display:none; }
 .ad-corner-link img{ width:100%; height:100%; object-fit:cover; display:block; }
 .ad-corner-txt{ width:100%; height:100%; background:var(--grad-brand,linear-gradient(135deg,#0E7A38,#1FB055)); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; padding:10px; }
 .ad-corner-txt b{ font-size:1rem; font-weight:800; } .ad-corner-txt span{ font-size:.8rem; opacity:.92; }
-.ad-corner-x{ position:absolute; top:6px; left:6px; width:22px; height:22px; border-radius:50%; border:0; background:rgba(0,0,0,.45); color:#fff; font-size:1rem; line-height:1; cursor:pointer; display:grid; place-items:center; z-index:2; }
-.ad-corner-x:hover{ background:rgba(0,0,0,.7); }
+/* دکمهٔ بستن نامرئی، دقیقاً روی ضربدرِ طراحی‌شدهٔ مربع (بالا-چپ) */
+.ad-corner-x{ position:absolute; top:14%; left:12%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; border:0; background:transparent; color:transparent; font-size:0; cursor:pointer; z-index:3; transition:background var(--dur-fast) var(--ease); }
+.ad-corner-x:hover{ background:rgba(255,255,255,.16); }
 @media (max-width:600px){
   .ad-strip-text{ display:none; }
   .ad-corner{ left:12px; bottom:12px; width:96px; }
@@ -1089,8 +1090,9 @@ html[data-theme="dark"] .hero::before{ display:none; }
 .ad-banner-link:hover{ transform:translateY(-2px); }
 .ad-banner-link img{ display:block; width:100%; height:auto; border-radius:20px; }
 .ad-banner .ad-sheen{ position:absolute; top:0; left:-65%; width:45%; height:100%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent); transform:skewX(-18deg); pointer-events:none; animation:adSheen 5s ease-in-out infinite; }
-.ad-banner-x{ position:absolute; top:50%; left:1.6%; transform:translateY(-50%); width:38px; height:38px; border-radius:50%; border:0; background:rgba(6,30,16,.45); color:#fff; font-size:1.25rem; line-height:1; cursor:pointer; display:grid; place-items:center; z-index:3; transition:background var(--dur-fast) var(--ease); backdrop-filter:blur(2px); }
-.ad-banner-x:hover{ background:rgba(6,30,16,.72); }
+/* دکمهٔ بستن نامرئی، دقیقاً روی ضربدرِ طراحی‌شدهٔ خودِ بنر (بالا-چپ) */
+.ad-banner-x{ position:absolute; top:41%; left:2.8%; transform:translate(-50%,-50%); width:min(4vw,54px); height:min(4vw,54px); min-width:40px; min-height:40px; border-radius:50%; border:0; background:transparent; color:transparent; font-size:0; cursor:pointer; z-index:3; transition:background var(--dur-fast) var(--ease); }
+.ad-banner-x:hover{ background:rgba(255,255,255,.14); }
 @keyframes adDrop{ from{ opacity:0; transform:translateY(-18px); } to{ opacity:1; transform:none; } }
 @keyframes adSheen{ 0%,55%{ left:-65%; } 92%,100%{ left:130%; } }
 
