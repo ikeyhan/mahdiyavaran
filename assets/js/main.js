@@ -48,7 +48,7 @@
       e.preventDefault();
       btn.classList.toggle("active");
       var use = btn.querySelector("use");
-      if(use) use.setAttribute("href", btn.classList.contains("active") ? "assets/svg/icons.svg#icon-heart-filled" : "assets/svg/icons.svg#icon-heart");
+      if(use) use.setAttribute("href", btn.classList.contains("active") ? "#icon-heart-filled" : "#icon-heart");
     });
   });
 
