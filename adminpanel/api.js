@@ -87,6 +87,8 @@
     slides: crud("/slides"),
     bannedWords: crud("/banned-words"),
     ads: crud("/ads"),
+    offices: crud("/offices"),
+    officeServices: crud("/office-services"),
     resource: function (name) { return crud("/" + name); },
 
     articlesPublic: function () { return req("/articles/public"); },

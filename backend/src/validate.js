@@ -16,4 +16,23 @@ function required(obj, fields) {
   }
   return null;
 }
-module.exports = { str, int, oneOf, required };
+
+// اعتبارسنجی کد ملی ایران (الگوریتم رقم کنترلی رسمی)
+function isNationalCode(code) {
+  code = String(code == null ? '' : code).replace(/[^0-9]/g, '');
+  if (!/^\d{10}$/.test(code)) return false;
+  if (/^(\d)\1{9}$/.test(code)) return false; // ده رقم یکسان نامعتبر است
+  let sum = 0;
+  for (let i = 0; i < 9; i++) sum += parseInt(code[i], 10) * (10 - i);
+  const r = sum % 11;
+  const check = parseInt(code[9], 10);
+  return (r < 2) ? (check === r) : (check === (11 - r));
+}
+
+// اعتبارسنجی شمارهٔ موبایل ایران
+function isMobile(m) {
+  m = String(m == null ? '' : m).replace(/[^0-9]/g, '');
+  return /^09\d{9}$/.test(m);
+}
+
+module.exports = { str, int, oneOf, required, isNationalCode, isMobile };

@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const rateLimit = require('express-rate-limit');
 const db = require('../db');
 const { sign, requireAuth, logActivity, clientIp } = require('../auth');
-const { str } = require('../validate');
+const { str, isNationalCode, isMobile } = require('../validate');
 const banned = require('../banned');
 
 const router = express.Router();
@@ -94,6 +94,54 @@ router.post('/register', loginLimiter, (req, res) => {
   res.status(201).json({
     token,
     user: { id: admin.id, username: admin.username, name: admin.name, role: admin.role, seller_name: store },
+  });
+});
+
+// ثبت‌نام دفتر محله (عمومی) — با اعتبارسنجی کد ملی؛ در وضعیت «در انتظار تأیید»
+router.post('/register-office', loginLimiter, (req, res) => {
+  const office = str(req.body.office_name, 160).trim();
+  const manager = str(req.body.manager, 120).trim();
+  const area = str(req.body.area, 120).trim();
+  const city = str(req.body.city, 60).trim();
+  const address = str(req.body.address, 300).trim();
+  const phone = str(req.body.phone, 20).trim();
+  const nationalCode = str(req.body.national_code, 12).trim();
+  const license = str(req.body.license_no, 60).trim();
+  const username = str(req.body.username, 60).trim().toLowerCase();
+  const password = str(req.body.password, 200);
+
+  if (!office || !username || !password || !manager || !nationalCode)
+    return res.status(400).json({ error: 'نام دفتر، مسئول، کد ملی، نام کاربری و رمز عبور الزامی است.' });
+  if (password.length < 6)
+    return res.status(400).json({ error: 'رمز عبور باید حداقل ۶ کاراکتر باشد.' });
+  if (!/^[a-zA-Z0-9_.]{3,}$/.test(username))
+    return res.status(400).json({ error: 'نام کاربری فقط حروف و عدد انگلیسی و حداقل ۳ کاراکتر باشد.' });
+  // اعتبارسنجی کد ملی (رقم کنترلی رسمی)
+  if (!isNationalCode(nationalCode))
+    return res.status(400).json({ error: 'کد ملی واردشده نامعتبر است. لطفاً یک کد ملی معتبر وارد کنید.' });
+  if (phone && !isMobile(phone))
+    return res.status(400).json({ error: 'شمارهٔ موبایل نامعتبر است (نمونهٔ درست: 09xxxxxxxxx).' });
+
+  const w = banned.findBanned(office, manager, username);
+  if (w) return res.status(400).json({ error: 'استفاده از کلمهٔ «' + w + '» مجاز نیست.' });
+  if (db.prepare('SELECT id FROM admins WHERE username=?').get(username))
+    return res.status(409).json({ error: 'این نام کاربری قبلاً ثبت شده است.' });
+
+  const hash = bcrypt.hashSync(password, 10);
+  const info = db.prepare(
+    "INSERT INTO admins (username,password_hash,name,role,status,phone,office_name) VALUES (?,?,?,?,?,?,?)"
+  ).run(username, hash, manager || office, 'office', 'active', phone, office);
+  db.prepare(
+    "INSERT INTO offices (name,manager,area,city,address,phone,national_code,license_no,owner,verified,status,rating) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+  ).run(office, manager, area, city, address, phone, nationalCode, license, username, 0, 'pending', 5);
+  db.prepare('INSERT INTO activity_log (actor,action,target,ip) VALUES (?,?,?,?)')
+    .run(username, 'ثبت‌نام دفتر محله', office, clientIp(req));
+
+  const admin = db.prepare('SELECT * FROM admins WHERE id=?').get(info.lastInsertRowid);
+  const token = sign(admin);
+  res.status(201).json({
+    token,
+    user: { id: admin.id, username: admin.username, name: admin.name, role: admin.role, office_name: office },
   });
 });
 

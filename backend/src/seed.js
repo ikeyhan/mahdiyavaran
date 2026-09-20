@@ -224,6 +224,25 @@ function seed() {
     ad.run('corner', 'پیشنهاد ویژهٔ چرم', 'تا ۲۰٪ تخفیف', 'assets/img/ads/corner-ad.jpg', 'products.html', 'مشاهده', '', 1, 'active');
   }
 
+  // دفاتر محلات (نمونه) — کدهای ملی معتبر (رقم کنترلی صحیح)
+  if (db.prepare('SELECT COUNT(*) c FROM offices').get().c === 0) {
+    const of = db.prepare('INSERT INTO offices (name,manager,area,city,address,phone,national_code,license_no,owner,verified,status,rating,bio) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)');
+    of.run('دفتر محله ولیعصر', 'علی رضایی', 'ولیعصر', 'تهران', 'خیابان ولیعصر، کوچهٔ ۵', '09121234567', '0012345679', 'MJ-1001', 'daftar', 1, 'verified', 4.9, 'دفتر خدمات محلهٔ ولیعصر؛ رسیدگی به امور و درخواست‌های شهروندان.');
+    of.run('دفتر محله سعادت‌آباد', 'مریم کریمی', 'سعادت‌آباد', 'تهران', 'میدان کاج', '09122345678', '1234567891', 'MJ-1002', '', 1, 'verified', 4.8, 'دفتر خدمات محلهٔ سعادت‌آباد.');
+    of.run('دفتر محله نارمک', 'حسین محمدی', 'نارمک', 'تهران', 'میدان هفت‌حوض', '09123456789', '0499370899', 'MJ-1003', '', 0, 'pending', 5, 'در انتظار بررسی و تأیید اعتبارسنجی.');
+  }
+
+  // حساب نمونهٔ دفتر محله (username: daftar / pass: daftar1234)
+  if (!db.prepare("SELECT id FROM admins WHERE username='daftar'").get()) {
+    const hash = bcrypt.hashSync('daftar1234', 10);
+    db.prepare("INSERT INTO admins (username,password_hash,name,role,status,phone,office_name) VALUES (?,?,?,?,?,?,?)")
+      .run('daftar', hash, 'دفتر محله ولیعصر', 'office', 'active', '09121234567', 'دفتر محله ولیعصر');
+    db.prepare("UPDATE offices SET owner='daftar' WHERE name='دفتر محله ولیعصر'").run();
+    const os = db.prepare("INSERT INTO office_services (title,category,office,description,price,owner,status) VALUES (?,?,?,?,?,?,?)");
+    os.run('صدور و تمدید کارت محله', 'خدمات هویتی', 'دفتر محله ولیعصر', 'صدور و تمدید کارت شهروندی محله با ارائهٔ مدارک شناسایی.', 0, 'daftar', 'active');
+    os.run('ثبت درخواست خدمات شهری', 'خدمات شهری', 'دفتر محله ولیعصر', 'ثبت و پیگیری درخواست‌های رفع سد معبر، نظافت و روشنایی معابر.', 0, 'daftar', 'active');
+  }
+
   // کلمات ممنوعه (نمونه)
   if (db.prepare('SELECT COUNT(*) c FROM banned_words').get().c === 0) {
     const bw = db.prepare('INSERT INTO banned_words (word,note,status) VALUES (?,?,?)');

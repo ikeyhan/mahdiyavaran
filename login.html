@@ -154,7 +154,7 @@
       <button class="btn-icon menu-toggle" data-drawer-open aria-label="منو"><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
-  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
+  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
@@ -168,7 +168,7 @@
   <nav class="nav-main">
     <a href="index.html">خانه</a>
     <a href="categories.html">دسته‌بندی‌ها</a>
-    <a href="products.html">محصولات</a>
+    <a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a>
     
     <a href="offers.html">تخفیف‌ها</a>
     <a href="blog.html">بلاگ</a>
@@ -188,6 +188,7 @@
     <div class="auth-tabs" data-auth-tabs>
       <button class="active" data-auth="login">ورود</button>
       <button data-auth="signup">ثبت‌نام فروشنده</button>
+      <button data-auth="office">ثبت‌نام دفتر</button>
     </div>
 
     <div class="auth-err" id="authErr" hidden></div>
@@ -212,6 +213,25 @@
       <div class="field" style="margin-bottom:14px;"><label>شماره موبایل</label><input type="text" id="suPhone" placeholder="۰۹xxxxxxxxx"></div>
       <div class="field" style="margin-bottom:18px;"><label>رمز عبور</label><input type="password" id="suPass" placeholder="حداقل ۶ کاراکتر" autocomplete="new-password"></div>
       <button type="button" id="signupBtn" class="btn btn-primary btn-block btn-lg">ثبت‌نام و ساخت فروشگاه</button>
+    </div>
+
+    <div data-auth-panel="office" hidden>
+      <p class="faint" style="font-size:.82rem; margin-bottom:14px; line-height:1.8;">ثبت‌نام دفتر خدمات محله. کد ملی مسئول به‌صورت خودکار اعتبارسنجی می‌شود و دفتر پس از تأیید مدیر، فعال و در فهرست عمومی نمایش داده می‌شود.</p>
+      <div class="field" style="margin-bottom:14px;"><label>نام دفتر</label><input type="text" id="ofStore" placeholder="مثلاً دفتر محله ولیعصر"></div>
+      <div class="flex gap-8" style="margin-bottom:14px;">
+        <div class="field" style="flex:1;margin:0;"><label>مسئول دفتر</label><input type="text" id="ofManager" placeholder="نام مسئول"></div>
+        <div class="field" style="flex:1;margin:0;"><label>کد ملی مسئول</label><input type="text" id="ofNat" placeholder="۱۰ رقم" inputmode="numeric" style="direction:ltr;text-align:left;"></div>
+      </div>
+      <div class="flex gap-8" style="margin-bottom:14px;">
+        <div class="field" style="flex:1;margin:0;"><label>محله</label><input type="text" id="ofArea" placeholder="محله"></div>
+        <div class="field" style="flex:1;margin:0;"><label>شهر</label><input type="text" id="ofCity" placeholder="شهر"></div>
+      </div>
+      <div class="field" style="margin-bottom:14px;"><label>نام کاربری (لاتین)</label><input type="text" id="ofUser" placeholder="username" autocomplete="username" style="direction:ltr;text-align:left;"></div>
+      <div class="flex gap-8" style="margin-bottom:14px;">
+        <div class="field" style="flex:1;margin:0;"><label>شماره موبایل</label><input type="text" id="ofPhone" placeholder="۰۹xxxxxxxxx"></div>
+        <div class="field" style="flex:1;margin:0;"><label>رمز عبور</label><input type="password" id="ofPass" placeholder="حداقل ۶ کاراکتر" autocomplete="new-password"></div>
+      </div>
+      <button type="button" id="officeBtn" class="btn btn-primary btn-block btn-lg">ثبت‌نام دفتر محله</button>
     </div>
 
     <div class="auth-sep">یا ادامه با</div>
@@ -239,7 +259,7 @@
         </div>
       </div>
       <div class="footer-col"><h4>بازارگاه</h4><ul>
-        <li><a href="products.html">محصولات</a></li>
+        <li><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a></li>
         <li><a href="categories.html">دسته‌بندی‌ها</a></li>
         <li><a href="sellers.html">فروشندگان</a></li>
         <li><a href="offers.html">تخفیف‌ها و حراج</a></li>
@@ -273,12 +293,16 @@
 <script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-  // اگر فروشندهٔ واردشده روی صفحهٔ ورود آمد، به پنل خودش برود
-  if (window.SiteAuth && SiteAuth.isSeller()) location.replace('seller-dashboard.html');
+  // اگر کاربر واردشده روی صفحهٔ ورود آمد، به پنل خودش برود
+  if (window.SiteAuth && SiteAuth.isOffice()) location.replace('office-dashboard.html');
+  else if (window.SiteAuth && SiteAuth.isSeller()) location.replace('seller-dashboard.html');
 
   function showErr(msg){ var e=document.getElementById('authErr'); if(!e) return; e.textContent=msg; e.hidden=false; }
   function hideErr(){ var e=document.getElementById('authErr'); if(e) e.hidden=true; }
-  function afterAuth(user){ location.href = (user && user.role==='seller') ? 'seller-dashboard.html' : 'dashboard.html'; }
+  function afterAuth(user){
+    var role = user && user.role;
+    location.href = role==='office' ? 'office-dashboard.html' : role==='seller' ? 'seller-dashboard.html' : 'dashboard.html';
+  }
 
   var loginBtn=document.getElementById('loginBtn');
   if(loginBtn) loginBtn.addEventListener('click', async function(){
@@ -306,6 +330,25 @@
     signupBtn.disabled=true; var t=signupBtn.textContent; signupBtn.textContent='در حال ثبت‌نام…';
     try { var user=await SiteAuth.register(payload); afterAuth(user); }
     catch(e){ showErr(e.message||'ثبت‌نام ناموفق بود.'); signupBtn.disabled=false; signupBtn.textContent=t; }
+  });
+
+  var officeBtn=document.getElementById('officeBtn');
+  if(officeBtn) officeBtn.addEventListener('click', async function(){
+    hideErr();
+    var payload={
+      office_name:document.getElementById('ofStore').value.trim(),
+      manager:document.getElementById('ofManager').value.trim(),
+      national_code:document.getElementById('ofNat').value.trim(),
+      area:document.getElementById('ofArea').value.trim(),
+      city:document.getElementById('ofCity').value.trim(),
+      username:document.getElementById('ofUser').value.trim(),
+      phone:document.getElementById('ofPhone').value.trim(),
+      password:document.getElementById('ofPass').value,
+    };
+    if(!payload.office_name||!payload.manager||!payload.username||!payload.password){ showErr('نام دفتر، مسئول، نام کاربری و رمز عبور الزامی است.'); return; }
+    officeBtn.disabled=true; var t=officeBtn.textContent; officeBtn.textContent='در حال ثبت‌نام…';
+    try { var user=await SiteAuth.registerOffice(payload); afterAuth(user); }
+    catch(e){ showErr(e.message||'ثبت‌نام ناموفق بود.'); officeBtn.disabled=false; officeBtn.textContent=t; }
   });
 </script>
 <script>

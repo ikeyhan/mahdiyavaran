@@ -22,6 +22,23 @@ router.get('/ads', (req, res) => {
   });
 });
 
+// دفاتر محلات تأییدشده برای نمایش در سایت
+router.get('/offices', (req, res) => {
+  const items = db.prepare(
+    "SELECT id,name,manager,area,city,address,phone,bio,avatar,rating FROM offices WHERE status='verified' ORDER BY rating DESC, id DESC LIMIT 48"
+  ).all();
+  res.json({ items });
+});
+
+// خدمات یک دفتر (عمومی) — با شناسهٔ مالک
+router.get('/office-services', (req, res) => {
+  const owner = String(req.query.owner || '').slice(0, 60);
+  const rows = owner
+    ? db.prepare("SELECT id,title,category,office,description,price FROM office_services WHERE status='active' AND owner=? ORDER BY id DESC").all(owner)
+    : db.prepare("SELECT id,title,category,office,description,price FROM office_services WHERE status='active' ORDER BY id DESC LIMIT 60").all();
+  res.json({ items: rows });
+});
+
 // فروشندگان تأییدشده برای نمایش در سایت
 router.get('/sellers', (req, res) => {
   const items = db.prepare(

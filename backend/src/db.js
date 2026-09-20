@@ -192,6 +192,38 @@ CREATE TABLE IF NOT EXISTS banned_words (
   created_at TEXT DEFAULT (datetime('now'))
 );
 
+CREATE TABLE IF NOT EXISTS offices (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,                            -- نام دفتر محله
+  manager TEXT,                                  -- مسئول دفتر
+  area TEXT,                                     -- محله / منطقه
+  city TEXT,
+  address TEXT,
+  phone TEXT,
+  national_code TEXT,                            -- کد ملی مسئول (اعتبارسنجی)
+  license_no TEXT,                               -- شمارهٔ مجوز
+  bio TEXT,
+  avatar TEXT,
+  owner TEXT,                                    -- نام‌کاربری حساب دفتر
+  verified INTEGER NOT NULL DEFAULT 0,           -- ۰ = تأییدنشده، ۱ = تأییدشده
+  status TEXT NOT NULL DEFAULT 'pending',        -- pending | verified | rejected | blocked
+  verify_note TEXT,                              -- یادداشت اعتبارسنجی (دلیل رد)
+  rating REAL NOT NULL DEFAULT 5,
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS office_services (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  category TEXT,
+  office TEXT,                                   -- نام دفتر
+  description TEXT,
+  price INTEGER NOT NULL DEFAULT 0,
+  owner TEXT,                                    -- نام‌کاربری حساب دفتر
+  status TEXT NOT NULL DEFAULT 'active',         -- active | inactive
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS ads (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   placement TEXT NOT NULL DEFAULT 'top',        -- top (نوار بالای سایت) | corner (مربع گوشهٔ چپ)
@@ -219,5 +251,6 @@ addColumn('sellers', 'avatar', 'TEXT');
 addColumn('sellers', 'phone', 'TEXT');
 addColumn('admins', 'seller_name', 'TEXT');        // نام فروشگاه برای نقش فروشنده
 addColumn('admins', 'phone', 'TEXT');
+addColumn('admins', 'office_name', 'TEXT');        // نام دفتر برای نقش office
 
 module.exports = db;

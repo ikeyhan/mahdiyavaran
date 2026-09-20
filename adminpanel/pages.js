@@ -174,7 +174,7 @@
     });
     listTable.querySelectorAll("[data-approve]").forEach(function (b) {
       b.onclick = async function () {
-        try { await window.AtomAPI[cfg.resource].update(+b.getAttribute("data-approve"), { status: "approved" }); toast("تأیید شد ✓"); reload(cfg); }
+        try { await window.AtomAPI[cfg.resource].update(+b.getAttribute("data-approve"), { status: cfg.approveStatus || "approved" }); toast("تأیید شد ✓"); reload(cfg); }
         catch (e) { toast(e.message, true); }
       };
     });
@@ -346,6 +346,20 @@
         { key: "bg", label: "رنگ", type: "text", form: "text" },
         { key: "sort", label: "ترتیب", type: "int", form: "number" },
         { key: "status", label: "وضعیت", type: "chip", map: { active: ["فعال", "ok"], hidden: ["مخفی", "pend"] }, form: "select", options: { active: "فعال", hidden: "مخفی" } },
+      ],
+    },
+    localoffices: {
+      resource: "offices", title: "دفتر محله", query: "limit=100", approve: true, approveStatus: "verified",
+      columns: [
+        { key: "name", label: "دفتر", type: "sub", sub: "area", grad: "135deg,#0E7A38,#37C463", form: "text", required: true },
+        { key: "manager", label: "مسئول", type: "text", form: "text" },
+        { key: "area", label: "محله", type: "text", form: "text" },
+        { key: "city", label: "شهر", type: "text", form: "text" },
+        { key: "phone", label: "تماس", type: "ltr", form: "text" },
+        { key: "national_code", label: "کد ملی", type: "mono", form: "text" },
+        { key: "license_no", label: "مجوز", type: "mono", form: "text" },
+        { key: "status", label: "اعتبارسنجی", type: "chip", map: { pending: ["در انتظار", "pend"], verified: ["تأییدشده", "ok"], rejected: ["رد شده", "err"], blocked: ["مسدود", "err"] }, form: "select", options: { pending: "در انتظار", verified: "تأییدشده", rejected: "رد شده", blocked: "مسدود" } },
+        { key: "verify_note", label: "یادداشت", type: "text", form: "text" },
       ],
     },
     banned: {

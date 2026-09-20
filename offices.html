@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>داشبورد مشتری | اتم ۳۱۳</title>
+<title>دفاتر محلات | اتم ۳۱۳</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="assets/svg/logo-mark.svg" type="image/svg+xml">
@@ -13,18 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<style>
-  .msg-item{ display:flex; gap:14px; padding:16px; border-radius:var(--radius-sm); transition:background .2s; }
-  .msg-item:hover{ background:var(--bg-elevated); }
-  .msg-item .ava{ width:46px; height:46px; border-radius:50%; flex-shrink:0; }
-  .msg-item.unread{ background:var(--gold-050); }
-  .notif-item{ display:flex; gap:14px; padding:16px 0; border-bottom:1px solid color-mix(in srgb, var(--text-1) 8%, transparent); }
-  .notif-item .ic{ width:40px; height:40px; border-radius:12px; background:var(--bg-elevated); box-shadow:var(--shadow-inset-sm); display:flex; align-items:center; justify-content:center; color:var(--indigo-500); flex-shrink:0; }
-  .notif-item .ic .icon{ width:18px; height:18px; }
-  .fav-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  @media (max-width:980px){ .fav-grid{ grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:640px){ .fav-grid{ grid-template-columns:1fr; } }
-</style>
+
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -165,7 +154,7 @@
       <button class="btn-icon menu-toggle" data-drawer-open aria-label="منو"><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
-  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
+  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="offices.html" class="active">دفاتر محلات</a><a href="sellers.html">فروشندگان</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
@@ -192,122 +181,41 @@
 </aside>
 
 <main>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs"><a href="index.html">خانه</a><svg class="icon"><use href="#icon-chevron-left"/></svg><span>دفاتر محلات</span></nav>
+    <h1>دفاتر محلات تأییدشده</h1>
+    <p>دفاتر خدمات محلی احراز هویت و اعتبارسنجی‌شده؛ برای دریافت خدمات محلهٔ خود به دفتر مربوطه مراجعه کنید.</p>
+    <a href="login.html" class="btn btn-primary" style="margin-top:16px;"><svg class="icon"><use href="#icon-shield"/></svg> ثبت‌نام دفتر محله</a>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
-    <div class="dash-layout">
-      <aside class="dash-side">
-        <div class="dash-profile">
-          <div class="ava ph-4" style="border-radius:50%;"></div>
-          <b>سارا محمدی</b>
-          <span class="faint" style="font-size:.76rem;">عضو از ۱۴۰۱</span>
-        </div>
-        <nav class="dash-nav" data-dash-nav>
-          <a href="#" class="active" data-dash-tab="overview"><svg class="icon"><use href="#icon-dashboard"/></svg> نمای کلی</a>
-          <a href="#" data-dash-tab="orders"><svg class="icon"><use href="#icon-box"/></svg> سفارش‌های من</a>
-          <a href="#" data-dash-tab="favorites"><svg class="icon"><use href="#icon-heart"/></svg> علاقه‌مندی‌ها</a>
-          <a href="#" data-dash-tab="messages"><svg class="icon"><use href="#icon-chat"/></svg> پیام‌ها</a>
-          <a href="#" data-dash-tab="notifications"><svg class="icon"><use href="#icon-bell"/></svg> اعلان‌ها</a>
-          <a href="#" data-dash-tab="profile"><svg class="icon"><use href="#icon-settings"/></svg> تنظیمات پروفایل</a>
-          <a href="index.html" style="margin-top:10px; border-top:1px solid color-mix(in srgb, var(--text-1) 8%, transparent); padding-top:16px;"><svg class="icon"><use href="#icon-logout"/></svg> خروج از حساب</a>
-        </nav>
-      </aside>
-
-      <div class="dash-main">
-
-        <div data-dash-panel="overview">
-          <h1 class="h-2" style="margin-bottom:20px;">سلام سارا، خوش برگشتی 👋</h1>
-          <div class="dash-cards reveal">
-            <div class="dash-card"><div class="top"><div class="ic"><svg class="icon"><use href="#icon-box"/></svg></div><span class="trend-up"><svg class="icon"><use href="#icon-trending-up"/></svg> ۱۲٪</span></div><b>۲۴</b><span>کل سفارش‌ها</span></div>
-            <div class="dash-card"><div class="top"><div class="ic"><svg class="icon"><use href="#icon-truck"/></svg></div></div><b>۳</b><span>در حال ارسال</span></div>
-            <div class="dash-card"><div class="top"><div class="ic"><svg class="icon"><use href="#icon-heart"/></svg></div></div><b>۱۸</b><span>علاقه‌مندی</span></div>
-            <div class="dash-card"><div class="top"><div class="ic"><svg class="icon"><use href="#icon-wallet"/></svg></div></div><b>۴۲۰,۰۰۰ ت</b><span>کیف پول</span></div>
-          </div>
-
-          <div class="panel reveal" style="margin-top:24px;">
-            <div class="panel-head"><h3 class="h-3">آخرین سفارش‌ها</h3><a href="#" data-dash-tab-link="orders" class="btn btn-sm">مشاهده همه</a></div>
-            <div style="overflow-x:auto;">
-            <table class="dtable">
-              <thead><tr><th>محصول</th><th>تاریخ</th><th>مبلغ</th><th>وضعیت</th></tr></thead>
-              <tbody>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-2"></div> کیف چرم طبیعی</td><td>۱۴۰۴/۰۶/۰۹</td><td>۲,۴۵۰,۰۰۰ ت</td><td><span class="status-chip ok">تحویل شد</span></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-1"></div> گلیم دستباف کرمان</td><td>۱۴۰۴/۰۶/۰۵</td><td>۱,۸۹۰,۰۰۰ ت</td><td><span class="status-chip pending">در حال ارسال</span></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-3"></div> طراحی لوگو حرفه‌ای</td><td>۱۴۰۴/۰۵/۲۸</td><td>۹۵۰,۰۰۰ ت</td><td><span class="status-chip ok">تحویل شد</span></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-6"></div> فرش ماشینی ۶ متری</td><td>۱۴۰۴/۰۵/۲۰</td><td>۳,۹۰۰,۰۰۰ ت</td><td><span class="status-chip cancel">مرجوع شده</span></td></tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-
-        <div data-dash-panel="orders" hidden>
-          <h1 class="h-2" style="margin-bottom:20px;">سفارش‌های من</h1>
-          <div class="panel reveal">
-            <div style="overflow-x:auto;">
-            <table class="dtable">
-              <thead><tr><th>محصول</th><th>فروشنده</th><th>تاریخ</th><th>مبلغ</th><th>وضعیت</th><th></th></tr></thead>
-              <tbody>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-2"></div> کیف چرم طبیعی</td><td>آترا چرم</td><td>۱۴۰۴/۰۶/۰۹</td><td>۲,۴۵۰,۰۰۰ ت</td><td><span class="status-chip ok">تحویل شد</span></td><td><button class="btn btn-sm">جزئیات</button></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-1"></div> گلیم دستباف کرمان</td><td>هنرکده پارسیان</td><td>۱۴۰۴/۰۶/۰۵</td><td>۱,۸۹۰,۰۰۰ ت</td><td><span class="status-chip pending">در حال ارسال</span></td><td><button class="btn btn-sm">پیگیری</button></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-3"></div> طراحی لوگو حرفه‌ای</td><td>استودیو نگاره</td><td>۱۴۰۴/۰۵/۲۸</td><td>۹۵۰,۰۰۰ ت</td><td><span class="status-chip ok">تحویل شد</span></td><td><button class="btn btn-sm">جزئیات</button></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-6"></div> فرش ماشینی ۶ متری</td><td>فرش ایران</td><td>۱۴۰۴/۰۵/۲۰</td><td>۳,۹۰۰,۰۰۰ ت</td><td><span class="status-chip cancel">مرجوع شده</span></td><td><button class="btn btn-sm">جزئیات</button></td></tr>
-                <tr><td class="flex gap-12"><div class="prow-thumb ph-7"></div> سرویس چای‌خوری سرامیکی</td><td>سفال سبز</td><td>۱۴۰۴/۰۵/۱۲</td><td>۱,۲۴۰,۰۰۰ ت</td><td><span class="status-chip ok">تحویل شد</span></td><td><button class="btn btn-sm">جزئیات</button></td></tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-
-        <div data-dash-panel="favorites" hidden>
-          <h1 class="h-2" style="margin-bottom:20px;">علاقه‌مندی‌های من</h1>
-          <div class="fav-grid reveal">
-            <article class="prod-card"><div class="prod-thumb"><div class="ph ph-2"></div><button class="wish-btn active" data-wish><svg class="icon"><use href="#icon-heart-filled"/></svg></button></div>
-              <div class="prod-body"><span class="prod-cat">پوشاک</span><h3 class="prod-title">کیف چرم طبیعی دست‌دوز</h3><div class="prod-foot"><div class="price"><b>۲,۴۵۰,۰۰۰ ت</b></div><button class="add-btn"><svg class="icon"><use href="#icon-cart"/></svg></button></div></div>
-            </article>
-            <article class="prod-card"><div class="prod-thumb"><div class="ph ph-1"></div><button class="wish-btn active" data-wish><svg class="icon"><use href="#icon-heart-filled"/></svg></button></div>
-              <div class="prod-body"><span class="prod-cat">صنایع‌دستی</span><h3 class="prod-title">گلیم دستباف سنتی کرمان</h3><div class="prod-foot"><div class="price"><b>۱,۸۹۰,۰۰۰ ت</b></div><button class="add-btn"><svg class="icon"><use href="#icon-cart"/></svg></button></div></div>
-            </article>
-            <article class="prod-card"><div class="prod-thumb"><div class="ph ph-4"></div><button class="wish-btn active" data-wish><svg class="icon"><use href="#icon-heart-filled"/></svg></button></div>
-              <div class="prod-body"><span class="prod-cat">لوازم خانه</span><h3 class="prod-title">سرویس چای‌خوری سرامیکی</h3><div class="prod-foot"><div class="price"><b>۱,۲۴۰,۰۰۰ ت</b></div><button class="add-btn"><svg class="icon"><use href="#icon-cart"/></svg></button></div></div>
-            </article>
-          </div>
-        </div>
-
-        <div data-dash-panel="messages" hidden>
-          <h1 class="h-2" style="margin-bottom:20px;">پیام‌ها</h1>
-          <div class="panel reveal">
-            <div class="msg-item unread"><div class="ava ph-2"></div><div style="flex:1;"><div class="flex between"><b style="font-size:.88rem;">فروشگاه آترا چرم</b><span class="faint" style="font-size:.72rem;">۱۰ دقیقه پیش</span></div><p class="muted" style="font-size:.83rem; margin:4px 0 0;">سفارش شما در حال آماده‌سازی برای ارسال است...</p></div></div>
-            <div class="msg-item"><div class="ava ph-7"></div><div style="flex:1;"><div class="flex between"><b style="font-size:.88rem;">پشتیبانی اتم</b><span class="faint" style="font-size:.72rem;">دیروز</span></div><p class="muted" style="font-size:.83rem; margin:4px 0 0;">مشکل شما با موفقیت برطرف شد. تشکر از صبوری شما.</p></div></div>
-            <div class="msg-item"><div class="ava ph-4"></div><div style="flex:1;"><div class="flex between"><b style="font-size:.88rem;">استودیو نگاره</b><span class="faint" style="font-size:.72rem;">۳ روز پیش</span></div><p class="muted" style="font-size:.83rem; margin:4px 0 0;">فایل نهایی طراحی لوگو ارسال شد، لطفاً بررسی بفرمایید.</p></div></div>
-          </div>
-        </div>
-
-        <div data-dash-panel="notifications" hidden>
-          <h1 class="h-2" style="margin-bottom:20px;">اعلان‌ها</h1>
-          <div class="panel reveal">
-            <div class="notif-item"><div class="ic"><svg class="icon"><use href="#icon-truck"/></svg></div><div><b style="font-size:.86rem; display:block;">سفارش شما ارسال شد</b><span class="faint" style="font-size:.78rem;">گلیم دستباف کرمان · ۲ ساعت پیش</span></div></div>
-            <div class="notif-item"><div class="ic"><svg class="icon"><use href="#icon-percent"/></svg></div><div><b style="font-size:.86rem; display:block;">تخفیف ویژه برای شما فعال شد</b><span class="faint" style="font-size:.78rem;">۲۰٪ تخفیف روی دسته پوشاک · دیروز</span></div></div>
-            <div class="notif-item"><div class="ic"><svg class="icon"><use href="#icon-badge-check"/></svg></div><div><b style="font-size:.86rem; display:block;">حساب شما تأیید شد</b><span class="faint" style="font-size:.78rem;">۳ روز پیش</span></div></div>
-          </div>
-        </div>
-
-        <div data-dash-panel="profile" hidden>
-          <h1 class="h-2" style="margin-bottom:20px;">تنظیمات پروفایل</h1>
-          <div class="panel reveal">
-            <div class="grid grid-2">
-              <div class="field"><label>نام و نام‌خانوادگی</label><input type="text" value="سارا محمدی"></div>
-              <div class="field"><label>شماره موبایل</label><input type="text" value="۰۹۱۲۳۴۵۶۷۸۹"></div>
-              <div class="field"><label>ایمیل</label><input type="email" value="sara.mohammadi@email.com"></div>
-              <div class="field"><label>شهر</label><input type="text" value="تهران"></div>
-            </div>
-            <div class="field" style="margin-top:20px;"><label>آدرس</label><textarea>تهران، خیابان ولیعصر، پلاک ۱۲۰</textarea></div>
-            <div class="flex gap-12" style="margin-top:22px;"><button class="btn btn-primary">ذخیره تغییرات</button><button class="btn btn-ghost">انصراف</button></div>
-          </div>
-        </div>
-
+    <div class="sort-bar reveal">
+      <div class="sort-opts"><span class="lbl">مرتب‌سازی:</span>
+        <button class="active">برترین</button><button>پرفروش‌ترین</button><button>جدیدترین</button><button>بیشترین امتیاز</button>
       </div>
+      <span class="result-count">دفاتر فعال محله</span>
+    </div>
+    <div class="seller-grid reveal" id="officeGrid"><div class="seller-card"><div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">و</div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div><b>دفتر محله ولیعصر</b><span class="role">محلهٔ ولیعصر</span><div class="seller-meta"><div><b>۴.۹</b><span>امتیاز</span></div><div><b>ولیعصر</b><span>محله</span></div><div><b>علی رضایی</b><span>مسئول</span></div></div></div><div class="seller-card"><div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">س</div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div><b>دفتر محله سعادت‌آباد</b><span class="role">محلهٔ سعادت‌آباد</span><div class="seller-meta"><div><b>۴.۸</b><span>امتیاز</span></div><div><b>سعادت‌آباد</b><span>محله</span></div><div><b>مریم کریمی</b><span>مسئول</span></div></div></div><div class="seller-card"><div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">ن</div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div><b>دفتر محله نارمک</b><span class="role">محلهٔ نارمک</span><div class="seller-meta"><div><b>۴.۷</b><span>امتیاز</span></div><div><b>نارمک</b><span>محله</span></div><div><b>حسین محمدی</b><span>مسئول</span></div></div></div></div>
+    <div class="pagination reveal">
+      <a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">…</a><a href="#">۲۰</a><a href="#"><svg class="icon"><use href="#icon-chevron-left"/></svg></a>
+    </div>
+
+    <div class="banner reveal" style="margin-top:40px;">
+      <div>
+        <span class="chip" style="background:rgba(255,255,255,.18);color:#fff;">فرصت طلایی فروش</span>
+        <h2 class="h-1" style="margin-top:14px;">شما هم فروشنده اتم شوید</h2>
+        <p>در کمتر از ۱۰ دقیقه فروشگاه بسازید و به میلیون‌ها مشتری دسترسی پیدا کنید.</p>
+        <div class="hero-cta"><a href="seller-dashboard.html" class="btn btn-primary">شروع فروش رایگان</a><a href="seller.html" class="btn btn-ghost" style="color:#fff;">نمونه فروشگاه</a></div>
+      </div>
+      <div class="banner-deco"><div class="bd"><svg class="icon"><use href="#icon-trending-up"/></svg></div><div class="bd"><svg class="icon"><use href="#icon-users"/></svg></div><div class="bd"><svg class="icon"><use href="#icon-wallet"/></svg></div></div>
     </div>
   </div>
 </section>
+
 </main>
 
 <footer class="site-footer">
@@ -354,25 +262,35 @@
   </div>
 </footer>
 
+<button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
 <script src="assets/js/main.js"></script>
 <script>
-  document.querySelectorAll('[data-dash-tab]').forEach(function(link){
-    link.addEventListener('click', function(e){
-      e.preventDefault();
-      document.querySelectorAll('[data-dash-tab]').forEach(function(l){ l.classList.remove('active'); });
-      link.classList.add('active');
-      var key = link.getAttribute('data-dash-tab');
-      document.querySelectorAll('[data-dash-panel]').forEach(function(p){ p.hidden = p.getAttribute('data-dash-panel') !== key; });
-      window.scrollTo({top:0,behavior:'smooth'});
-    });
-  });
-  document.querySelectorAll('[data-dash-tab-link]').forEach(function(link){
-    link.addEventListener('click', function(e){
-      e.preventDefault();
-      var key = link.getAttribute('data-dash-tab-link');
-      document.querySelector('[data-dash-tab="'+key+'"]').click();
-    });
-  });
+  var b=document.getElementById('toTopBtn');
+  window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+</script>
+<script src="assets/js/site-auth.js"></script>
+<script>
+(async function(){
+  var grid=document.getElementById('officeGrid'); if(!grid) return;
+  var FA="۰۱۲۳۴۵۶۷۸۹"; function fa(s){return String(s==null?'':s).replace(/[0-9]/g,function(d){return FA[+d];});}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function card(o){
+    var letter=esc((o.name||'د').trim().charAt(0));
+    return '<div class="seller-card">'+
+      '<div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">'+letter+'</div>'+
+      '<span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>'+
+      '<b>'+esc(o.name)+'</b><span class="role">محلهٔ '+esc(o.area||o.city||'')+'</span>'+
+      '<div class="seller-meta"><div><b>'+fa(o.rating||5)+'</b><span>امتیاز</span></div>'+
+      '<div><b>'+esc(o.area||'—')+'</b><span>محله</span></div>'+
+      '<div><b>'+esc(o.manager||'—')+'</b><span>مسئول</span></div></div></div>';
+  }
+  try{
+    var c=new AbortController(); var to=setTimeout(function(){c.abort();},1500);
+    var r=await fetch('/api/public/offices',{signal:c.signal}); clearTimeout(to);
+    if(r.ok){ var d=await r.json(); if(d.items&&d.items.length){ grid.innerHTML=d.items.map(card).join(''); } }
+  }catch(e){ /* آفلاین → کارت‌های نمونه می‌مانند */ }
+})();
 </script>
 </body>
 </html>

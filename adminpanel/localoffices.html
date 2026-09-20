@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سرویس‌ها و API | پنل مدیریت اتم ۳۱۳</title>
+<title>دفاتر محلات | پنل مدیریت اتم ۳۱۳</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -362,7 +362,7 @@
     <a href="customers.html"><span class="nav-ic"><svg class="icon"><use href="#i-users"/></svg></span><span class="nav-tx">مشتریان</span></a>
     <a href="loyalty.html"><span class="nav-ic"><svg class="icon"><use href="#i-medal"/></svg></span><span class="nav-tx">باشگاه مشتریان</span></a>
     <a href="sellers.html"><span class="nav-ic"><svg class="icon"><use href="#i-store"/></svg></span><span class="nav-tx">فروشندگان</span></a>
-    <a href="localoffices.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">دفاتر محلات</span></a>
+    <a href="localoffices.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">دفاتر محلات</span></a>
     <a href="categories.html"><span class="nav-ic"><svg class="icon"><use href="#i-tag"/></svg></span><span class="nav-tx">دسته‌بندی‌ها</span></a>
     <a href="offers.html"><span class="nav-ic"><svg class="icon"><use href="#i-percent"/></svg></span><span class="nav-tx">تخفیف‌ها</span></a>
     <div class="admin-nav-label">محتوا و بازاریابی</div>
@@ -380,7 +380,7 @@
     <div class="admin-nav-label">سیستم و امنیت</div>
     <a href="settings.html"><span class="nav-ic"><svg class="icon"><use href="#i-settings"/></svg></span><span class="nav-tx">تنظیمات سایت</span></a>
     <a href="security.html"><span class="nav-ic"><svg class="icon"><use href="#i-key"/></svg></span><span class="nav-tx">امنیت و دسترسی</span></a>
-    <a href="integrations.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-plug"/></svg></span><span class="nav-tx">سرویس‌ها و API</span></a>
+    <a href="integrations.html"><span class="nav-ic"><svg class="icon"><use href="#i-plug"/></svg></span><span class="nav-tx">سرویس‌ها و API</span></a>
     <a href="audit.html"><span class="nav-ic"><svg class="icon"><use href="#i-history"/></svg></span><span class="nav-tx">لاگ فعالیت</span></a>
     <a href="flags.html"><span class="nav-ic"><svg class="icon"><use href="#i-flag"/></svg></span><span class="nav-tx">فیچرفلگ‌ها</span></a>
     <a href="banned.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">کلمات ممنوعه</span></a>
@@ -395,13 +395,13 @@
     <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
   </nav>
 </aside>
-  <main class="admin-main" data-page="integrations">
+  <main class="admin-main" data-page="localoffices">
     <div class="admin-topbar">
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>سرویس‌ها و API</h1>
-      <div class="crumb">پنل مدیریت · اتصالات خارجی</div>
+      <h1>دفاتر محلات</h1>
+      <div class="crumb">پنل مدیریت · اعتبارسنجی دفاتر</div>
     </div>
   </div>
   <div class="admin-user">
@@ -413,51 +413,19 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-plug"/></svg></span>سرویس‌ها و API</div>
-    <div class="tabs"><button class="active">درگاه‌ها و سرویس‌ها</button><button>کلیدهای API</button><button>Webhookها</button></div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-shield-user"/></svg></span>دفاتر محلات</div>
+    
   </div>
-  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-check"/></svg> ذخیره تغییرات</button></div>
+  <div class="actions"><button class="abtn primary"><svg class="icon"><use href="#i-plus"/></svg> افزودن دفتر</button></div>
 </div>
-
-<div class="grid-2">
-  <div class="card">
-    <div class="card-head"><h3>درگاه پرداخت</h3><span class="chip ok">متصل</span></div>
-    <div class="field"><label>درگاه فعال</label><select><option>زرین‌پال</option><option>بانک ملت (به‌پرداخت)</option><option>آسان‌پرداخت</option></select></div>
-    <div class="field"><label>Merchant ID</label><div class="mask-field"><input type="password" value="zp-3f8a-92kd-2200-aa19" readonly><button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div></div>
-    <div class="field"><label>API Key</label><div class="mask-field"><input type="password" value="sk_live_51H2xQ2eZv…" readonly><button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div></div>
-  </div>
-  <div class="card">
-    <div class="card-head"><h3>سرویس پیامک</h3><span class="chip ok">متصل</span></div>
-    <div class="field"><label>ارائه‌دهنده</label><select><option>کاوه‌نگار</option><option>ملی پیامک</option><option>فراپیامک</option></select></div>
-    <div class="field"><label>API Key</label><div class="mask-field"><input type="password" value="4B7A2C…9F10" readonly><button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div></div>
-    <div class="field"><label>خط ارسال</label><input type="text" value="۱۰۰۰۸۶۶۳"></div>
-  </div>
-  <div class="card">
-    <div class="card-head"><h3>سرویس ایمیل (SMTP)</h3><span class="chip ok">متصل</span></div>
-    <div class="field"><label>میزبان SMTP</label><input type="text" value="smtp.atom.ir"></div>
-    <div class="field"><label>نام کاربری</label><input type="text" value="no-reply@atom.ir"></div>
-    <div class="field"><label>رمز عبور SMTP</label><div class="mask-field"><input type="password" value="••••••••••" readonly><button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div></div>
-  </div>
-  <div class="card">
-    <div class="card-head"><h3>CDN و زیرساخت</h3><span class="chip ok">فعال</span></div>
-    <div class="field"><label>Cloudflare API Token</label><div class="mask-field"><input type="password" value="cf_9812…33ab" readonly><button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div></div>
-    <div class="field"><label>CDN Access Key</label><div class="mask-field"><input type="password" value="AKIA…7T2Q" readonly><button type="button" class="mask-btn" data-mask-toggle aria-label="نمایش"><svg class="icon"><use href="#i-eye"/></svg></button></div></div>
-    <div class="field"><label>Google Analytics</label><input type="text" value="G-ATOM4041X"></div>
-  </div>
+<p style="margin:-4px 0 18px;color:var(--a-text-3);font-size:.88rem;line-height:1.9">
+دفاتر خدمات محلی با اعتبارسنجی کد ملی مسئول. با دکمهٔ «تأیید» هر دفتر را اعتبارسنجی کنید تا در فهرست عمومی سایت نمایش داده شود؛ یا وضعیت آن را از فرم ویرایش تغییر دهید.</p>
+<div class="tbl-wrap">
+<table class="tbl">
+  <thead><tr><th>دفتر</th><th>مسئول</th><th>محله</th><th>شهر</th><th>تماس</th><th>کد ملی</th><th>مجوز</th><th>اعتبارسنجی</th><th>یادداشت</th><th></th></tr></thead>
+  <tbody><tr><td colspan="10" style="text-align:center;padding:30px;color:var(--a-text-3)">برای مشاهدهٔ دفاتر، بک‌اند باید در دسترس باشد…</td></tr></tbody>
+</table>
 </div>
-
-<div class="card">
-  <div class="card-head"><h3>Webhookها</h3><button class="abtn sm"><svg class="icon"><use href="#i-plus"/></svg> افزودن</button></div>
-  <div class="tbl-wrap flush"><table class="tbl">
-    <thead><tr><th>رویداد</th><th>آدرس مقصد (URL)</th><th>وضعیت</th><th></th></tr></thead>
-    <tbody>
-      <tr><td>ثبت سفارش جدید</td><td class="mono">https://hook.atom.ir/orders</td><td><span class="chip ok">فعال</span></td><td><div class="act-icons"><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-      <tr><td>پرداخت موفق</td><td class="mono">https://hook.atom.ir/payments</td><td><span class="chip ok">فعال</span></td><td><div class="act-icons"><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-      <tr><td>ثبت‌نام کاربر</td><td class="mono">https://crm.atom.ir/webhook</td><td><span class="chip pend">در حال آزمایش</span></td><td><div class="act-icons"><button title="ویرایش"><svg class="icon"><use href="#i-edit"/></svg></button><button class="dl" title="حذف"><svg class="icon"><use href="#i-trash"/></svg></button></div></td></tr>
-    </tbody>
-  </table></div>
-</div>
-<p class="warn-note">🔒 کلیدهای حساس به‌صورت پیش‌فرض Mask شده‌اند و برای مشاهده باید روی دکمه چشم کلیک کنید. هرگز کلیدها را در محیط عمومی به اشتراک نگذارید.</p>
 
   </main>
 </div>

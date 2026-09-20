@@ -8,6 +8,18 @@
   "use strict";
   var TK = "atom_token", UK = "atom_user", MK = "atom_mode";
   var PKEY = "atom_demo_products", SKEY = "atom_demo_shop", UKEY = "atom_demo_users";
+  var OKEY = "atom_demo_office", OSKEY = "atom_demo_oservices";
+
+  // اعتبارسنجی کد ملی ایران (همان الگوریتم سرور — برای حالت دمو)
+  function isNationalCode(code) {
+    code = String(code == null ? "" : code).replace(/[^0-9]/g, "");
+    if (!/^\d{10}$/.test(code)) return false;
+    if (/^(\d)\1{9}$/.test(code)) return false;
+    var sum = 0; for (var i = 0; i < 9; i++) sum += parseInt(code[i], 10) * (10 - i);
+    var r = sum % 11, ch = parseInt(code[9], 10);
+    return (r < 2) ? (ch === r) : (ch === (11 - r));
+  }
+  function isMobile(m) { return /^09\d{9}$/.test(String(m == null ? "" : m).replace(/[^0-9]/g, "")); }
 
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
@@ -133,6 +145,46 @@
     updateShop: function (id, d) {
       if (isDemo()) { saveJSON(SKEY, Object.assign({}, loadJSON(SKEY, {}), d)); return Promise.resolve({ ok: true }); }
       return api("/sellers/" + id, { method: "PUT", body: d });
+    },
+
+    /* ---------- دفاتر محلات ---------- */
+    isOffice: function () { var u = this.user(); return !!(u && u.role === "office"); },
+    validateNationalCode: isNationalCode,
+
+    registerOffice: async function (payload) {
+      // اعتبارسنجی سمت کلاینت
+      if (!payload.office_name || !payload.username || !payload.password || !payload.manager || !payload.national_code)
+        throw new Error("نام دفتر، مسئول، کد ملی، نام کاربری و رمز عبور الزامی است.");
+      if (!isNationalCode(payload.national_code)) throw new Error("کد ملی واردشده نامعتبر است.");
+      if (payload.phone && !isMobile(payload.phone)) throw new Error("شمارهٔ موبایل نامعتبر است (نمونه: 09xxxxxxxxx).");
+      if (await available()) {
+        var d = await api("/auth/register-office", { method: "POST", body: payload });
+        set(TK, d.token); set(UK, JSON.stringify(d.user)); set(MK, "online"); return d.user;
+      }
+      // حالت دمو
+      if (payload.password.length < 6) throw new Error("رمز عبور باید حداقل ۶ کاراکتر باشد.");
+      var users = demoUsers();
+      if (users[payload.username]) throw new Error("این نام کاربری قبلاً ثبت شده است.");
+      var user = { id: Date.now(), username: payload.username, role: "office", name: payload.manager || payload.office_name, office_name: payload.office_name };
+      users[payload.username] = { password: payload.password, user: user }; saveJSON(UKEY, users);
+      set(TK, "demo-token"); set(UK, JSON.stringify(user)); set(MK, "demo");
+      saveJSON(OKEY, { id: 1, name: payload.office_name, manager: payload.manager, area: payload.area || "", city: payload.city || "", address: payload.address || "", phone: payload.phone || "", national_code: payload.national_code, license_no: payload.license_no || "", verified: 0, status: "pending", verify_note: "", bio: "" });
+      saveJSON(OSKEY, []);
+      return user;
+    },
+    myOffice: async function () {
+      if (isDemo()) return loadJSON(OKEY, null);
+      var d = await api("/offices?limit=5"); return (d.items && d.items[0]) || null;
+    },
+    updateOffice: function (id, d) {
+      if (isDemo()) { var o = Object.assign({}, loadJSON(OKEY, {}), d); o.status = (loadJSON(OKEY, {}) || {}).status || "pending"; o.verified = o.status === "verified" ? 1 : 0; saveJSON(OKEY, o); return Promise.resolve({ ok: true }); }
+      return api("/offices/" + id, { method: "PUT", body: d });
+    },
+    officeServices: {
+      list: function () { if (isDemo()) return Promise.resolve({ items: loadJSON(OSKEY, []) }); return api("/office-services?limit=200"); },
+      create: function (d) { if (isDemo()) { var a = loadJSON(OSKEY, []); d.id = Date.now(); d.price = +d.price || 0; a.unshift(d); saveJSON(OSKEY, a); return Promise.resolve({ id: d.id }); } return api("/office-services", { method: "POST", body: d }); },
+      update: function (id, d) { if (isDemo()) { saveJSON(OSKEY, loadJSON(OSKEY, []).map(function (x) { return x.id == id ? Object.assign({}, x, d, { price: +d.price || 0 }) : x; })); return Promise.resolve({ ok: true }); } return api("/office-services/" + id, { method: "PUT", body: d }); },
+      remove: function (id) { if (isDemo()) { saveJSON(OSKEY, loadJSON(OSKEY, []).filter(function (x) { return x.id != id; })); return Promise.resolve({ ok: true }); } return api("/office-services/" + id, { method: "DELETE" }); },
     },
   };
 })();
