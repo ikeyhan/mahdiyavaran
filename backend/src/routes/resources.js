@@ -272,4 +272,22 @@ const officeServices = makeResource({
   ],
 });
 
-module.exports = { products, orders, customers, categories, sellers, offers, comments, messages, faqs, slides, bannedWords, ads, offices, officeServices };
+// گفتگوی دفاتر محلات — دفتر پیام‌های شهروندان خود را می‌بیند و پاسخ می‌دهد
+const officeMessages = makeResource({
+  table: 'office_messages', label: 'پیام دفتر', writeRoles: ['admin', 'office'],
+  ownerField: 'owner', ownerRole: 'office', ownerNameCol: 'office_name',
+  bannedFields: ['reply'],
+  derive: (data, req, existing) => {
+    // ثبت پاسخ توسط دفتر → وضعیت «پاسخ داده‌شده»
+    if (req && req.admin && req.admin.role === 'office' && data.reply && String(data.reply).trim() && (!existing || !existing.reply)) {
+      data.status = 'replied';
+    }
+  },
+  fields: [
+    { name: 'office', max: 160 }, { name: 'sender_name', max: 120 }, { name: 'sender_phone', max: 20 },
+    { name: 'body', max: 4000 }, { name: 'reply', max: 4000 },
+    { name: 'status', allowed: ['open', 'replied', 'closed'], def: 'open' }, { name: 'owner', max: 60 },
+  ],
+});
+
+module.exports = { products, orders, customers, categories, sellers, offers, comments, messages, faqs, slides, bannedWords, ads, offices, officeServices, officeMessages };

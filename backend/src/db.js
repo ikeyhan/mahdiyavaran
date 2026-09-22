@@ -224,6 +224,18 @@ CREATE TABLE IF NOT EXISTS office_services (
   created_at TEXT DEFAULT (datetime('now'))
 );
 
+CREATE TABLE IF NOT EXISTS office_messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  owner TEXT,                                   -- نام‌کاربری حساب دفتر گیرنده
+  office TEXT,                                   -- نام دفتر
+  sender_name TEXT,
+  sender_phone TEXT,
+  body TEXT,
+  reply TEXT,                                   -- پاسخ دفتر
+  status TEXT NOT NULL DEFAULT 'open',          -- open | replied | closed
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS ads (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   placement TEXT NOT NULL DEFAULT 'top',        -- top (نوار بالای سایت) | corner (مربع گوشهٔ چپ)

@@ -275,6 +275,12 @@
   var grid=document.getElementById('officeGrid'); if(!grid) return;
   var FA="۰۱۲۳۴۵۶۷۸۹"; function fa(s){return String(s==null?'':s).replace(/[0-9]/g,function(d){return FA[+d];});}
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var offices=[];
+  var DEMO=[
+    {id:1,name:'دفتر محله ولیعصر',area:'ولیعصر',city:'تهران',manager:'علی رضایی',rating:4.9},
+    {id:2,name:'دفتر محله سعادت‌آباد',area:'سعادت‌آباد',city:'تهران',manager:'مریم کریمی',rating:4.8},
+    {id:3,name:'دفتر محله نارمک',area:'نارمک',city:'تهران',manager:'حسین محمدی',rating:4.7},
+  ];
   function card(o){
     var letter=esc((o.name||'د').trim().charAt(0));
     return '<div class="seller-card">'+
@@ -283,13 +289,56 @@
       '<b>'+esc(o.name)+'</b><span class="role">محلهٔ '+esc(o.area||o.city||'')+'</span>'+
       '<div class="seller-meta"><div><b>'+fa(o.rating||5)+'</b><span>امتیاز</span></div>'+
       '<div><b>'+esc(o.area||'—')+'</b><span>محله</span></div>'+
-      '<div><b>'+esc(o.manager||'—')+'</b><span>مسئول</span></div></div></div>';
+      '<div><b>'+esc(o.manager||'—')+'</b><span>مسئول</span></div></div>'+
+      '<button class="btn btn-primary btn-sm" data-msg="'+esc(o.id)+'" style="margin-top:14px;width:100%;"><svg class="icon"><use href="#icon-chat"/></svg> ارسال پیام به دفتر</button>'+
+      '</div>';
   }
+  function render(){ grid.innerHTML=offices.map(card).join(''); bind(); }
   try{
     var c=new AbortController(); var to=setTimeout(function(){c.abort();},1500);
     var r=await fetch('/api/public/offices',{signal:c.signal}); clearTimeout(to);
-    if(r.ok){ var d=await r.json(); if(d.items&&d.items.length){ grid.innerHTML=d.items.map(card).join(''); } }
-  }catch(e){ /* آفلاین → کارت‌های نمونه می‌مانند */ }
+    if(r.ok){ var d=await r.json(); offices=(d.items&&d.items.length)?d.items:DEMO; }
+    else offices=DEMO;
+  }catch(e){ offices=DEMO; }
+  render();
+
+  /* مودال ارسال پیام به دفتر */
+  var modal=document.createElement('div'); modal.className='sd-modal'; modal.hidden=true;
+  modal.innerHTML='<div class="sd-card"><div class="sd-head"><h3>ارسال پیام به دفتر</h3><button class="btn-icon" data-x aria-label="بستن"><svg class="icon"><use href="#icon-close"/></svg></button></div>'+
+    '<div class="sd-body">'+
+      '<p class="faint" id="omTo" style="margin:0 0 14px;font-size:.85rem;"></p>'+
+      '<div class="sd-field"><label>نام و نام خانوادگی</label><input type="text" id="om_name" placeholder="نام شما"></div>'+
+      '<div class="sd-field"><label>شماره تماس (اختیاری)</label><input type="text" id="om_phone" placeholder="09xxxxxxxxx" inputmode="numeric" style="direction:ltr;text-align:left;"></div>'+
+      '<div class="sd-field"><label>متن پیام</label><textarea id="om_body" placeholder="درخواست یا پرسش خود را بنویسید…" style="min-height:110px;"></textarea></div>'+
+    '</div>'+
+    '<div class="sd-foot"><button class="btn btn-ghost" data-x>انصراف</button><button class="btn btn-primary" id="om_send">ارسال پیام</button></div></div>';
+  document.body.appendChild(modal);
+  var curr=null;
+  modal.addEventListener('click',function(e){ if(e.target===modal||e.target.closest('[data-x]')) modal.hidden=true; });
+  function bind(){
+    grid.querySelectorAll('[data-msg]').forEach(function(btn){
+      btn.onclick=function(){
+        var id=btn.getAttribute('data-msg'); curr=offices.filter(function(o){return String(o.id)===String(id);})[0]; if(!curr) return;
+        document.getElementById('omTo').innerHTML='گیرنده: <b style="color:var(--text-1)">'+esc(curr.name)+'</b>';
+        document.getElementById('om_name').value=''; document.getElementById('om_phone').value=''; document.getElementById('om_body').value='';
+        modal.hidden=false;
+      };
+    });
+  }
+  document.getElementById('om_send').onclick=async function(){
+    if(!curr){ modal.hidden=true; return; }
+    var body=document.getElementById('om_body').value.trim();
+    if(!body){ alert('لطفاً متن پیام را بنویسید.'); return; }
+    var phone=document.getElementById('om_phone').value.trim();
+    if(phone && !SiteAuth.isMobile && !/^09\d{9}$/.test(phone.replace(/[^0-9]/g,''))){ /* بی‌خطر */ }
+    var b=this; b.disabled=true; var t=b.textContent; b.textContent='در حال ارسال…';
+    try{
+      await SiteAuth.sendOfficeMessage({ office_id:curr.id, office_name:curr.name, name:document.getElementById('om_name').value.trim(), phone:phone, body:body });
+      modal.hidden=true;
+      if(window.Toast) Toast('پیام شما برای «'+curr.name+'» ارسال شد ✓'); else alert('پیام شما ارسال شد ✓');
+    }catch(e){ alert(e.message||'خطا در ارسال پیام'); }
+    b.disabled=false; b.textContent=t;
+  };
 })();
 </script>
 </body>

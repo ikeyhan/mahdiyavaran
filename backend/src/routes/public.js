@@ -1,7 +1,24 @@
 /* داده‌های عمومی سایت — بدون احراز هویت (فقط خواندنی و امن) */
 const express = require('express');
 const db = require('../db');
+const { str } = require('../validate');
+const banned = require('../banned');
 const router = express.Router();
+
+// ارسال پیام شهروند به یک دفتر محله (گفتگو)
+router.post('/office-message', (req, res) => {
+  const officeId = parseInt(req.body.office_id, 10);
+  const name = str(req.body.name, 120).trim() || 'شهروند';
+  const phone = str(req.body.phone, 20).trim();
+  const body = str(req.body.body, 4000).trim();
+  if (!officeId || !body) return res.status(400).json({ error: 'انتخاب دفتر و متن پیام الزامی است.' });
+  if (!banned.guard(res, name, body)) return;
+  const office = db.prepare("SELECT id,name,owner FROM offices WHERE id=? AND status='verified'").get(officeId);
+  if (!office) return res.status(404).json({ error: 'دفتر یافت نشد یا هنوز تأیید نشده است.' });
+  db.prepare("INSERT INTO office_messages (owner,office,sender_name,sender_phone,body,status) VALUES (?,?,?,?,?,?)")
+    .run(office.owner || '', office.name, name, phone, body, 'open');
+  res.status(201).json({ ok: true });
+});
 
 // اسلایدهای فعال بخش اولیهٔ سایت
 router.get('/slides', (req, res) => {

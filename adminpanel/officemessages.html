@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لاگ فعالیت | پنل مدیریت اتم ۳۱۳</title>
+<title>گفتگوی دفاتر | پنل مدیریت اتم ۳۱۳</title>
 <meta name="theme-color" content="#149B3E">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -363,7 +363,7 @@
     <a href="loyalty.html"><span class="nav-ic"><svg class="icon"><use href="#i-medal"/></svg></span><span class="nav-tx">باشگاه مشتریان</span></a>
     <a href="sellers.html"><span class="nav-ic"><svg class="icon"><use href="#i-store"/></svg></span><span class="nav-tx">فروشندگان</span></a>
     <a href="localoffices.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">دفاتر محلات</span></a>
-    <a href="officemessages.html"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span><span class="nav-tx">گفتگوی دفاتر</span></a>
+    <a href="officemessages.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span><span class="nav-tx">گفتگوی دفاتر</span></a>
     <a href="categories.html"><span class="nav-ic"><svg class="icon"><use href="#i-tag"/></svg></span><span class="nav-tx">دسته‌بندی‌ها</span></a>
     <a href="offers.html"><span class="nav-ic"><svg class="icon"><use href="#i-percent"/></svg></span><span class="nav-tx">تخفیف‌ها</span></a>
     <div class="admin-nav-label">محتوا و بازاریابی</div>
@@ -382,7 +382,7 @@
     <a href="settings.html"><span class="nav-ic"><svg class="icon"><use href="#i-settings"/></svg></span><span class="nav-tx">تنظیمات سایت</span></a>
     <a href="security.html"><span class="nav-ic"><svg class="icon"><use href="#i-key"/></svg></span><span class="nav-tx">امنیت و دسترسی</span></a>
     <a href="integrations.html"><span class="nav-ic"><svg class="icon"><use href="#i-plug"/></svg></span><span class="nav-tx">سرویس‌ها و API</span></a>
-    <a href="audit.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-history"/></svg></span><span class="nav-tx">لاگ فعالیت</span></a>
+    <a href="audit.html"><span class="nav-ic"><svg class="icon"><use href="#i-history"/></svg></span><span class="nav-tx">لاگ فعالیت</span></a>
     <a href="flags.html"><span class="nav-ic"><svg class="icon"><use href="#i-flag"/></svg></span><span class="nav-tx">فیچرفلگ‌ها</span></a>
     <a href="banned.html"><span class="nav-ic"><svg class="icon"><use href="#i-shield-user"/></svg></span><span class="nav-tx">کلمات ممنوعه</span></a>
     <div class="admin-nav-label">زیرساخت و نگهداری</div>
@@ -396,13 +396,13 @@
     <a href="#" data-logout><span class="nav-ic"><svg class="icon"><use href="#i-logout"/></svg></span><span class="nav-tx">خروج از حساب</span></a>
   </nav>
 </aside>
-  <main class="admin-main" data-page="audit">
+  <main class="admin-main" data-page="officemessages">
     <div class="admin-topbar">
   <div class="tb-start">
     <button class="topbar-menu" data-side-toggle aria-label="باز کردن منو"><svg class="icon"><use href="#i-menu"/></svg></button>
     <div class="tb-head">
-      <h1>لاگ فعالیت</h1>
-      <div class="crumb">پنل مدیریت · رهگیری اقدامات</div>
+      <h1>گفتگوی دفاتر</h1>
+      <div class="crumb">پنل مدیریت · پیام شهروندان</div>
     </div>
   </div>
   <div class="admin-user">
@@ -414,83 +414,19 @@
     
 <div class="section-bar">
   <div class="left">
-    <div class="title"><span class="ic"><svg class="icon"><use href="#i-history"/></svg></span>لاگ فعالیت</div>
-    <div class="tabs"><button class="active">همه رویدادها</button><button>ورود/خروج</button><button>تغییرات</button><button>حذف‌ها</button></div>
+    <div class="title"><span class="ic"><svg class="icon"><use href="#i-chat"/></svg></span>گفتگوی دفاتر محلات</div>
+    
   </div>
-  <div class="actions"><button class="abtn"><svg class="icon"><use href="#i-external"/></svg> خروجی لاگ</button></div>
+  <div class="actions"></div>
 </div>
-
-<div class="filter-row">
-  <div class="field"><input type="text" placeholder="جستجو در رویدادها..."></div>
-  <div class="field"><select><option>همه مدیران</option><option>مدیر اصلی</option><option>رضا کاظمی</option></select></div>
-  <div class="field"><input type="date"></div>
-  <button class="abtn">اعمال</button>
-</div>
-
+<p style="margin:-4px 0 18px;color:var(--a-text-3);font-size:.88rem;line-height:1.9">
+پیام‌های ارسالی شهروندان به دفاتر محلات. دفاتر پاسخ‌ها را از پنل اختصاصی خود ثبت می‌کنند؛ در اینجا می‌توانید همهٔ گفتگوها را ببینید، پاسخ بنویسید یا وضعیت آن‌ها را مدیریت کنید.</p>
 <div class="tbl-wrap">
 <table class="tbl">
-  <thead><tr><th>کاربر</th><th>اقدام</th><th>مورد</th><th>IP</th><th>زمان</th></tr></thead>
-  <tbody>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">م</span><b>مدیر اصلی</b></div></td>
-  <td><span class="chip ok">ورود</span></td>
-  <td style="color:var(--a-text-2);">ورود موفق به پنل</td>
-  <td style="direction:ltr;text-align:right;">85.198.10.4</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۰۹:۰۱</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ر</span><b>رضا کاظمی</b></div></td>
-  <td><span class="chip info">ویرایش</span></td>
-  <td style="color:var(--a-text-2);">محصول «کیف چرم رویا»</td>
-  <td style="direction:ltr;text-align:right;">2.189.44.7</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۰۹:۲۴</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">م</span><b>مدیر اصلی</b></div></td>
-  <td><span class="chip info">تسویه</span></td>
-  <td style="color:var(--a-text-2);">تسویه فروشنده آترا چرم</td>
-  <td style="direction:ltr;text-align:right;">85.198.10.4</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۱۰:۰۵</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">س</span><b>سمیرا نادری</b></div></td>
-  <td><span class="chip ok">پاسخ</span></td>
-  <td style="color:var(--a-text-2);">تیکت پشتیبانی #۲۰۴۸</td>
-  <td style="direction:ltr;text-align:right;">5.112.9.31</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۱۰:۴۰</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ر</span><b>رضا کاظمی</b></div></td>
-  <td><span class="chip err">حذف</span></td>
-  <td style="color:var(--a-text-2);">کد تخفیف «SUMMER20»</td>
-  <td style="direction:ltr;text-align:right;">2.189.44.7</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۱۱:۱۲</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ا</span><b>امیر توکلی</b></div></td>
-  <td><span class="chip ok">انتشار</span></td>
-  <td style="color:var(--a-text-2);">مقاله «راهنمای خرید فرش»</td>
-  <td style="direction:ltr;text-align:right;">151.240.8.9</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۱۲:۰۰</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">م</span><b>مدیر اصلی</b></div></td>
-  <td><span class="chip info">تغییر تنظیمات</span></td>
-  <td style="color:var(--a-text-2);">کارمزد فروشنده → ۵٪</td>
-  <td style="direction:ltr;text-align:right;">85.198.10.4</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۱۲:۳۰</td>
-</tr>
-    <tr>
-  <td><div class="row-th"><span class="th-img av" style="background:linear-gradient(135deg,#0E7A38,#37C463);">ک</span><b>کاربر ناشناس</b></div></td>
-  <td><span class="chip err">تلاش ورود</span></td>
-  <td style="color:var(--a-text-2);">رمز اشتباه (۳ بار)</td>
-  <td style="direction:ltr;text-align:right;">45.11.x.x</td>
-  <td>۱۴۰۴/۰۶/۱۲ ۱۳:۰۵</td>
-</tr>
-  </tbody>
+  <thead><tr><th>دفتر</th><th>فرستنده</th><th>متن پیام</th><th>پاسخ دفتر</th><th>تاریخ</th><th>وضعیت</th><th></th></tr></thead>
+  <tbody><tr><td colspan="7" style="text-align:center;padding:30px;color:var(--a-text-3)">برای مشاهدهٔ پیام‌ها، بک‌اند باید در دسترس باشد…</td></tr></tbody>
 </table>
 </div>
-<div class="pgn"><a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">…</a><a href="#">۹۰</a></div>
 
   </main>
 </div>

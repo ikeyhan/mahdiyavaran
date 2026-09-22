@@ -65,6 +65,7 @@ app.use('/api/banned-words', R.bannedWords);
 app.use('/api/ads', R.ads);
 app.use('/api/offices', R.offices);
 app.use('/api/office-services', R.officeServices);
+app.use('/api/office-messages', R.officeMessages);
 app.use('/api/support', require('./src/routes/support'));
 app.use('/api/public', require('./src/routes/public'));
 

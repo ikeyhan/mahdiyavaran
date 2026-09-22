@@ -362,6 +362,17 @@
         { key: "verify_note", label: "یادداشت", type: "text", form: "text" },
       ],
     },
+    officemessages: {
+      resource: "officeMessages", title: "پیام دفتر", query: "limit=200",
+      columns: [
+        { key: "office", label: "دفتر", type: "text" },
+        { key: "sender_name", label: "فرستنده", type: "sub", sub: "sender_phone" },
+        { key: "body", label: "متن پیام", type: "text" },
+        { key: "reply", label: "پاسخ دفتر", type: "text", form: "textarea" },
+        { key: "created_at", label: "تاریخ", type: "date" },
+        { key: "status", label: "وضعیت", type: "chip", map: { open: ["بی‌پاسخ", "pend"], replied: ["پاسخ داده‌شده", "ok"], closed: ["بسته‌شده", "info"] }, form: "select", options: { open: "بی‌پاسخ", replied: "پاسخ داده‌شده", closed: "بسته‌شده" } },
+      ],
+    },
     banned: {
       resource: "bannedWords", title: "کلمهٔ ممنوعه", query: "limit=200",
       columns: [

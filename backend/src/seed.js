@@ -243,6 +243,14 @@ function seed() {
     os.run('ثبت درخواست خدمات شهری', 'خدمات شهری', 'دفتر محله ولیعصر', 'ثبت و پیگیری درخواست‌های رفع سد معبر، نظافت و روشنایی معابر.', 0, 'daftar', 'active');
   }
 
+  // پیام‌های نمونهٔ گفتگوی دفتر محله (برای حساب daftar)
+  if (db.prepare('SELECT COUNT(*) c FROM office_messages').get().c === 0) {
+    const om = db.prepare("INSERT INTO office_messages (owner,office,sender_name,sender_phone,body,reply,status) VALUES (?,?,?,?,?,?,?)");
+    om.run('daftar', 'دفتر محله ولیعصر', 'زهرا کریمی', '09120001122', 'سلام، برای تمدید کارت شهروندی محله چه مدارکی لازم است؟', 'سلام؛ کارت ملی، یک قطعه عکس و قبض آب یا برق به‌نام خودتان کافی است. همه‌روزه از ۹ تا ۱۷ می‌توانید مراجعه کنید.', 'replied');
+    om.run('daftar', 'دفتر محله ولیعصر', 'محمد احمدی', '09121234000', 'در کوچهٔ ما چند چراغ معبر خاموش است، لطفاً پیگیری کنید.', '', 'open');
+    om.run('daftar', 'دفتر محله ولیعصر', 'نگین موسوی', '', 'ساعت کاری دفتر در روزهای پنجشنبه چگونه است؟', '', 'open');
+  }
+
   // کلمات ممنوعه (نمونه)
   if (db.prepare('SELECT COUNT(*) c FROM banned_words').get().c === 0) {
     const bw = db.prepare('INSERT INTO banned_words (word,note,status) VALUES (?,?,?)');

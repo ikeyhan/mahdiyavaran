@@ -1077,9 +1077,11 @@ html[data-theme="dark"] .hero::before{ display:none; }
 }
 
 /* ===== فونت یکان بخ برای بنرها (در صورت وجود فایل‌ها فعال می‌شود) ===== */
-@font-face{ font-family:"Yekan Bakh"; src:url("../fonts/YekanBakh-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
-@font-face{ font-family:"Yekan Bakh"; src:url("../fonts/YekanBakh-Bold.woff2") format("woff2"); font-weight:700 800; font-display:swap; }
-@font-face{ font-family:"Yekan Bakh"; src:url("../fonts/YekanBakh-ExtraBold.woff2") format("woff2"); font-weight:900; font-display:swap; }
+/* فونت یکان‌بخ اختیاری است؛ اگر فایل‌ها را در assets/fonts/ قرار دهید، به‌صورت خودکار استفاده می‌شود.
+   تا آن زمان از نسخهٔ نصب‌شده روی سیستم (local) استفاده می‌شود و در نبود آن به «وزیرمتن» بازمی‌گردد — بدون خطای ۴۰۴. */
+@font-face{ font-family:"Yekan Bakh"; src:local("Yekan Bakh"),local("YekanBakh"),local("Yekan Bakh Regular"); font-weight:400; font-display:swap; }
+@font-face{ font-family:"Yekan Bakh"; src:local("Yekan Bakh Bold"),local("YekanBakh-Bold"),local("Yekan Bakh"); font-weight:700 800; font-display:swap; }
+@font-face{ font-family:"Yekan Bakh"; src:local("Yekan Bakh ExtraBold"),local("YekanBakh-ExtraBold"),local("Yekan Bakh"); font-weight:900; font-display:swap; }
 :root{ --font-banner:"Yekan Bakh","Vazirmatn",Tahoma,sans-serif; }
 .ad-strip, .ad-strip-title, .ad-strip-cta, .ad-corner-txt, .hs-title, .hs-eyebrow{ font-family:var(--font-banner); }
 
@@ -1105,3 +1107,12 @@ html[data-theme="dark"] .hero::before{ display:none; }
   .ad-banner, .ad-corner{ animation:none; }
   .ad-banner .ad-sheen, .ad-corner .ad-sheen{ animation:none; display:none; }
 }
+
+/* ===== توست اعلان‌ها ===== */
+.toast-wrap{ position:fixed; z-index:9999; bottom:22px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:10px; align-items:center; pointer-events:none; }
+.toast{ display:flex; align-items:center; gap:10px; background:var(--green-600); color:#fff; padding:12px 20px; border-radius:14px; box-shadow:0 12px 30px rgba(20,155,62,.32); font-size:.88rem; font-weight:600; opacity:0; transform:translateY(16px) scale(.96); transition:all .3s var(--ease-out); max-width:88vw; }
+.toast.in{ opacity:1; transform:translateY(0) scale(1); }
+.toast.err{ background:#B42318; box-shadow:0 12px 30px rgba(180,35,24,.3); }
+.toast .icon{ width:18px; height:18px; flex-shrink:0; }
+.add-btn.added{ background:var(--green-600) !important; color:#fff !important; border-color:var(--green-600) !important; transform:scale(1.12) !important; }
+@media (prefers-reduced-motion:reduce){ .toast{ transition:opacity .2s; transform:none; } }

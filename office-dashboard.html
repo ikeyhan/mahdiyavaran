@@ -211,6 +211,7 @@
         </div>
         <nav class="dash-nav" data-dash-nav>
           <a href="#" class="active" data-dash-tab="overview"><svg class="icon"><use href="#icon-dashboard"/></svg> نمای کلی</a>
+          <a href="#" data-dash-tab="messages"><svg class="icon"><use href="#icon-chat"/></svg> گفتگوها <span id="ofcMsgBadge" class="badge-dot" style="position:static; display:none; margin-inline-start:auto;">۰</span></a>
           <a href="#" data-dash-tab="services"><svg class="icon"><use href="#icon-box"/></svg> خدمات دفتر</a>
           <a href="#" data-dash-tab="verify"><svg class="icon"><use href="#icon-shield"/></svg> اعتبارسنجی</a>
           <a href="#" data-dash-tab="settings"><svg class="icon"><use href="#icon-settings"/></svg> تنظیمات دفتر</a>
@@ -230,6 +231,19 @@
             <div class="panel" style="text-align:center;"><span class="faint" style="font-size:.8rem;">خدمات ثبت‌شده</span><b id="ofcStat2" style="display:block; font-size:1.15rem; margin-top:6px;">۰</b></div>
             <div class="panel" style="text-align:center;"><span class="faint" style="font-size:.8rem;">محله</span><b id="ofcStat3" style="display:block; font-size:1.15rem; margin-top:6px;">—</b></div>
           </div>
+        </div>
+
+        <div data-dash-panel="messages" hidden>
+          <div class="flex between" style="margin-bottom:8px; flex-wrap:wrap; gap:12px;">
+            <h1 class="h-2">گفتگو با شهروندان</h1>
+            <div class="flex gap-8">
+              <button class="btn btn-ghost btn-sm" id="ofcMsgFilterAll" data-mf="all">همه</button>
+              <button class="btn btn-ghost btn-sm" id="ofcMsgFilterOpen" data-mf="open">بی‌پاسخ</button>
+              <button class="btn btn-ghost btn-sm" id="ofcMsgRefresh"><svg class="icon"><use href="#icon-download"/></svg> به‌روزرسانی</button>
+            </div>
+          </div>
+          <p class="faint" style="margin-bottom:20px; line-height:1.9;">پیام‌های ارسالی شهروندان از صفحهٔ عمومی دفتر شما اینجا نمایش داده می‌شود. می‌توانید به هر پیام پاسخ دهید یا آن را ببندید.</p>
+          <div class="panel reveal" id="ofcMsgList"></div>
         </div>
 
         <div data-dash-panel="services" hidden>
@@ -464,9 +478,54 @@
   if(a1) a1.onclick=function(){ openSvc(null); };
   if(a2) a2.onclick=function(){ openSvc(null); };
 
+  /* ===== گفتگو با شهروندان ===== */
+  var messages=[], msgFilter='all';
+  var MST={open:['بی‌پاسخ','pend'],replied:['پاسخ داده‌شده','ok'],closed:['بسته‌شده','cancel']};
+  function renderMsgs(){
+    var list=document.getElementById('ofcMsgList'); if(!list) return;
+    var open=messages.filter(function(m){return (m.status||'open')==='open';}).length;
+    var badge=document.getElementById('ofcMsgBadge');
+    if(badge){ if(open>0){ badge.style.display=''; badge.textContent=fa(open); } else badge.style.display='none'; }
+    var rows=messages.filter(function(m){ return msgFilter==='all'?true:(m.status||'open')==='open'; });
+    if(!rows.length){ list.innerHTML='<div style="text-align:center;padding:44px 16px;color:var(--text-3)">'+(msgFilter==='open'?'پیام بی‌پاسخی وجود ندارد.':'هنوز پیامی دریافت نکرده‌اید.')+'</div>'; return; }
+    list.innerHTML=rows.map(function(m){
+      var st=m.status||'open'; var mm=MST[st]||[st,'pend'];
+      var chip='<span class="status-chip '+mm[1]+'">'+esc(mm[0])+'</span>';
+      var when=m.created_at?('<span class="faint" style="font-size:.74rem;">'+esc(fa(String(m.created_at).replace('T',' ').slice(0,16)))+'</span>'):'';
+      var phone=m.sender_phone?(' · <span dir="ltr">'+esc(fa(m.sender_phone))+'</span>'):'';
+      var replied=m.reply?('<div style="margin-top:10px;padding:10px 12px;background:#E7F7EE;border:1px solid #B9E6C9;border-radius:10px;font-size:.85rem;line-height:1.9;color:#1B7A43;"><b style="font-size:.78rem;">پاسخ شما:</b><br>'+esc(m.reply)+'</div>'):'';
+      var replyBox='<div class="ofc-reply" data-reply-box="'+m.id+'" hidden style="margin-top:12px;"><textarea data-reply-input="'+m.id+'" placeholder="پاسخ خود را بنویسید…" style="width:100%;min-height:80px;"></textarea><div class="flex gap-8" style="margin-top:8px;"><button class="btn btn-primary btn-sm" data-reply-send="'+m.id+'">ارسال پاسخ</button><button class="btn btn-ghost btn-sm" data-reply-cancel="'+m.id+'">انصراف</button></div></div>';
+      var actions='<div class="flex gap-8" style="margin-top:12px;">'+
+        (st!=='closed'?'<button class="btn btn-ghost btn-sm" data-reply-open="'+m.id+'"><svg class="icon"><use href="#icon-chat"/></svg> '+(m.reply?'ویرایش پاسخ':'پاسخ')+'</button>':'')+
+        (st!=='closed'?'<button class="btn btn-ghost btn-sm" data-msg-close="'+m.id+'">بستن گفتگو</button>':'<button class="btn btn-ghost btn-sm" data-msg-reopen="'+m.id+'">بازکردن مجدد</button>')+
+        '<button class="btn-icon btn-icon-sm" data-msg-del="'+m.id+'" aria-label="حذف"><svg class="icon"><use href="#icon-trash"/></svg></button></div>';
+      return '<div class="panel" style="padding:16px;margin-bottom:12px;">'+
+        '<div class="flex between" style="gap:10px;flex-wrap:wrap;"><div class="flex gap-8" style="align-items:center;"><span class="ava" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;">'+esc((m.sender_name||'ش').slice(0,1))+'</span><b style="font-size:.9rem;">'+esc(m.sender_name||'شهروند')+phone+'</b></div><div class="flex gap-8" style="align-items:center;">'+when+' '+chip+'</div></div>'+
+        '<p style="margin:12px 0 0;font-size:.9rem;line-height:1.95;">'+esc(m.body)+'</p>'+replied+actions+replyBox+'</div>';
+    }).join('');
+    bindMsgActions(list);
+  }
+  function bindMsgActions(list){
+    list.querySelectorAll('[data-reply-open]').forEach(function(b){ b.onclick=function(){ var id=b.getAttribute('data-reply-open'); var box=list.querySelector('[data-reply-box="'+id+'"]'); if(box){ box.hidden=false; var m=messages.filter(function(x){return x.id==id;})[0]; var ta=box.querySelector('[data-reply-input]'); if(ta){ ta.value=(m&&m.reply)||''; ta.focus(); } } }; });
+    list.querySelectorAll('[data-reply-cancel]').forEach(function(b){ b.onclick=function(){ var box=list.querySelector('[data-reply-box="'+b.getAttribute('data-reply-cancel')+'"]'); if(box) box.hidden=true; }; });
+    list.querySelectorAll('[data-reply-send]').forEach(function(b){ b.onclick=async function(){ var id=b.getAttribute('data-reply-send'); var ta=list.querySelector('[data-reply-input="'+id+'"]'); var txt=ta?ta.value.trim():''; if(!txt){ alert('متن پاسخ را وارد کنید.'); return; } b.disabled=true; try{ await SiteAuth.officeMessages.update(id,{reply:txt}); await loadMessages(); }catch(e){ alert(e.message||'خطا در ارسال پاسخ'); b.disabled=false; } }; });
+    list.querySelectorAll('[data-msg-close]').forEach(function(b){ b.onclick=async function(){ try{ await SiteAuth.officeMessages.update(b.getAttribute('data-msg-close'),{status:'closed'}); await loadMessages(); }catch(e){ alert(e.message); } }; });
+    list.querySelectorAll('[data-msg-reopen]').forEach(function(b){ b.onclick=async function(){ var id=b.getAttribute('data-msg-reopen'); var m=messages.filter(function(x){return x.id==id;})[0]; try{ await SiteAuth.officeMessages.update(id,{status:(m&&m.reply)?'replied':'open'}); await loadMessages(); }catch(e){ alert(e.message); } }; });
+    list.querySelectorAll('[data-msg-del]').forEach(function(b){ b.onclick=async function(){ if(!confirm('این گفتگو حذف شود؟')) return; try{ await SiteAuth.officeMessages.remove(+b.getAttribute('data-msg-del')); await loadMessages(); }catch(e){ alert(e.message); } }; });
+  }
+  async function loadMessages(){ try{ var d=await SiteAuth.officeMessages.list(); messages=d.items||[]; renderMsgs(); }catch(e){ messages=[]; renderMsgs(); } }
+  (function(){
+    function setF(f){ msgFilter=f; ['ofcMsgFilterAll','ofcMsgFilterOpen'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.remove('btn-primary'); }); var on=document.getElementById(f==='open'?'ofcMsgFilterOpen':'ofcMsgFilterAll'); if(on) on.classList.add('btn-primary'); renderMsgs(); }
+    var fa1=document.getElementById('ofcMsgFilterAll'), fo=document.getElementById('ofcMsgFilterOpen'), rf=document.getElementById('ofcMsgRefresh');
+    if(fa1) fa1.onclick=function(){ setF('all'); }; if(fo) fo.onclick=function(){ setF('open'); };
+    if(rf) rf.onclick=function(){ loadMessages(); };
+    setF('all');
+  })();
+
   await loadOffice();
   verifyBanner();
   await loadServices();
+  await loadMessages();
 })();
 </script>
 </body>

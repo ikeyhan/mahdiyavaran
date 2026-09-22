@@ -8,7 +8,7 @@
   "use strict";
   var TK = "atom_token", UK = "atom_user", MK = "atom_mode";
   var PKEY = "atom_demo_products", SKEY = "atom_demo_shop", UKEY = "atom_demo_users";
-  var OKEY = "atom_demo_office", OSKEY = "atom_demo_oservices";
+  var OKEY = "atom_demo_office", OSKEY = "atom_demo_oservices", OMKEY = "atom_demo_omessages";
 
   // اعتبارسنجی کد ملی ایران (همان الگوریتم سرور — برای حالت دمو)
   function isNationalCode(code) {
@@ -185,6 +185,38 @@
       create: function (d) { if (isDemo()) { var a = loadJSON(OSKEY, []); d.id = Date.now(); d.price = +d.price || 0; a.unshift(d); saveJSON(OSKEY, a); return Promise.resolve({ id: d.id }); } return api("/office-services", { method: "POST", body: d }); },
       update: function (id, d) { if (isDemo()) { saveJSON(OSKEY, loadJSON(OSKEY, []).map(function (x) { return x.id == id ? Object.assign({}, x, d, { price: +d.price || 0 }) : x; })); return Promise.resolve({ ok: true }); } return api("/office-services/" + id, { method: "PUT", body: d }); },
       remove: function (id) { if (isDemo()) { saveJSON(OSKEY, loadJSON(OSKEY, []).filter(function (x) { return x.id != id; })); return Promise.resolve({ ok: true }); } return api("/office-services/" + id, { method: "DELETE" }); },
+    },
+
+    /* ---------- گفتگوی دفاتر محلات (پیام شهروندان ↔ دفتر) ---------- */
+    // فهرست/پاسخ پیام‌ها برای حساب دفتر واردشده
+    officeMessages: {
+      list: function () { if (isDemo()) return Promise.resolve({ items: loadJSON(OMKEY, []) }); return api("/office-messages?limit=200"); },
+      update: function (id, d) {
+        if (isDemo()) {
+          saveJSON(OMKEY, loadJSON(OMKEY, []).map(function (x) {
+            if (x.id != id) return x;
+            var n = Object.assign({}, x, d);
+            if (d.reply && String(d.reply).trim() && !x.reply) n.status = "replied";
+            return n;
+          }));
+          return Promise.resolve({ ok: true });
+        }
+        return api("/office-messages/" + id, { method: "PUT", body: d });
+      },
+      remove: function (id) { if (isDemo()) { saveJSON(OMKEY, loadJSON(OMKEY, []).filter(function (x) { return x.id != id; })); return Promise.resolve({ ok: true }); } return api("/office-messages/" + id, { method: "DELETE" }); },
+    },
+    // ارسال پیام عمومی شهروند به یک دفتر (بدون نیاز به ورود)
+    sendOfficeMessage: async function (payload) {
+      if (!payload || !payload.office_id || !String(payload.body || "").trim())
+        throw new Error("انتخاب دفتر و متن پیام الزامی است.");
+      if (await available()) {
+        return api("/public/office-message", { method: "POST", body: payload });
+      }
+      // حالت دمو — پیام در همین مرورگر ذخیره می‌شود
+      var a = loadJSON(OMKEY, []);
+      a.unshift({ id: Date.now(), office: payload.office_name || "", sender_name: payload.name || "شهروند", sender_phone: payload.phone || "", body: payload.body, reply: "", status: "open", created_at: new Date().toISOString().slice(0, 16).replace("T", " ") });
+      saveJSON(OMKEY, a);
+      return { ok: true, demo: true };
     },
   };
 })();
