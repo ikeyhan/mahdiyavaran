@@ -43,14 +43,6 @@
   document.querySelectorAll("[data-drawer-close]").forEach(function(b){ b.addEventListener("click", function(){ setDrawer(false); }); });
   if(overlay) overlay.addEventListener("click", function(){ setDrawer(false); });
 
-  document.querySelectorAll("[data-wish]").forEach(function(btn){
-    btn.addEventListener("click", function(e){
-      e.preventDefault();
-      btn.classList.toggle("active");
-      var use = btn.querySelector("use");
-      if(use) use.setAttribute("href", btn.classList.contains("active") ? "#icon-heart-filled" : "#icon-heart");
-    });
-  });
 
   document.querySelectorAll("[data-tabbar]").forEach(function(bar){
     var buttons = bar.querySelectorAll("button");
@@ -196,6 +188,9 @@
     home();
   }
   function toggle(){ root.classList.toggle("open"); if(root.classList.contains("open") && !root.dataset.seen){ root.dataset.seen="1"; } }
+  // باز کردن ویجت از دکمه‌های سایت (data-open-support)
+  window.atomOpenSupport = function(){ if(root && !root.classList.contains("open")) toggle(); };
+  document.addEventListener("click", function(e){ if(e.target.closest("[data-open-support]")){ e.preventDefault(); window.atomOpenSupport(); } });
   function foot(show){ root.querySelector(".as-foot").hidden = !show; }
 
   function home(){
@@ -242,7 +237,7 @@
     box.appendChild(typing); box.parentElement.scrollTop = box.parentElement.scrollHeight;
     root.querySelector(".as-send").disabled = true;
     try {
-      var r = await fetch(API+"/support/chat", {method:"POST",headers:{"Content-Type":"application/json"},
+      var r = await (window.atomFetch||fetch)(API+"/support/chat", {method:"POST",headers:{"Content-Type":"application/json"},
         body:JSON.stringify({session:session, messages:history})});
       var d = await r.json();
       typing.remove();
@@ -271,7 +266,7 @@
     if(!bd.trim()){ root.querySelector("#asBody").focus(); return; }
     var btn=root.querySelector(".as-submit"); btn.disabled=true; btn.textContent="در حال ارسال…";
     try {
-      await fetch(API+"/support/message",{method:"POST",headers:{"Content-Type":"application/json"},
+      await (window.atomFetch||fetch)(API+"/support/message",{method:"POST",headers:{"Content-Type":"application/json"},
         body:JSON.stringify({sender:(name.trim()||"کاربر سایت")+(contact?" ("+contact+")":""), subject:"پیام از ویجت پشتیبانی", body:bd, status:"open"})});
     } catch(e){}
     body('<div class="as-note">'+CHECK+'<div><b>پیام شما ثبت شد.</b><br>تیم پشتیبانی اتم به‌زودی پاسخ می‌دهد.</div></div>' +
@@ -285,7 +280,7 @@
   (async function(){
     try {
       var c = new AbortController(); var to=setTimeout(function(){c.abort();},1500);
-      var r = await fetch(API+"/support/config",{signal:c.signal}); clearTimeout(to);
+      var r = await (window.atomFetch||fetch)(API+"/support/config",{signal:c.signal}); clearTimeout(to);
       if(r.ok){ var d = await r.json(); online = true;
         cfg.enabled = d.enabled!==false; cfg.title=d.title||cfg.title; cfg.welcome=d.welcome||cfg.welcome;
         cfg.avatar=d.avatar||""; cfg.color=d.color||cfg.color; cfg.aiEnabled=!!d.aiEnabled;
@@ -313,7 +308,7 @@
     // بارگذاری اسلایدها از بک‌اند؛ در صورت نبود، اسلایدهای ثابت HTML می‌مانند
     try {
       var c = new AbortController(); var to = setTimeout(function(){ c.abort(); }, 1500);
-      var rs = await fetch("/api/public/slides", { signal:c.signal }); clearTimeout(to);
+      var rs = await (window.atomFetch||fetch)("/api/public/slides", { signal:c.signal }); clearTimeout(to);
       if(rs.ok){ var d = await rs.json(); if(d && d.items && d.items.length){ track.innerHTML = d.items.map(slideHTML).join(""); } }
     } catch(e){ /* آفلاین */ }
     var slides = Array.prototype.slice.call(root.querySelectorAll(".hs-slide"));
@@ -423,9 +418,9 @@
       var c = CATS[i];
       panel.innerHTML =
         '<div class="cat-mega-phead"><b>'+esc(c.name)+'</b>'+
-          '<a href="'+LINK+'">مشاهده همه <svg class="icon"><use href="#icon-chevron-left"/></svg></a></div>'+
+          '<a href="'+LINK+'?q='+encodeURIComponent(c.name)+'">مشاهده همه <svg class="icon"><use href="#icon-chevron-left"/></svg></a></div>'+
         '<div class="cat-mega-subs">'+
-          c.subs.map(function(s){ return '<a class="cat-mega-sub" href="'+LINK+'">'+esc(s)+'</a>'; }).join("")+
+          c.subs.map(function(s){ return '<a class="cat-mega-sub" href="'+LINK+'?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+
         '</div>';
       panel.classList.remove("swap"); void panel.offsetWidth; panel.classList.add("swap");
     }
@@ -437,8 +432,8 @@
       var i = +it.getAttribute("data-i");
       it.addEventListener("mouseenter", function(){ setActive(i); });
       it.addEventListener("focus", function(){ setActive(i); });
-      it.addEventListener("click", function(){ window.location.href = LINK; });
-      it.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); window.location.href = LINK; } });
+      it.addEventListener("click", function(){ window.location.href = LINK+"?q="+encodeURIComponent(CATS[i].name); });
+      it.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); window.location.href = LINK+"?q="+encodeURIComponent(CATS[i].name); } });
     });
     renderPanel(0);
 
@@ -463,7 +458,7 @@
   function aesc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
   // مسیر تصویرهای آپلودی؛ اگر نبود، به نمونهٔ متنی/SVG برمی‌گردد
   var FALLBACK = {
-    top: [{ title:"جشنواره فروش اتم ۳۱۳", text:"همین حالا با کد ATOM۲۰ روی همهٔ محصولات تخفیف بگیر!", link:"offers.html", cta_label:"خرید کن", bg:"#149B3E" }],
+    top: [{ title:"جشنواره فروش اتم ۳۱۳", text:"همین حالا با کد ATOM20 روی همهٔ محصولات ۲۰٪ تخفیف بگیر!", link:"offers.html", cta_label:"خرید کن", bg:"#149B3E" }],
     corner: [{ title:"پیشنهاد ویژهٔ چرم", image:"assets/img/ads/corner-ad.jpg", link:"products.html" }]
   };
   function closed(key){ try{ return sessionStorage.getItem(key)==="1"; }catch(e){ return false; } }
@@ -518,7 +513,7 @@
     var data = FALLBACK;
     try {
       var c=new AbortController(); var to=setTimeout(function(){c.abort();},1500);
-      var r=await fetch("/api/public/ads",{signal:c.signal}); clearTimeout(to);
+      var r=await (window.atomFetch||fetch)("/api/public/ads",{signal:c.signal}); clearTimeout(to);
       if(r.ok){ var d=await r.json(); if(d && ((d.top&&d.top.length)||(d.corner&&d.corner.length))) data=d; }
     } catch(e){ /* آفلاین → نمونهٔ پیش‌فرض */ }
     boot(data);
@@ -561,8 +556,8 @@
     });
   }
   function addToCart(item){
-    var c=getCart(); var f=c.filter(function(x){ return String(x.id)===String(item.id); })[0];
-    if(f) f.qty=(+f.qty||1)+1; else c.push({ id:item.id, title:item.title, price:+item.price||0, qty:1, seller:item.seller||"", thumb:item.thumb||"" });
+    var c=getCart(), q=Math.max(1,+item.qty||1); var f=c.filter(function(x){ return String(x.id)===String(item.id); })[0];
+    if(f) f.qty=Math.min(99,(+f.qty||1)+q); else c.push({ id:item.id, title:item.title, price:+item.price||0, qty:q, seller:item.seller||"", thumb:item.thumb||"" });
     setCart(c);
   }
   window.AtomCart={ get:getCart, set:setCart, add:addToCart, count:cartCount, total:cartTotal, money:money, fa:fa };
@@ -572,12 +567,14 @@
     var btn=e.target.closest(".add-btn, [data-add-cart]"); if(!btn) return;
     if(btn.closest(".sd-modal, .qty-box")) return;
     e.preventDefault();
-    var title="محصول", price=0, id="", seller="", thumb="";
+    var title="محصول", price=0, id="", seller="", thumb="", qty=1;
     if(btn.hasAttribute("data-add-cart")){
       title=btn.getAttribute("data-title")||title; price=parsePrice(btn.getAttribute("data-price")||"0");
       id=btn.getAttribute("data-id")||title; seller=btn.getAttribute("data-seller")||"";
+      var qb=document.querySelector(".pd-actions") && document.querySelector("[data-qty] input"); if(qb) qty=parseInt(faToEn(qb.value),10)||1;
     } else {
       var card=btn.closest(".prod-card, .product-card, .p-card, article, [data-product]");
+      if(card && card.getAttribute("data-pid")) id=card.getAttribute("data-pid");
       if(card){
         var tEl=card.querySelector(".prod-title, .product-title, h3, h1"); if(tEl) title=tEl.textContent.trim();
         // فقط قیمت اصلی (تگ b) خوانده شود، نه قیمت خط‌خوردهٔ del
@@ -590,12 +587,27 @@
         var h=document.querySelector("h1.product-title, h1.h-1, .product-info h1"); if(h) title=h.textContent.trim();
         var pp=document.querySelector(".product-price b, .buy-price b, .price b"); if(pp) price=parsePrice(pp.textContent);
       }
-      id=title;
+      id=id||title;
     }
-    addToCart({ id:id||title, title:title, price:price, seller:seller, thumb:thumb });
+    addToCart({ id:id||title, title:title, price:price, seller:seller, thumb:thumb, qty:qty });
     btn.classList.add("added"); setTimeout(function(){ btn.classList.remove("added"); },600);
     Toast("«"+title+"» به سبد خرید افزوده شد");
   });
+
+  /* ---------- کلیک روی کارت محصول → صفحهٔ جزئیات ---------- */
+  document.addEventListener("click", function(e){
+    var card=e.target.closest(".prod-card"); if(!card || e.target.closest("button, a, input, [data-wish]")) return;
+    var tEl=card.querySelector(".prod-title"); if(!tEl) return;
+    var pid=card.getAttribute("data-pid");
+    var pr=card.querySelector(".price b"), old=card.querySelector(".price del"), th=card.querySelector(".prod-thumb .ph");
+    var bg=th && th.style.backgroundImage || "", m=bg.match(/url\(["']?(.*?)["']?\)/);
+    var info={ id:pid||"", title:tEl.textContent.trim(), cat:((card.querySelector(".prod-cat")||{}).textContent||"").trim(),
+      seller:((card.querySelector(".prod-seller")||{}).textContent||"").trim(), price:pr?parsePrice(pr.textContent):0, old:old?parsePrice(old.textContent):0,
+      image:m?m[1]:"", thumb:th&&!m?th.className:"" };
+    try{ sessionStorage.setItem("atom_pd",JSON.stringify(info)); }catch(er){}
+    location.href = pid ? "product.html?id="+encodeURIComponent(pid) : "product.html?t="+encodeURIComponent(info.title);
+  });
+  document.querySelectorAll(".prod-card .prod-title").forEach(function(t){ t.style.cursor="pointer"; });
 
   /* ---------- رندر صفحهٔ سبد خرید ---------- */
   function renderCartPage(){
@@ -625,34 +637,92 @@
       wrap.querySelectorAll("[data-ci-dec]").forEach(function(b){ b.onclick=function(){ var c=getCart(); var i=+b.getAttribute("data-ci-dec"); if(c[i]){ c[i].qty=(+c[i].qty||1)-1; if(c[i].qty<1) c.splice(i,1); setCart(c); } }; });
       wrap.querySelectorAll("[data-ci-rm]").forEach(function(b){ b.onclick=function(){ var c=getCart(); c.splice(+b.getAttribute("data-ci-rm"),1); setCart(c); Toast("کالا از سبد حذف شد"); }; });
     }
-    var sc=document.getElementById("sumCount"), si=document.getElementById("sumItems"), st=document.getElementById("sumTotal");
-    if(sc) sc.textContent=fa(cartCount());
-    if(si) si.textContent=money(cartTotal());
-    if(st) st.textContent=money(cartTotal());
+    renderSummary();
   }
-  var checkout=document.getElementById("cartCheckout");
-  if(checkout) checkout.addEventListener("click", function(e){
+
+  /* ---------- خلاصهٔ سفارش: تخفیف، ارسال، جمع کل (قوانین از تنظیمات مدیریت) ---------- */
+  var shopCfg={ shipping_cost:45000, free_shipping_min:500000, min_order:0 }, coupon=null;
+  try{ coupon=JSON.parse(sessionStorage.getItem("atom_coupon")||"null"); }catch(e){}
+  function num(v,d){ var n=parseInt(String(v==null?"":v).replace(/[^0-9]/g,""),10); return isNaN(n)?d:n; }
+  function calc(){
+    var sub=cartTotal(), disc=0;
+    if(coupon) disc = coupon.kind==="percent" ? Math.round(sub*Math.min(100,coupon.amount)/100) : Math.min(sub,+coupon.amount||0);
+    var after=sub-disc, ship = !sub ? 0 : (after>=shopCfg.free_shipping_min ? 0 : shopCfg.shipping_cost);
+    return { sub:sub, disc:disc, ship:ship, total:after+ship };
+  }
+  function renderSummary(){
+    var c=calc(), el=function(id){ return document.getElementById(id); };
+    if(el("sumCount")) el("sumCount").textContent=fa(cartCount());
+    if(el("sumItems")) el("sumItems").textContent=money(c.sub);
+    if(el("sumDiscRow")){ el("sumDiscRow").hidden=!coupon; if(coupon){ el("sumCoupon").textContent=coupon.code; el("sumDisc").textContent="−"+money(c.disc); } }
+    if(el("sumShip")) el("sumShip").textContent = c.ship ? money(c.ship) : "رایگان";
+    if(el("sumShipHint")) el("sumShipHint").textContent = c.sub && c.ship ? ("برای خریدهای بالای "+money(shopCfg.free_shipping_min)+" ارسال رایگان است.") : "";
+    if(el("sumTotal")) el("sumTotal").textContent=money(c.total);
+    if(el("couponInput") && coupon && !el("couponInput").value) el("couponInput").value=coupon.code;
+  }
+  if(document.getElementById("cartItems") && window.SiteAuth){
+    SiteAuth.publicSettings().then(function(d){ var s=(d&&d.settings)||{};
+      shopCfg.shipping_cost=num(s.shipping_cost,shopCfg.shipping_cost); shopCfg.free_shipping_min=num(s.free_shipping_min,shopCfg.free_shipping_min); shopCfg.min_order=num(s.min_order,0);
+      renderSummary(); }).catch(function(){});
+    // پیش‌پر کردن گیرنده برای مشتری واردشده
+    var me=SiteAuth.user(); if(me && me.role==="customer"){ var n=document.getElementById("coName"), ph=document.getElementById("coPhone"); if(n&&!n.value) n.value=me.name||""; if(ph&&!ph.value) ph.value=me.phone||""; }
+  }
+
+  var couponBtn=document.getElementById("couponBtn");
+  if(couponBtn) couponBtn.addEventListener("click", async function(e){
     e.preventDefault();
-    if(!getCart().length){ Toast("سبد خرید شما خالی است","err"); return; }
-    Toast("سفارش شما ثبت شد! به‌زودی با شما تماس می‌گیریم ✓");
-    setTimeout(function(){ setCart([]); },400);
+    var inp=document.getElementById("couponInput"), code=(inp&&inp.value||"").trim();
+    if(!code){ if(coupon){ coupon=null; try{ sessionStorage.removeItem("atom_coupon"); }catch(er){} renderSummary(); Toast("کد تخفیف حذف شد"); } else Toast("لطفاً کد تخفیف را وارد کنید.","err"); return; }
+    couponBtn.disabled=true;
+    try{
+      var o=await SiteAuth.api("/public/offer?code="+encodeURIComponent(code));
+      coupon=o; try{ sessionStorage.setItem("atom_coupon",JSON.stringify(o)); }catch(er){}
+      renderSummary(); Toast("کد تخفیف «"+o.code+"» اعمال شد ✓");
+    }catch(er){ coupon=null; try{ sessionStorage.removeItem("atom_coupon"); }catch(x){} renderSummary(); Toast(er.message,"err"); }
+    couponBtn.disabled=false;
   });
-  var promo=document.querySelector(".promo-row .btn");
-  if(promo) promo.addEventListener("click", function(e){ e.preventDefault(); var inp=promo.parentNode.querySelector("input"); Toast(inp&&inp.value.trim()?"کد تخفیف بررسی شد؛ کد معتبر یافت نشد.":"لطفاً کد تخفیف را وارد کنید.","err"); });
+
+  var checkout=document.getElementById("cartCheckout");
+  if(checkout) checkout.addEventListener("click", async function(e){
+    e.preventDefault();
+    var cart=getCart();
+    if(!cart.length){ Toast("سبد خرید شما خالی است","err"); return; }
+    var v=function(id){ var x=document.getElementById(id); return x?x.value.trim():""; };
+    var payload={ name:v("coName"), phone:v("coPhone"), city:v("coCity"), address:v("coAddress")+(v("coZip")?" — کد پستی "+v("coZip"):""), note:v("coNote"),
+      coupon: coupon?coupon.code:"", items:cart.map(function(i){ return { id:i.id, title:i.title, price:i.price, qty:i.qty, seller:i.seller }; }) };
+    if(!payload.name){ Toast("نام گیرنده را وارد کنید.","err"); document.getElementById("coName").focus(); return; }
+    if(!window.SiteAuth || !SiteAuth.isMobile(payload.phone)){ Toast("شمارهٔ موبایل معتبر وارد کنید (۰۹xxxxxxxxx).","err"); document.getElementById("coPhone").focus(); return; }
+    if(!v("coAddress")){ Toast("آدرس کامل را وارد کنید.","err"); document.getElementById("coAddress").focus(); return; }
+    var c=calc(); if(shopCfg.min_order && c.sub<shopCfg.min_order){ Toast("حداقل مبلغ سفارش "+money(shopCfg.min_order)+" است.","err"); return; }
+    checkout.disabled=true; var t=checkout.innerHTML; checkout.textContent="در حال ثبت سفارش…";
+    try{
+      var r=await SiteAuth.placeOrder(payload);
+      try{ sessionStorage.removeItem("atom_coupon"); localStorage.setItem("atom_last_order",JSON.stringify({code:r.code,phone:payload.phone})); }catch(er){}
+      coupon=null; setCart([]);
+      var layout=document.querySelector(".cart-layout");
+      if(layout) layout.innerHTML='<div class="panel order-done" style="grid-column:1/-1;text-align:center;padding:48px 20px;">'+
+        '<div class="od-ic"><svg class="icon"><use href="#icon-check"/></svg></div>'+
+        '<h2 class="h-2" style="margin:14px 0 8px;">سفارش شما با موفقیت ثبت شد</h2>'+
+        '<p class="muted" style="line-height:2;">کد سفارش: <b style="font-size:1.2rem;color:var(--green-600)">'+fa(r.code)+'</b><br>مبلغ قابل پرداخت: <b>'+money(r.total)+'</b><br>همکاران ما برای هماهنگی ارسال و پرداخت با شمارهٔ '+esc(fa(payload.phone))+' تماس می‌گیرند.</p>'+
+        '<div class="flex gap-8" style="justify-content:center;margin-top:22px;flex-wrap:wrap;"><a class="btn btn-primary" href="track.html?code='+encodeURIComponent(r.code)+'&phone='+encodeURIComponent(payload.phone)+'">پیگیری سفارش</a><a class="btn btn-ghost" href="products.html">ادامهٔ خرید</a></div></div>';
+      var steps=document.querySelectorAll(".steps .step"); steps.forEach(function(s){ s.classList.remove("active"); s.classList.add("done"); });
+      window.scrollTo({top:0,behavior:"smooth"});
+    }catch(er){ Toast(er.message||"ثبت سفارش ناموفق بود.","err"); checkout.disabled=false; checkout.innerHTML=t; }
+  });
 
   updateBadges(); renderCartPage();
 
   /* ---------- جستجو ---------- */
   function goSearch(q){ q=(q||"").trim(); window.location.href="products.html"+(q?("?q="+encodeURIComponent(q)):""); }
   document.querySelectorAll(".search-bar").forEach(function(bar){
-    var inp=bar.querySelector("input"); if(!inp) return;
+    var inp=bar.querySelector("input"); if(!inp || inp.hasAttribute("data-local-search")) return;
     inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); goSearch(inp.value); } });
     var go=bar.querySelector(".s-go"); if(go){ go.style.cursor="pointer"; go.addEventListener("click", function(){ goSearch(inp.value); }); }
   });
   // پیش‌پرکردن جستجو از ?q=
   try{
     var q=new URLSearchParams(window.location.search).get("q");
-    if(q){ document.querySelectorAll(".search-bar input").forEach(function(i){ if(!i.value) i.value=q; }); }
+    if(q){ document.querySelectorAll(".search-bar input:not([data-local-search])").forEach(function(i){ if(!i.value) i.value=q; }); }
   }catch(e){}
 
   /* ---------- فیلتر/مرتب‌سازی: فعال‌سازی حالت انتخاب ---------- */
@@ -670,29 +740,55 @@
     e.preventDefault();
     var panel=cs.closest(".panel, section, main")||document;
     var inps=panel.querySelectorAll("input, textarea");
-    var name=inps[0]&&inps[0].value.trim(), msg=panel.querySelector("textarea");
+    var fields=[].slice.call(panel.querySelectorAll("input"));
+    var name=fields[0]&&fields[0].value.trim(), contact=fields[1]&&fields[1].value.trim(), subject=fields[2]&&fields[2].value.trim(), msg=panel.querySelector("textarea");
     if(!name){ Toast("لطفاً نام خود را وارد کنید.","err"); return; }
+    if(!contact){ Toast("ایمیل یا شماره موبایل را برای پاسخ وارد کنید.","err"); return; }
     if(msg && !msg.value.trim()){ Toast("لطفاً متن پیام را بنویسید.","err"); return; }
-    inps.forEach(function(i){ i.value=""; });
-    Toast("پیام شما با موفقیت ارسال شد ✓");
+    if(!window.SiteAuth){ Toast("ارسال ممکن نیست.","err"); return; }
+    cs.disabled=true;
+    SiteAuth.supportMessage({ sender:name+" ("+contact+")", subject:subject||"پیام از فرم تماس", body:msg?msg.value.trim():"" })
+      .then(function(){ inps.forEach(function(i){ i.value=""; }); Toast("پیام شما ثبت شد؛ به‌زودی پاسخ می‌دهیم ✓"); })
+      .catch(function(er){ Toast(er.message,"err"); })
+      .then(function(){ cs.disabled=false; });
   });
 
   /* ---------- علاقه‌مندی (پایداری + شمارنده) ---------- */
   var WISH_KEY="atom_wish";
   function getWish(){ try{ return JSON.parse(localStorage.getItem(WISH_KEY)||"[]")||[]; }catch(e){ return []; } }
   function setWish(a){ try{ localStorage.setItem(WISH_KEY,JSON.stringify(a)); }catch(e){} updateWishBadges(); }
-  function updateWishBadges(){ var n=getWish().length; document.querySelectorAll('a[href="dashboard.html"] .badge-dot, a[href="wishlist.html"] .badge-dot').forEach(function(b){ if(n>0){ b.style.display=""; b.textContent=fa(n); } else b.style.display="none"; }); }
-  document.querySelectorAll("[data-wish]").forEach(function(btn){
+  function updateWishBadges(){ var n=getWish().length; document.querySelectorAll('a[href="dashboard.html"] .badge-dot, [data-wish-link] .badge-dot').forEach(function(b){ if(n>0){ b.style.display=""; b.textContent=fa(n); } else b.style.display="none"; }); }
+  // هر محصول با عنوانش شناخته می‌شود؛ جزئیات برای تب «علاقه‌مندی‌ها» ذخیره می‌شود
+  function wishInfo(btn){
     var card=btn.closest(".prod-card, .product-card, article");
-    var key=card?((card.querySelector(".prod-title, h3, h1")||{}).textContent||"").trim():"";
-    if(key && getWish().indexOf(key)!==-1){ btn.classList.add("active"); var u=btn.querySelector("use"); if(u) u.setAttribute("href","#icon-heart-filled"); }
-    btn.addEventListener("click", function(){
-      if(!key) return;
-      var w=getWish(), i=w.indexOf(key);
-      if(i===-1){ w.push(key); Toast("به علاقه‌مندی‌ها افزوده شد"); } else { w.splice(i,1); Toast("از علاقه‌مندی‌ها حذف شد"); }
-      setWish(w);
+    if(card){
+      var pr=card.querySelector(".price b"), th=card.querySelector(".prod-thumb .ph");
+      return { title:((card.querySelector(".prod-title, h3")||{}).textContent||"").trim(), price:pr?parsePrice(pr.textContent):0,
+        seller:((card.querySelector(".prod-seller")||{}).textContent||"").trim(), pid:card.getAttribute("data-pid")||"", thumb:th?th.className:"", img:th&&th.style.backgroundImage||"" };
+    }
+    var h=document.querySelector(".pd-title-row h1, h1.h-1"), pp=document.querySelector(".pd-price-box b");
+    return { title:h?h.textContent.trim():"", price:pp?parsePrice(pp.textContent):0, seller:"", pid:new URLSearchParams(location.search).get("id")||"", thumb:"", img:"" };
+  }
+  function wishKeys(){ return getWish().map(function(w){ return typeof w==="string"?w:w.title; }); }
+  function paintWish(root){
+    var keys=wishKeys();
+    (root||document).querySelectorAll("[data-wish]").forEach(function(btn){
+      var on=keys.indexOf(wishInfo(btn).title)!==-1;
+      btn.classList.toggle("active",on); var u=btn.querySelector("use"); if(u) u.setAttribute("href", on?"#icon-heart-filled":"#icon-heart");
     });
+  }
+  document.addEventListener("click", function(e){
+    var btn=e.target.closest("[data-wish]"); if(!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    var info=wishInfo(btn); if(!info.title) return;
+    var w=getWish().map(function(x){ return typeof x==="string"?{title:x}:x; });
+    var i=-1; w.forEach(function(x,k){ if(x.title===info.title) i=k; });
+    if(i===-1){ w.push(info); Toast("«"+info.title+"» به علاقه‌مندی‌ها افزوده شد"); } else { w.splice(i,1); Toast("از علاقه‌مندی‌ها حذف شد"); }
+    setWish(w); paintWish();
   });
+  window.AtomWish={ get:function(){ return getWish().map(function(x){ return typeof x==="string"?{title:x}:x; }); }, set:setWish, paint:paintWish };
+  paintWish();
+  new MutationObserver(function(m){ m.forEach(function(r){ [].forEach.call(r.addedNodes,function(n){ if(n.nodeType===1 && (n.matches("[data-wish]")||n.querySelector("[data-wish]"))) paintWish(n.parentNode||n); }); }); }).observe(document.body,{childList:true,subtree:true});
   updateWishBadges();
 
   /* ---------- خنثی‌سازی لینک‌های خالی (href="#") ---------- */
@@ -702,5 +798,100 @@
     e.preventDefault();
     var lbl=(a.getAttribute("aria-label")||"").trim();
     if(a.closest(".footer-social")) Toast((lbl||"شبکهٔ اجتماعی")+" — به‌زودی");
+  });
+})();
+
+/* ===== وضعیت حساب کاربری در هدر، لینک‌های پویا و شبکه‌های اجتماعی ===== */
+(function(){
+  "use strict";
+  var SA = window.SiteAuth;
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  if(!SA) return;
+
+  // «مرا به خاطر بسپار» خاموش بود و مرورگر بسته شده → خروج خودکار
+  try {
+    if(localStorage.getItem("atom_session_only")==="1" && !sessionStorage.getItem("atom_alive") && SA.isAuthed()){
+      localStorage.removeItem("atom_token"); localStorage.removeItem("atom_user"); localStorage.removeItem("atom_session_only");
+    }
+  } catch(e){}
+
+  var u = SA.user(), home = SA.home();
+  var ROLE = { seller:"پنل فروشندگی", office:"پنل دفتر محله", customer:"حساب من", admin:"پنل مدیریت", editor:"پنل مدیریت", support:"پنل مدیریت" };
+
+  // آیکن حساب در هدر
+  document.querySelectorAll('.header-actions a[href="login.html"]').forEach(function(a){
+    if(!u) return;
+    a.href = home; a.setAttribute("aria-label", ROLE[u.role]||"حساب من"); a.title = (u.name||u.username)+" — "+(ROLE[u.role]||"");
+    a.classList.add("is-authed");
+  });
+  // منوی کشویی موبایل: ورود ↔ حساب من + خروج
+  document.querySelectorAll('.mobile-drawer a[href="login.html"]').forEach(function(a){
+    if(!u) return;
+    a.href = home; a.textContent = (ROLE[u.role]||"حساب من")+" — "+(u.name||u.username);
+    var out = document.createElement("a"); out.href="#"; out.textContent="خروج از حساب"; out.setAttribute("data-site-logout","");
+    a.insertAdjacentElement("afterend", out);
+  });
+  document.addEventListener("click", async function(e){
+    var lo = e.target.closest("[data-site-logout]"); if(!lo) return;
+    e.preventDefault(); await SA.logout(); location.href = "index.html";
+  });
+
+  // «فروشنده شوید»: اگر فروشنده نیست → فرم ثبت‌نام فروشنده
+  document.querySelectorAll('a[href="seller-dashboard.html"]').forEach(function(a){
+    if(/فروشنده شوید|شروع فروش/.test(a.textContent) && !(u && u.role==="seller")) a.href = "login.html#signup";
+    if(/پنل فروشندگی/.test(a.textContent) && !(u && u.role==="seller")) a.href = "login.html?switch=1";
+  });
+  document.querySelectorAll('a[href="dashboard.html"]').forEach(function(a){
+    if(a.querySelector(".badge-dot")) a.setAttribute("data-wish-link","");
+    if(!u) a.href = "login.html?next=dashboard.html#customer";
+    else if(u.role!=="customer") a.href = home;
+  });
+
+  // اطلاعات تماس و شبکه‌های اجتماعی از تنظیمات مدیریت
+  (async function(){
+    var s = {};
+    try { s = (await SA.publicSettings()).settings || {}; } catch(e){}
+    var map = { "اینستاگرام":"social_instagram", "تلگرام":"social_telegram", "واتساپ":"social_whatsapp", "لینکدین":"social_linkedin" };
+    document.querySelectorAll(".footer-social a").forEach(function(a){
+      var k = map[a.getAttribute("aria-label")]; var v = k && s[k];
+      if(v){ a.href = v; a.target = "_blank"; a.rel = "noopener"; }
+    });
+    document.querySelectorAll(".site-footer .footer-col li").forEach(function(li){
+      var ic = li.querySelector("use"); if(!ic) return; var h = ic.getAttribute("href");
+      var val = h==="#icon-phone" ? s.contact_phone : h==="#icon-mail" ? s.contact_email : h==="#icon-map-pin" ? s.address : null;
+      if(val){ var svg = li.querySelector("svg").outerHTML; li.innerHTML = svg+" "+esc(val); }
+    });
+  })();
+})();
+
+/* ===== لینک کارت‌های فروشنده به ویترین همان فروشگاه + صفحه‌بندی عمومی ===== */
+(function(){
+  "use strict";
+  // لینک‌های دسته و زیردسته → جستجوی همان دسته در محصولات
+  document.querySelectorAll('a[href="products.html"]').forEach(function(a){
+    if(a.closest(".site-header, .mobile-drawer, .site-footer, .nav-main, .hs-slide")) return;
+    var t=(a.querySelector("h3")||a).textContent.trim();
+    if(!t){ var box=a.closest(".cat-big, .cat-card, .cat-tile, article, li"); var h=box&&box.querySelector("h3, b"); t=h?h.textContent.trim():""; }
+    if(t && t.length<40 && !/^(محصولات|مشاهده|همه|خرید|شروع)/.test(t)) a.href="products.html?q="+encodeURIComponent(t);
+  });
+  document.querySelectorAll('a.seller-card[href="seller.html"]').forEach(function(a){
+    var b=a.querySelector("b"); if(b) a.href="seller.html?name="+encodeURIComponent(b.textContent.trim());
+  });
+  // صفحه‌بندی سمت کاربر برای شبکه‌هایی که اسکریپت اختصاصی ندارند (مثل تخفیف‌ها)
+  var page=location.pathname.split("/").pop()||"index.html";
+  if(/^(products|blog|sellers|offices)\.html$/.test(page)) return;
+  var FA="۰۱۲۳۴۵۶۷۸۹"; function fa(s){ return String(s).replace(/[0-9]/g,function(d){return FA[+d];}); }
+  document.querySelectorAll(".pagination").forEach(function(pg){
+    var grid=pg.previousElementSibling; while(grid && !grid.children.length) grid=grid.previousElementSibling;
+    if(!grid) return;
+    var items=[].slice.call(grid.children), PER=8, cur=1;
+    function render(){
+      var pages=Math.max(1,Math.ceil(items.length/PER));
+      items.forEach(function(it,i){ it.style.display = (i>=(cur-1)*PER && i<cur*PER) ? "" : "none"; });
+      var h=""; for(var i=1;i<=pages;i++) h+='<a href="#" data-gp="'+i+'"'+(i===cur?' class="active"':'')+'>'+fa(i)+'</a>';
+      pg.innerHTML=h; pg.style.display = pages>1 ? "" : "none";
+    }
+    pg.addEventListener("click",function(e){ var a=e.target.closest("[data-gp]"); if(!a) return; e.preventDefault(); cur=+a.getAttribute("data-gp"); render(); grid.scrollIntoView({behavior:"smooth",block:"start"}); });
+    render();
   });
 })();

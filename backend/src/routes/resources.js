@@ -1,7 +1,7 @@
 /* کارخانه CRUD برای منابع ساده (محصولات، سفارش‌ها، مشتریان، ...) */
 const express = require('express');
 const db = require('../db');
-const { requireAuth, requireRole, logActivity } = require('../auth');
+const { requireAuth, requireRole, STAFF, logActivity } = require('../auth');
 const { str, int, oneOf, isNationalCode, isMobile } = require('../validate');
 const banned = require('../banned');
 
@@ -16,6 +16,14 @@ function makeResource(cfg) {
   const router = express.Router();
   router.use(requireAuth);
   const cols = cfg.fields.map(f => f.name);
+
+  // خواندن: فقط کارکنان پنل؛ یا صاحب ردیف (فروشنده/دفتر) برای منابع مالک‌محور
+  router.use((req, res, next) => {
+    const role = req.admin && req.admin.role;
+    if (STAFF.includes(role)) return next();
+    if (cfg.ownerField && role === (cfg.ownerRole || 'seller')) return next();
+    return res.status(403).json({ error: 'به این بخش دسترسی ندارید.' });
+  });
 
   function isOwnerScoped(req) {
     return cfg.ownerField && req.admin && req.admin.role === (cfg.ownerRole || 'seller');
@@ -137,6 +145,7 @@ const orders = makeResource({
     { name: 'code', max: 40 }, { name: 'customer', max: 120 }, { name: 'product', max: 300 },
     { name: 'seller', max: 120 }, { name: 'amount', type: 'int' },
     { name: 'status', allowed: ['pending', 'shipping', 'delivered', 'returned', 'review'], def: 'pending' },
+    { name: 'phone', max: 20 }, { name: 'address', max: 600 }, { name: 'owner', max: 60 }, { name: 'note', max: 600 },
   ],
 });
 

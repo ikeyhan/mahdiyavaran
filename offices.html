@@ -154,7 +154,7 @@
       <button class="btn-icon menu-toggle" data-drawer-open aria-label="منو"><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
-  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="offices.html" class="active">دفاتر محلات</a><a href="sellers.html">فروشندگان</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
+  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html">محصولات</a><a href="offices.html" class="active">دفاتر محلات</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
@@ -195,21 +195,19 @@
   <div class="container">
     <div class="sort-bar reveal">
       <div class="sort-opts"><span class="lbl">مرتب‌سازی:</span>
-        <button class="active">برترین</button><button>پرفروش‌ترین</button><button>جدیدترین</button><button>بیشترین امتیاز</button>
+        <button class="active" data-osort="top">برترین</button><button data-osort="new">جدیدترین</button><button data-osort="name">الفبایی</button>
       </div>
-      <span class="result-count">دفاتر فعال محله</span>
+      <div class="search-bar office-search" style="max-width:320px;"><svg class="icon"><use href="#icon-search"/></svg><input type="text" id="officeQ" placeholder="جستجوی دفتر، محله یا شهر…" data-local-search></div>
+      <span class="result-count" id="officeCount">دفاتر فعال محله</span>
     </div>
     <div class="seller-grid reveal" id="officeGrid"><div class="seller-card"><div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">و</div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div><b>دفتر محله ولیعصر</b><span class="role">محلهٔ ولیعصر</span><div class="seller-meta"><div><b>۴.۹</b><span>امتیاز</span></div><div><b>ولیعصر</b><span>محله</span></div><div><b>علی رضایی</b><span>مسئول</span></div></div></div><div class="seller-card"><div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">س</div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div><b>دفتر محله سعادت‌آباد</b><span class="role">محلهٔ سعادت‌آباد</span><div class="seller-meta"><div><b>۴.۸</b><span>امتیاز</span></div><div><b>سعادت‌آباد</b><span>محله</span></div><div><b>مریم کریمی</b><span>مسئول</span></div></div></div><div class="seller-card"><div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">ن</div><span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div><b>دفتر محله نارمک</b><span class="role">محلهٔ نارمک</span><div class="seller-meta"><div><b>۴.۷</b><span>امتیاز</span></div><div><b>نارمک</b><span>محله</span></div><div><b>حسین محمدی</b><span>مسئول</span></div></div></div></div>
-    <div class="pagination reveal">
-      <a href="#" class="active">۱</a><a href="#">۲</a><a href="#">۳</a><a href="#">…</a><a href="#">۲۰</a><a href="#"><svg class="icon"><use href="#icon-chevron-left"/></svg></a>
-    </div>
 
     <div class="banner reveal" style="margin-top:40px;">
       <div>
-        <span class="chip" style="background:rgba(255,255,255,.18);color:#fff;">فرصت طلایی فروش</span>
-        <h2 class="h-1" style="margin-top:14px;">شما هم فروشنده اتم شوید</h2>
-        <p>در کمتر از ۱۰ دقیقه فروشگاه بسازید و به میلیون‌ها مشتری دسترسی پیدا کنید.</p>
-        <div class="hero-cta"><a href="seller-dashboard.html" class="btn btn-primary">شروع فروش رایگان</a><a href="seller.html" class="btn btn-ghost" style="color:#fff;">نمونه فروشگاه</a></div>
+        <span class="chip" style="background:rgba(255,255,255,.18);color:#fff;">دفاتر خدمات محله</span>
+        <h2 class="h-1" style="margin-top:14px;">دفتر محلهٔ خود را ثبت کنید</h2>
+        <p>پس از اعتبارسنجی کد ملی و تأیید مدیر، دفتر شما در این فهرست نمایش داده می‌شود و شهروندان می‌توانند خدمات را ببینند و با شما گفتگو کنند.</p>
+        <div class="hero-cta"><a href="login.html#office" class="btn btn-primary">ثبت‌نام دفتر محله</a><a href="login.html" class="btn btn-ghost" style="color:#fff;">ورود به پنل دفتر</a></div>
       </div>
       <div class="banner-deco"><div class="bd"><svg class="icon"><use href="#icon-trending-up"/></svg></div><div class="bd"><svg class="icon"><use href="#icon-users"/></svg></div><div class="bd"><svg class="icon"><use href="#icon-wallet"/></svg></div></div>
     </div>
@@ -232,7 +230,8 @@
         </div>
       </div>
       <div class="footer-col"><h4>بازارگاه</h4><ul>
-        <li><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a></li>
+        <li><a href="products.html">محصولات</a></li>
+        <li><a href="offices.html">دفاتر محلات</a></li>
         <li><a href="categories.html">دسته‌بندی‌ها</a></li>
         <li><a href="sellers.html">فروشندگان</a></li>
         <li><a href="offers.html">تخفیف‌ها و حراج</a></li>
@@ -247,7 +246,9 @@
         <li><a href="about.html">درباره ما</a></li>
         <li><a href="blog.html">بلاگ</a></li>
         <li><a href="contact.html">تماس با ما</a></li>
-        <li><a href="#">سوالات متداول</a></li>
+        <li><a href="faq.html">سوالات متداول</a></li>
+        <li><a href="track.html">پیگیری سفارش</a></li>
+        <li><a href="terms.html">قوانین و مقررات</a></li>
       </ul></div>
       <div class="footer-col"><h4>تماس</h4><ul>
         <li class="flex gap-8"><svg class="icon" style="width:15px;height:15px;"><use href="#icon-phone"/></svg> ۰۲۱-۹۱۰۰۰۰۰۰</li>
@@ -263,82 +264,92 @@
 </footer>
 
 <button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
+<script src="assets/js/demo-db.js"></script>
+<script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
   var b=document.getElementById('toTopBtn');
   window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });
   b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 </script>
-<script src="assets/js/site-auth.js"></script>
 <script>
+/* ===== دفاتر محلات: فهرست واقعی، جستجو، مرتب‌سازی، خدمات هر دفتر و گفتگو ===== */
 (async function(){
-  var grid=document.getElementById('officeGrid'); if(!grid) return;
+  var grid=document.getElementById('officeGrid'); if(!grid||!window.SiteAuth) return;
   var FA="۰۱۲۳۴۵۶۷۸۹"; function fa(s){return String(s==null?'':s).replace(/[0-9]/g,function(d){return FA[+d];});}
+  function en(s){return String(s==null?'':s).replace(/[۰-۹]/g,function(d){return FA.indexOf(d);});}
+  function norm(s){return en(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]+/g,' ').trim().toLowerCase();}
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  var offices=[];
-  var DEMO=[
-    {id:1,name:'دفتر محله ولیعصر',area:'ولیعصر',city:'تهران',manager:'علی رضایی',rating:4.9},
-    {id:2,name:'دفتر محله سعادت‌آباد',area:'سعادت‌آباد',city:'تهران',manager:'مریم کریمی',rating:4.8},
-    {id:3,name:'دفتر محله نارمک',area:'نارمک',city:'تهران',manager:'حسین محمدی',rating:4.7},
-  ];
+  function money(n){return fa(String(Math.round(+n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,','))+' ت';}
+  var offices=[], sort='top', q='';
   function card(o){
-    var letter=esc((o.name||'د').trim().charAt(0));
-    return '<div class="seller-card">'+
+    var letter=esc((o.name||'د').replace(/^دفتر\s*(محله\s*)?/,'').trim().charAt(0)||'د');
+    return '<div class="seller-card office-card">'+
       '<div class="seller-ava"><div class="fill" style="background:linear-gradient(135deg,#0E7A38,#37C463);display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.3rem;">'+letter+'</div>'+
-      '<span class="verified"><svg class="icon"><use href="#icon-check"/></svg></span></div>'+
-      '<b>'+esc(o.name)+'</b><span class="role">محلهٔ '+esc(o.area||o.city||'')+'</span>'+
+      '<span class="verified" title="اعتبارسنجی‌شده"><svg class="icon"><use href="#icon-check"/></svg></span></div>'+
+      '<b>'+esc(o.name)+'</b><span class="role">'+esc([o.area?'محلهٔ '+o.area:'',o.city].filter(Boolean).join('، '))+'</span>'+
+      (o.bio?'<p class="office-bio">'+esc(o.bio)+'</p>':'')+
       '<div class="seller-meta"><div><b>'+fa(o.rating||5)+'</b><span>امتیاز</span></div>'+
-      '<div><b>'+esc(o.area||'—')+'</b><span>محله</span></div>'+
-      '<div><b>'+esc(o.manager||'—')+'</b><span>مسئول</span></div></div>'+
-      '<button class="btn btn-primary btn-sm" data-msg="'+esc(o.id)+'" style="margin-top:14px;width:100%;"><svg class="icon"><use href="#icon-chat"/></svg> ارسال پیام به دفتر</button>'+
-      '</div>';
+      '<div><b>'+esc(o.manager||'—')+'</b><span>مسئول</span></div>'+
+      '<div><b dir="ltr">'+esc(fa(o.phone||'—'))+'</b><span>تماس</span></div></div>'+
+      (o.address?'<div class="office-addr"><svg class="icon"><use href="#icon-map-pin"/></svg> '+esc(o.address)+'</div>':'')+
+      '<div class="flex gap-8" style="margin-top:14px;">'+
+        '<button class="btn btn-ghost btn-sm" data-svc="'+esc(o.id)+'" style="flex:1;"><svg class="icon"><use href="#icon-box"/></svg> خدمات</button>'+
+        '<button class="btn btn-primary btn-sm" data-msg="'+esc(o.id)+'" style="flex:1.4;"><svg class="icon"><use href="#icon-chat"/></svg> گفتگو با دفتر</button>'+
+      '</div></div>';
   }
-  function render(){ grid.innerHTML=offices.map(card).join(''); bind(); }
-  try{
-    var c=new AbortController(); var to=setTimeout(function(){c.abort();},1500);
-    var r=await fetch('/api/public/offices',{signal:c.signal}); clearTimeout(to);
-    if(r.ok){ var d=await r.json(); offices=(d.items&&d.items.length)?d.items:DEMO; }
-    else offices=DEMO;
-  }catch(e){ offices=DEMO; }
+  function render(){
+    var list=offices.filter(function(o){ return !q || norm([o.name,o.area,o.city,o.manager,o.address].join(' ')).indexOf(q)!==-1; });
+    list.sort(sort==='new'?function(a,b){return String(b.created_at||'').localeCompare(String(a.created_at||''))||b.id-a.id;}
+      :sort==='name'?function(a,b){return String(a.name).localeCompare(String(b.name),'fa');}
+      :function(a,b){return (b.rating||0)-(a.rating||0)||b.id-a.id;});
+    grid.innerHTML=list.length?list.map(card).join(''):'<div class="cat-empty"><svg class="icon"><use href="#icon-search"/></svg><b>'+(offices.length?'دفتری با این مشخصات پیدا نشد':'هنوز دفتری تأیید نشده است')+'</b><span>'+(offices.length?'نام محله یا شهر دیگری را جستجو کنید.':'پس از اعتبارسنجی دفاتر، فهرست آن‌ها اینجا نمایش داده می‌شود.')+'</span></div>';
+    var c=document.getElementById('officeCount'); if(c) c.textContent=fa(list.length)+' دفتر تأییدشده';
+  }
+  try{ offices=(await SiteAuth.publicGet('offices')).items||[]; }catch(e){ offices=[]; }
   render();
+  document.querySelectorAll('[data-osort]').forEach(function(b){ b.addEventListener('click',function(){ document.querySelectorAll('[data-osort]').forEach(function(x){x.classList.remove('active');}); b.classList.add('active'); sort=b.getAttribute('data-osort'); render(); }); });
+  var qi=document.getElementById('officeQ'); if(qi) qi.addEventListener('input',function(){ q=norm(qi.value); render(); });
 
-  /* مودال ارسال پیام به دفتر */
-  var modal=document.createElement('div'); modal.className='sd-modal'; modal.hidden=true;
-  modal.innerHTML='<div class="sd-card"><div class="sd-head"><h3>ارسال پیام به دفتر</h3><button class="btn-icon" data-x aria-label="بستن"><svg class="icon"><use href="#icon-close"/></svg></button></div>'+
-    '<div class="sd-body">'+
-      '<p class="faint" id="omTo" style="margin:0 0 14px;font-size:.85rem;"></p>'+
-      '<div class="sd-field"><label>نام و نام خانوادگی</label><input type="text" id="om_name" placeholder="نام شما"></div>'+
-      '<div class="sd-field"><label>شماره تماس (اختیاری)</label><input type="text" id="om_phone" placeholder="09xxxxxxxxx" inputmode="numeric" style="direction:ltr;text-align:left;"></div>'+
-      '<div class="sd-field"><label>متن پیام</label><textarea id="om_body" placeholder="درخواست یا پرسش خود را بنویسید…" style="min-height:110px;"></textarea></div>'+
-    '</div>'+
-    '<div class="sd-foot"><button class="btn btn-ghost" data-x>انصراف</button><button class="btn btn-primary" id="om_send">ارسال پیام</button></div></div>';
-  document.body.appendChild(modal);
-  var curr=null;
-  modal.addEventListener('click',function(e){ if(e.target===modal||e.target.closest('[data-x]')) modal.hidden=true; });
-  function bind(){
-    grid.querySelectorAll('[data-msg]').forEach(function(btn){
-      btn.onclick=function(){
-        var id=btn.getAttribute('data-msg'); curr=offices.filter(function(o){return String(o.id)===String(id);})[0]; if(!curr) return;
-        document.getElementById('omTo').innerHTML='گیرنده: <b style="color:var(--text-1)">'+esc(curr.name)+'</b>';
-        document.getElementById('om_name').value=''; document.getElementById('om_phone').value=''; document.getElementById('om_body').value='';
-        modal.hidden=false;
-      };
-    });
+  /* ---------- مودال‌ها ---------- */
+  function modal(html){
+    var m=document.createElement('div'); m.className='sd-modal'; m.innerHTML='<div class="sd-card">'+html+'</div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){ if(e.target===m||e.target.closest('[data-x]')) m.remove(); });
+    return m;
   }
-  document.getElementById('om_send').onclick=async function(){
-    if(!curr){ modal.hidden=true; return; }
-    var body=document.getElementById('om_body').value.trim();
-    if(!body){ alert('لطفاً متن پیام را بنویسید.'); return; }
-    var phone=document.getElementById('om_phone').value.trim();
-    if(phone && !SiteAuth.isMobile && !/^09\d{9}$/.test(phone.replace(/[^0-9]/g,''))){ /* بی‌خطر */ }
-    var b=this; b.disabled=true; var t=b.textContent; b.textContent='در حال ارسال…';
-    try{
-      await SiteAuth.sendOfficeMessage({ office_id:curr.id, office_name:curr.name, name:document.getElementById('om_name').value.trim(), phone:phone, body:body });
-      modal.hidden=true;
-      if(window.Toast) Toast('پیام شما برای «'+curr.name+'» ارسال شد ✓'); else alert('پیام شما ارسال شد ✓');
-    }catch(e){ alert(e.message||'خطا در ارسال پیام'); }
-    b.disabled=false; b.textContent=t;
-  };
+  function byId(id){ return offices.filter(function(o){return String(o.id)===String(id);})[0]; }
+  grid.addEventListener('click', async function(e){
+    var sv=e.target.closest('[data-svc]'), mg=e.target.closest('[data-msg]');
+    if(sv){
+      var o=byId(sv.getAttribute('data-svc')); if(!o) return;
+      var m=modal('<div class="sd-head"><h3>خدمات '+esc(o.name)+'</h3><button class="btn-icon" data-x aria-label="بستن"><svg class="icon"><use href="#icon-close"/></svg></button></div><div class="sd-body" id="svcBody"><p class="faint">در حال بارگذاری…</p></div><div class="sd-foot"><button class="btn btn-ghost" data-x>بستن</button><button class="btn btn-primary" data-msg2>گفتگو با دفتر</button></div>');
+      m.querySelector('[data-msg2]').onclick=function(){ m.remove(); openMsg(o); };
+      try{
+        var items=(await SiteAuth.api('/public/office-services?office_id='+encodeURIComponent(o.id))).items||[];
+        m.querySelector('#svcBody').innerHTML=items.length?items.map(function(x){ return '<div class="svc-item"><div class="flex between"><b>'+esc(x.title)+'</b><span class="chip">'+(x.price?money(x.price):'رایگان')+'</span></div>'+(x.category?'<span class="faint" style="font-size:.76rem">'+esc(x.category)+'</span>':'')+(x.description?'<p>'+esc(x.description)+'</p>':'')+'</div>'; }).join(''):'<p class="faint" style="text-align:center;padding:18px 0">این دفتر هنوز خدمتی ثبت نکرده است.</p>';
+      }catch(er){ m.querySelector('#svcBody').innerHTML='<p class="faint">'+esc(er.message)+'</p>'; }
+    }
+    if(mg){ var o2=byId(mg.getAttribute('data-msg')); if(o2) openMsg(o2); }
+  });
+  function openMsg(o){
+    var me=SiteAuth.user()||{};
+    var m=modal('<div class="sd-head"><h3>گفتگو با '+esc(o.name)+'</h3><button class="btn-icon" data-x aria-label="بستن"><svg class="icon"><use href="#icon-close"/></svg></button></div>'+
+      '<div class="sd-body"><p class="faint" style="margin:0 0 14px;font-size:.84rem;line-height:1.9">پیام شما مستقیماً در پنل این دفتر ثبت می‌شود و پاسخ از طریق شماره تماس شما اعلام می‌گردد.</p>'+
+      '<div class="sd-field"><label>نام و نام خانوادگی</label><input type="text" id="om_name" value="'+esc(me.name||'')+'" placeholder="نام شما"></div>'+
+      '<div class="sd-field"><label>شماره موبایل برای پاسخ</label><input type="text" id="om_phone" value="'+esc(me.phone||'')+'" placeholder="09xxxxxxxxx" inputmode="numeric" style="direction:ltr;text-align:left;"></div>'+
+      '<div class="sd-field"><label>متن پیام</label><textarea id="om_body" placeholder="درخواست یا پرسش خود را بنویسید…" style="min-height:110px;"></textarea></div></div>'+
+      '<div class="sd-foot"><button class="btn btn-ghost" data-x>انصراف</button><button class="btn btn-primary" id="om_send">ارسال پیام</button></div>');
+    m.querySelector('#om_send').onclick=async function(){
+      var body=m.querySelector('#om_body').value.trim(), phone=m.querySelector('#om_phone').value.trim(), name=m.querySelector('#om_name').value.trim();
+      if(!name){ Toast('نام خود را وارد کنید.','err'); return; }
+      if(!body){ Toast('لطفاً متن پیام را بنویسید.','err'); return; }
+      if(phone && !SiteAuth.isMobile(phone)){ Toast('شمارهٔ موبایل نامعتبر است.','err'); return; }
+      var b=this; b.disabled=true; b.textContent='در حال ارسال…';
+      try{ await SiteAuth.sendOfficeMessage({ office_id:o.id, office_name:o.name, name:name, phone:phone, body:body }); m.remove(); Toast('پیام شما برای «'+o.name+'» ارسال شد ✓'); }
+      catch(er){ Toast(er.message||'خطا در ارسال پیام','err'); b.disabled=false; b.textContent='ارسال پیام'; }
+    };
+  }
 })();
 </script>
 </body>

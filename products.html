@@ -154,7 +154,7 @@
       <button class="btn-icon menu-toggle" data-drawer-open aria-label="منو"><svg class="icon"><use href="#icon-menu"/></svg></button>
     </div>
   </div>
-  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html" class="active">محصولات</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
+  <div class="container nav-row"><nav class="nav-main"><a href="index.html">خانه</a><a href="categories.html">دسته‌بندی‌ها</a><a href="products.html" class="active">محصولات</a><a href="offices.html">دفاتر محلات</a><a href="offers.html">تخفیف‌ها</a><a href="blog.html">بلاگ</a><a href="about.html">درباره ما</a><a href="contact.html">تماس</a></nav></div>
 </header>
 
 <div class="drawer-overlay" data-drawer-overlay></div>
@@ -201,23 +201,23 @@
         <div class="price-range"><input type="text" placeholder="از ۰"><input type="text" placeholder="تا ۵٬۰۰۰٬۰۰۰"></div>
       </div>
       <div class="filter-group"><h4>حداقل امتیاز</h4>
-        <div class="chips-wrap" data-filter-group><span class="filter-chip active">همه</span><span class="filter-chip">۴ به بالا</span><span class="filter-chip">۴.۵ به بالا</span></div>
+        <div class="chips-wrap"><span class="filter-chip active">همه</span><span class="filter-chip">۴ به بالا</span><span class="filter-chip">۴.۵ به بالا</span></div>
       </div>
       <div class="filter-group"><h4>وضعیت</h4>
         <label class="checkline"><input type="checkbox"> موجود در انبار<span class="cnt"></span></label><label class="checkline"><input type="checkbox"> دارای تخفیف<span class="cnt"></span></label><label class="checkline"><input type="checkbox"> ارسال رایگان<span class="cnt"></span></label><label class="checkline"><input type="checkbox"> کالای جدید<span class="cnt"></span></label>
       </div>
       <div class="filter-group"><h4>شهر فروشنده</h4>
-        <div class="chips-wrap" data-filter-group><span class="filter-chip">تهران</span><span class="filter-chip">اصفهان</span><span class="filter-chip">شیراز</span><span class="filter-chip">مشهد</span><span class="filter-chip">تبریز</span></div>
+        <div class="chips-wrap"><span class="filter-chip">تهران</span><span class="filter-chip">اصفهان</span><span class="filter-chip">شیراز</span><span class="filter-chip">مشهد</span><span class="filter-chip">تبریز</span></div>
       </div>
     </aside>
 
     <div>
       <div class="sort-bar reveal">
-        <div class="sort-opts" data-filter-group><span class="lbl">مرتب‌سازی:</span>
+        <div class="sort-opts"><span class="lbl">مرتب‌سازی:</span>
           <button class="active">پرفروش‌ترین</button><button>جدیدترین</button><button>ارزان‌ترین</button><button>گران‌ترین</button><button>محبوب‌ترین</button>
         </div>
         <div class="flex gap-12"><span class="result-count">۱٬۲۴۸ نتیجه</span>
-          <div class="view-toggle" data-filter-group><button class="btn-icon btn-icon-sm" style="color:var(--green-600)"><svg class="icon"><use href="#icon-grid"/></svg></button><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-list"/></svg></button></div>
+          <div class="view-toggle"><button class="btn-icon btn-icon-sm" style="color:var(--green-600)"><svg class="icon"><use href="#icon-grid"/></svg></button><button class="btn-icon btn-icon-sm"><svg class="icon"><use href="#icon-list"/></svg></button></div>
         </div>
       </div>
       <div class="prod-grid cols-3 reveal">
@@ -318,7 +318,8 @@
         </div>
       </div>
       <div class="footer-col"><h4>بازارگاه</h4><ul>
-        <li><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a></li>
+        <li><a href="products.html">محصولات</a></li>
+        <li><a href="offices.html">دفاتر محلات</a></li>
         <li><a href="categories.html">دسته‌بندی‌ها</a></li>
         <li><a href="sellers.html">فروشندگان</a></li>
         <li><a href="offers.html">تخفیف‌ها و حراج</a></li>
@@ -333,7 +334,9 @@
         <li><a href="about.html">درباره ما</a></li>
         <li><a href="blog.html">بلاگ</a></li>
         <li><a href="contact.html">تماس با ما</a></li>
-        <li><a href="#">سوالات متداول</a></li>
+        <li><a href="faq.html">سوالات متداول</a></li>
+        <li><a href="track.html">پیگیری سفارش</a></li>
+        <li><a href="terms.html">قوانین و مقررات</a></li>
       </ul></div>
       <div class="footer-col"><h4>تماس</h4><ul>
         <li class="flex gap-8"><svg class="icon" style="width:15px;height:15px;"><use href="#icon-phone"/></svg> ۰۲۱-۹۱۰۰۰۰۰۰</li>
@@ -349,7 +352,10 @@
 </footer>
 
 <button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
+<script src="assets/js/demo-db.js"></script>
+<script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/catalog.js"></script>
 <script>
   var b=document.getElementById('toTopBtn');
   window.addEventListener('scroll',function(){ if(window.scrollY>480){b.style.opacity=1;b.style.pointerEvents='auto';b.style.transform='scale(1)';} else {b.style.opacity=0;b.style.pointerEvents='none';b.style.transform='scale(.8)';} });

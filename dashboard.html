@@ -208,7 +208,7 @@
           <a href="#" data-dash-tab="messages"><svg class="icon"><use href="#icon-chat"/></svg> پیام‌ها</a>
           <a href="#" data-dash-tab="notifications"><svg class="icon"><use href="#icon-bell"/></svg> اعلان‌ها</a>
           <a href="#" data-dash-tab="profile"><svg class="icon"><use href="#icon-settings"/></svg> تنظیمات پروفایل</a>
-          <a href="index.html" style="margin-top:10px; border-top:1px solid color-mix(in srgb, var(--text-1) 8%, transparent); padding-top:16px;"><svg class="icon"><use href="#icon-logout"/></svg> خروج از حساب</a>
+          <a href="#" data-site-logout style="margin-top:10px; border-top:1px solid color-mix(in srgb, var(--text-1) 8%, transparent); padding-top:16px;"><svg class="icon"><use href="#icon-logout"/></svg> خروج از حساب</a>
         </nav>
       </aside>
 
@@ -294,13 +294,21 @@
           <h1 class="h-2" style="margin-bottom:20px;">تنظیمات پروفایل</h1>
           <div class="panel reveal">
             <div class="grid grid-2">
-              <div class="field"><label>نام و نام‌خانوادگی</label><input type="text" value="سارا محمدی"></div>
-              <div class="field"><label>شماره موبایل</label><input type="text" value="۰۹۱۲۳۴۵۶۷۸۹"></div>
-              <div class="field"><label>ایمیل</label><input type="email" value="sara.mohammadi@email.com"></div>
-              <div class="field"><label>شهر</label><input type="text" value="تهران"></div>
+              <div class="field"><label>نام و نام‌خانوادگی</label><input type="text" id="pfName" value=""></div>
+              <div class="field"><label>شماره موبایل</label><input type="text" id="pfPhone" value="" inputmode="numeric"></div>
+              <div class="field"><label>ایمیل</label><input type="email" id="pfEmail" value="" style="direction:ltr;text-align:left;"></div>
+              <div class="field"><label>شهر</label><input type="text" id="pfCity" value=""></div>
             </div>
-            <div class="field" style="margin-top:20px;"><label>آدرس</label><textarea>تهران، خیابان ولیعصر، پلاک ۱۲۰</textarea></div>
-            <div class="flex gap-12" style="margin-top:22px;"><button class="btn btn-primary">ذخیره تغییرات</button><button class="btn btn-ghost">انصراف</button></div>
+            <div class="field" style="margin-top:20px;"><label>آدرس پیش‌فرض ارسال</label><textarea id="pfAddress"></textarea></div>
+            <div class="flex gap-12" style="margin-top:22px;"><button class="btn btn-primary" id="pfSave">ذخیره تغییرات</button><button class="btn btn-ghost" id="pfReset">انصراف</button></div>
+          </div>
+          <div class="panel reveal" style="margin-top:20px;">
+            <h3 class="h-3" style="margin-bottom:14px;">تغییر رمز عبور</h3>
+            <div class="grid grid-2">
+              <div class="field"><label>رمز فعلی</label><input type="password" id="pwCur" autocomplete="current-password"></div>
+              <div class="field"><label>رمز جدید (حداقل ۸ کاراکتر)</label><input type="password" id="pwNew" autocomplete="new-password"></div>
+            </div>
+            <div class="flex gap-12" style="margin-top:18px;"><button class="btn btn-primary" id="pwSave">تغییر رمز</button></div>
           </div>
         </div>
 
@@ -324,7 +332,8 @@
         </div>
       </div>
       <div class="footer-col"><h4>بازارگاه</h4><ul>
-        <li><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a></li>
+        <li><a href="products.html">محصولات</a></li>
+        <li><a href="offices.html">دفاتر محلات</a></li>
         <li><a href="categories.html">دسته‌بندی‌ها</a></li>
         <li><a href="sellers.html">فروشندگان</a></li>
         <li><a href="offers.html">تخفیف‌ها و حراج</a></li>
@@ -339,7 +348,9 @@
         <li><a href="about.html">درباره ما</a></li>
         <li><a href="blog.html">بلاگ</a></li>
         <li><a href="contact.html">تماس با ما</a></li>
-        <li><a href="#">سوالات متداول</a></li>
+        <li><a href="faq.html">سوالات متداول</a></li>
+        <li><a href="track.html">پیگیری سفارش</a></li>
+        <li><a href="terms.html">قوانین و مقررات</a></li>
       </ul></div>
       <div class="footer-col"><h4>تماس</h4><ul>
         <li class="flex gap-8"><svg class="icon" style="width:15px;height:15px;"><use href="#icon-phone"/></svg> ۰۲۱-۹۱۰۰۰۰۰۰</li>
@@ -354,7 +365,10 @@
   </div>
 </footer>
 
+<script src="assets/js/demo-db.js"></script>
+<script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/account.js"></script>
 <script>
   document.querySelectorAll('[data-dash-tab]').forEach(function(link){
     link.addEventListener('click', function(e){

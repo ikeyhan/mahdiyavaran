@@ -187,8 +187,9 @@
     <a href="index.html" class="logo"><img src="assets/svg/logo-mark.svg" class="mark" alt=""><b style="font-size:1.1rem;">اتم ۳۱۳</b></a>
     <div class="auth-tabs" data-auth-tabs>
       <button class="active" data-auth="login">ورود</button>
-      <button data-auth="signup">ثبت‌نام فروشنده</button>
-      <button data-auth="office">ثبت‌نام دفتر</button>
+      <button data-auth="customer">ثبت‌نام خریدار</button>
+      <button data-auth="signup">فروشنده</button>
+      <button data-auth="office">دفتر محله</button>
     </div>
 
     <div class="auth-err" id="authErr" hidden></div>
@@ -196,9 +197,27 @@
     <div data-auth-panel="login">
       <div class="field" style="margin-bottom:16px;"><label>نام کاربری</label><input type="text" id="loginUser" placeholder="نام کاربری" autocomplete="username"></div>
       <div class="field" style="margin-bottom:8px;"><label>رمز عبور</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
-      <div class="flex between" style="margin-bottom:18px;"><label class="checkline" style="padding:0;"><input type="checkbox"> مرا به خاطر بسپار</label><a href="#" class="faint" style="font-size:.8rem;">فراموشی رمز؟</a></div>
+      <div class="flex between" style="margin-bottom:18px;"><label class="checkline" style="padding:0;"><input type="checkbox" id="loginRemember" checked> مرا به خاطر بسپار</label><button type="button" class="link-btn faint" id="forgotBtn" style="font-size:.8rem;">فراموشی رمز؟</button></div>
       <button type="button" id="loginBtn" class="btn btn-primary btn-block btn-lg">ورود به حساب</button>
-      <p class="faint center" style="font-size:.78rem; margin-top:12px;">حساب نمونهٔ فروشنده: <b style="direction:ltr;display:inline-block">atra / atra1234</b></p>
+      <div class="demo-accounts">
+        <b>حساب‌های نمونه برای تست</b>
+        <button type="button" data-demo-login="atra|atra1234">فروشنده · <bdi dir="ltr">atra / atra1234</bdi></button>
+        <button type="button" data-demo-login="daftar|daftar1234">دفتر محله · <bdi dir="ltr">daftar / daftar1234</bdi></button>
+        <a href="adminpanel/index.html">پنل مدیریت · <bdi dir="ltr">admin / atom313@</bdi></a>
+      </div>
+    </div>
+
+    <div data-auth-panel="customer" hidden>
+      <p class="faint" style="font-size:.82rem; margin-bottom:14px; line-height:1.8;">با ساخت حساب خریدار، سفارش‌هایتان در «حساب من» ذخیره می‌شود و وضعیت ارسال را همیشه می‌بینید.</p>
+      <div class="field" style="margin-bottom:14px;"><label>نام و نام‌خانوادگی</label><input type="text" id="cuName" placeholder="نام شما"></div>
+      <div class="flex gap-8" style="margin-bottom:14px;">
+        <div class="field" style="flex:1;margin:0;"><label>شماره موبایل</label><input type="text" id="cuPhone" placeholder="۰۹xxxxxxxxx" inputmode="numeric"></div>
+        <div class="field" style="flex:1;margin:0;"><label>شهر</label><input type="text" id="cuCity" placeholder="شهر"></div>
+      </div>
+      <div class="field" style="margin-bottom:14px;"><label>ایمیل (اختیاری)</label><input type="email" id="cuEmail" placeholder="name@example.com" style="direction:ltr;text-align:left;"></div>
+      <div class="field" style="margin-bottom:14px;"><label>نام کاربری (لاتین)</label><input type="text" id="cuUser" placeholder="username" autocomplete="username" style="direction:ltr;text-align:left;"></div>
+      <div class="field" style="margin-bottom:18px;"><label>رمز عبور</label><input type="password" id="cuPass" placeholder="حداقل ۶ کاراکتر" autocomplete="new-password"></div>
+      <button type="button" id="customerBtn" class="btn btn-primary btn-block btn-lg">ساخت حساب خریدار</button>
     </div>
 
     <div data-auth-panel="signup" hidden>
@@ -234,12 +253,12 @@
       <button type="button" id="officeBtn" class="btn btn-primary btn-block btn-lg">ثبت‌نام دفتر محله</button>
     </div>
 
-    <div class="auth-sep">یا ادامه با</div>
+    <div class="auth-sep">یا بدون ورود</div>
     <div class="auth-social">
-      <a href="#"><svg class="icon"><use href="#icon-mail"/></svg> گوگل</a>
-      <a href="#"><svg class="icon"><use href="#icon-phone"/></svg> پیامک</a>
+      <a href="track.html"><svg class="icon"><use href="#icon-truck"/></svg> پیگیری سفارش</a>
+      <a href="products.html"><svg class="icon"><use href="#icon-cart"/></svg> خرید مهمان</a>
     </div>
-    <p class="faint center" style="font-size:.8rem; margin-top:20px;">با ورود، <a href="#" style="color:var(--green-600)">قوانین و مقررات</a> را می‌پذیرید.</p>
+    <p class="faint center" style="font-size:.8rem; margin-top:20px;">با ورود یا ثبت‌نام، <a href="terms.html" style="color:var(--green-600)">قوانین و مقررات</a> اتم ۳۱۳ را می‌پذیرید.</p>
   </div>
 </div>
 
@@ -259,7 +278,8 @@
         </div>
       </div>
       <div class="footer-col"><h4>بازارگاه</h4><ul>
-        <li><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a></li>
+        <li><a href="products.html">محصولات</a></li>
+        <li><a href="offices.html">دفاتر محلات</a></li>
         <li><a href="categories.html">دسته‌بندی‌ها</a></li>
         <li><a href="sellers.html">فروشندگان</a></li>
         <li><a href="offers.html">تخفیف‌ها و حراج</a></li>
@@ -274,7 +294,9 @@
         <li><a href="about.html">درباره ما</a></li>
         <li><a href="blog.html">بلاگ</a></li>
         <li><a href="contact.html">تماس با ما</a></li>
-        <li><a href="#">سوالات متداول</a></li>
+        <li><a href="faq.html">سوالات متداول</a></li>
+        <li><a href="track.html">پیگیری سفارش</a></li>
+        <li><a href="terms.html">قوانین و مقررات</a></li>
       </ul></div>
       <div class="footer-col"><h4>تماس</h4><ul>
         <li class="flex gap-8"><svg class="icon" style="width:15px;height:15px;"><use href="#icon-phone"/></svg> ۰۲۱-۹۱۰۰۰۰۰۰</li>
@@ -290,18 +312,22 @@
 </footer>
 
 <button class="btn-icon to-top" id="toTopBtn" style="opacity:0;pointer-events:none;transform:scale(.8);transition:all .3s;" aria-label="بازگشت به بالا"><svg class="icon"><use href="#icon-chevron-up"/></svg></button>
+<script src="assets/js/demo-db.js"></script>
 <script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
   // اگر کاربر واردشده روی صفحهٔ ورود آمد، به پنل خودش برود
-  if (window.SiteAuth && SiteAuth.isOffice()) location.replace('office-dashboard.html');
-  else if (window.SiteAuth && SiteAuth.isSeller()) location.replace('seller-dashboard.html');
+  if (window.SiteAuth && SiteAuth.isAuthed() && !/[?&]switch=1/.test(location.search)) location.replace(SiteAuth.home());
 
   function showErr(msg){ var e=document.getElementById('authErr'); if(!e) return; e.textContent=msg; e.hidden=false; }
   function hideErr(){ var e=document.getElementById('authErr'); if(e) e.hidden=true; }
   function afterAuth(user){
-    var role = user && user.role;
-    location.href = role==='office' ? 'office-dashboard.html' : role==='seller' ? 'seller-dashboard.html' : 'dashboard.html';
+    // «مرا به خاطر بسپار» خاموش → خروج خودکار با بستن مرورگر
+    var rem=document.getElementById('loginRemember');
+    try { if(rem && !rem.checked){ localStorage.setItem('atom_session_only','1'); sessionStorage.setItem('atom_alive','1'); } else localStorage.removeItem('atom_session_only'); } catch(e){}
+    var back=new URLSearchParams(location.search).get('next');
+    if(back && /^[a-z0-9-]+\.html$/i.test(back) && user && user.role==='customer'){ location.href=back; return; }
+    location.href = SiteAuth.home();
   }
 
   var loginBtn=document.getElementById('loginBtn');
@@ -330,6 +356,52 @@
     signupBtn.disabled=true; var t=signupBtn.textContent; signupBtn.textContent='در حال ثبت‌نام…';
     try { var user=await SiteAuth.register(payload); afterAuth(user); }
     catch(e){ showErr(e.message||'ثبت‌نام ناموفق بود.'); signupBtn.disabled=false; signupBtn.textContent=t; }
+  });
+
+  var customerBtn=document.getElementById('customerBtn');
+  if(customerBtn) customerBtn.addEventListener('click', async function(){
+    hideErr();
+    var payload={
+      name:document.getElementById('cuName').value.trim(), phone:document.getElementById('cuPhone').value.trim(),
+      city:document.getElementById('cuCity').value.trim(), email:document.getElementById('cuEmail').value.trim(),
+      username:document.getElementById('cuUser').value.trim(), password:document.getElementById('cuPass').value,
+    };
+    customerBtn.disabled=true; var t=customerBtn.textContent; customerBtn.textContent='در حال ساخت حساب…';
+    try { var user=await SiteAuth.registerCustomer(payload); afterAuth(user); }
+    catch(e){ showErr(e.message||'ثبت‌نام ناموفق بود.'); customerBtn.disabled=false; customerBtn.textContent=t; }
+  });
+
+  // حساب‌های نمونه فقط در «حالت HTML» (دمو) نمایش داده می‌شوند، نه روی سرور واقعی
+  (async function(){ var box=document.querySelector('.demo-accounts'); if(!box) return; box.hidden=true; try{ if(!(await SiteAuth.available())) box.hidden=false; }catch(e){ box.hidden=false; } })();
+
+  // ورود سریع با حساب‌های نمونه
+  document.querySelectorAll('[data-demo-login]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p=b.getAttribute('data-demo-login').split('|');
+      document.getElementById('loginUser').value=p[0]; document.getElementById('loginPass').value=p[1];
+      document.getElementById('loginBtn').click();
+    });
+  });
+
+  // فراموشی رمز: درخواست بازیابی برای پشتیبانی ثبت می‌شود
+  var forgot=document.getElementById('forgotBtn');
+  if(forgot) forgot.addEventListener('click', function(){
+    var box=document.getElementById('forgotBox');
+    if(!box){
+      box=document.createElement('div'); box.id='forgotBox'; box.className='forgot-box';
+      box.innerHTML='<b>بازیابی رمز عبور</b><p>نام کاربری و موبایل ثبت‌شده را وارد کنید؛ پشتیبانی پس از احراز هویت، رمز جدید را برایتان پیامک می‌کند.</p>'+
+        '<div class="flex gap-8"><input type="text" id="fgUser" placeholder="نام کاربری" style="direction:ltr;text-align:left;"><input type="text" id="fgPhone" placeholder="۰۹xxxxxxxxx" inputmode="numeric"></div>'+
+        '<button type="button" class="btn btn-primary btn-sm" id="fgSend">ثبت درخواست بازیابی</button>';
+      forgot.closest('.flex').insertAdjacentElement('afterend', box);
+      document.getElementById('fgSend').onclick=async function(){
+        var u=document.getElementById('fgUser').value.trim(), ph=document.getElementById('fgPhone').value.trim();
+        if(!u||!SiteAuth.isMobile(ph)){ showErr('نام کاربری و شمارهٔ موبایل معتبر را وارد کنید.'); return; }
+        hideErr(); this.disabled=true;
+        try{ await SiteAuth.supportMessage({ sender:u+' ('+ph+')', subject:'درخواست بازیابی رمز عبور', body:'کاربر «'+u+'» با موبایل '+ph+' درخواست بازیابی رمز عبور دارد.' });
+          box.innerHTML='<b>✓ درخواست ثبت شد</b><p>درخواست شما در صف پشتیبانی قرار گرفت و به‌زودی با شما تماس می‌گیریم.</p>'; }
+        catch(e){ showErr(e.message); this.disabled=false; }
+      };
+    } else box.hidden=!box.hidden;
   });
 
   var officeBtn=document.getElementById('officeBtn');
@@ -363,8 +435,10 @@
       b.classList.add('active');
       var k=b.getAttribute('data-auth');
       document.querySelectorAll('[data-auth-panel]').forEach(function(p){p.hidden=p.getAttribute('data-auth-panel')!==k;});
+      var e=document.getElementById('authErr'); if(e) e.hidden=true;
     });
   });
+  (function(){ var h=(location.hash||'').slice(1); var b=h&&document.querySelector('[data-auth="'+h+'"]'); if(b) b.click(); })();
 </script>
 </body>
 </html>

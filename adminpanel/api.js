@@ -1,19 +1,20 @@
 /* =====================================================================
    اتم — کلاینت API پنل مدیریت
    با بک‌اند واقعی (Express+SQLite) کار می‌کند؛ اگر بک‌اند در دسترس نباشد
-   (مثلاً میزبانی استاتیک)، حالت دموی محلی فعال می‌ماند.
+   (باز کردن مستقیم فایل‌ها یا میزبانی استاتیک)، همهٔ درخواست‌ها به
+   «حالت HTML» (assets/js/demo-db.js) می‌روند و پنل کاملاً کار می‌کند.
    ===================================================================== */
 (function () {
   "use strict";
-  var TOKEN_KEY = "atom_token";
-  var USER_KEY = "atom_user";
+  var TOKEN_KEY = "atom_admin_token";
+  var USER_KEY = "atom_admin_user";
+  var STAFF = ["admin", "editor", "support"];
 
   function token() { try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; } }
   function setToken(t) { try { t ? localStorage.setItem(TOKEN_KEY, t) : localStorage.removeItem(TOKEN_KEY); } catch (e) {} }
   function setUser(u) { try { u ? localStorage.setItem(USER_KEY, JSON.stringify(u)) : localStorage.removeItem(USER_KEY); } catch (e) {} }
   function getUser() { try { return JSON.parse(localStorage.getItem(USER_KEY) || "null"); } catch (e) { return null; } }
-
-  var _online = null; // نتیجه‌ی کش‌شده‌ی در دسترس بودن بک‌اند
+  var doFetch = window.atomFetch || window.fetch.bind(window);
 
   async function req(path, opts) {
     opts = opts || {};
@@ -21,14 +22,17 @@
     if (!(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
     var t = token();
     if (t) headers["Authorization"] = "Bearer " + t;
-    var res = await fetch("/api" + path, {
-      method: opts.method || "GET",
-      headers: headers,
-      body: opts.body instanceof FormData ? opts.body : (opts.body ? JSON.stringify(opts.body) : undefined),
-    });
+    var res;
+    try {
+      res = await doFetch("/api" + path, {
+        method: opts.method || "GET",
+        headers: headers,
+        body: opts.body instanceof FormData ? opts.body : (opts.body ? JSON.stringify(opts.body) : undefined),
+      });
+    } catch (e) { throw new Error("ارتباط با سرور برقرار نشد."); }
     var data = null;
     try { data = await res.json(); } catch (e) {}
-    if (res.status === 401) { // توکن منقضی/نامعتبر
+    if (res.status === 401 && path.indexOf("/auth/login") !== 0) { // توکن منقضی/نامعتبر
       setToken(null); setUser(null);
       if (!/index\.html$|\/adminpanel\/?$/.test(location.pathname)) location.replace("index.html");
     }
@@ -36,26 +40,24 @@
     return data;
   }
 
+  // true فقط وقتی سرور واقعی در دسترس است
   async function available() {
-    if (_online !== null) return _online;
-    try {
-      var c = new AbortController();
-      var to = setTimeout(function () { c.abort(); }, 1500);
-      var res = await fetch("/api/health", { signal: c.signal });
-      clearTimeout(to);
-      _online = res.ok;
-    } catch (e) { _online = false; }
-    return _online;
+    if (window.AtomDemo) return window.AtomDemo.online();
+    try { var r = await fetch("/api/health"); return r.ok; } catch (e) { return false; }
   }
 
   window.AtomAPI = {
     available: available,
+    mode: async function () { return (await available()) ? "online" : "html"; },
     token: token,
     user: getUser,
     isAuthed: function () { return !!token(); },
 
     login: async function (username, password) {
       var d = await req("/auth/login", { method: "POST", body: { username: username, password: password } });
+      // فقط کارکنان (مدیر/ویرایشگر/پشتیبان) وارد پنل مدیریت می‌شوند؛ فروشنده و دفتر پنل اختصاصی خود را دارند
+      if (STAFF.indexOf(d.user && d.user.role) === -1)
+        throw new Error("این حساب به پنل مدیریت دسترسی ندارد؛ از «ورود» سایت وارد پنل اختصاصی خود شوید.");
       setToken(d.token); setUser(d.user);
       return d.user;
     },
@@ -101,6 +103,9 @@
     saveSettings: function (obj) { return req("/settings", { method: "PUT", body: obj }); },
     flags: function () { return req("/settings/flags"); },
     setFlag: function (key, enabled) { return req("/settings/flags/" + encodeURIComponent(key), { method: "PUT", body: { enabled: enabled } }); },
+    conversations: function () { return req("/support/conversations"); },
+    demoCleanup: function () { return req("/admins/demo-cleanup", { method: "POST" }); },
+    setAdminStatus: function (id, status) { return req("/admins/" + id + "/status", { method: "POST", body: { status: status } }); },
   };
 
   function crud(base) {

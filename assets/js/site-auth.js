@@ -1,222 +1,150 @@
 /* =====================================================================
    اتم ۳۱۳ — کلاینت احراز هویت و API سمت سایت
-   با بک‌اند واقعی (Express) کار می‌کند؛ و اگر بک‌اند در دسترس نباشد
-   (باز کردن مستقیم فایل یا میزبانی استاتیک) به «حالت دمو» محلی
-   برمی‌گردد تا ورود، پنل فروشنده، بارگذاری محصول و پروفایل کار کنند.
+   همهٔ درخواست‌ها از atomFetch می‌گذرند: اگر بک‌اند Node در دسترس باشد
+   به سرور واقعی می‌روند؛ وگرنه «حالت HTML» (assets/js/demo-db.js) با همان
+   قوانین پاسخ می‌دهد. بنابراین ورود، ثبت‌نام، پنل فروشنده، پنل دفتر،
+   سبد خرید و ثبت سفارش در هر دو حالت کامل کار می‌کنند.
    ===================================================================== */
 (function () {
   "use strict";
   var TK = "atom_token", UK = "atom_user", MK = "atom_mode";
-  var PKEY = "atom_demo_products", SKEY = "atom_demo_shop", UKEY = "atom_demo_users";
-  var OKEY = "atom_demo_office", OSKEY = "atom_demo_oservices", OMKEY = "atom_demo_omessages";
 
-  // اعتبارسنجی کد ملی ایران (همان الگوریتم سرور — برای حالت دمو)
   function isNationalCode(code) {
     code = String(code == null ? "" : code).replace(/[^0-9]/g, "");
-    if (!/^\d{10}$/.test(code)) return false;
-    if (/^(\d)\1{9}$/.test(code)) return false;
+    if (!/^\d{10}$/.test(code) || /^(\d)\1{9}$/.test(code)) return false;
     var sum = 0; for (var i = 0; i < 9; i++) sum += parseInt(code[i], 10) * (10 - i);
     var r = sum % 11, ch = parseInt(code[9], 10);
-    return (r < 2) ? (ch === r) : (ch === (11 - r));
+    return r < 2 ? ch === r : ch === 11 - r;
   }
-  function isMobile(m) { return /^09\d{9}$/.test(String(m == null ? "" : m).replace(/[^0-9]/g, "")); }
+  function toEn(s) { return String(s == null ? "" : s).replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }); }
+  function isMobile(m) { return /^09\d{9}$/.test(toEn(m).replace(/[^0-9]/g, "")); }
 
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
-  function loadJSON(k, def) { try { return JSON.parse(get(k) || "null") || def; } catch (e) { return def; } }
-  function saveJSON(k, v) { set(k, JSON.stringify(v)); }
-  function isDemo() { return get(MK) === "demo"; }
+  var doFetch = window.atomFetch || window.fetch.bind(window);
 
   async function api(path, opts) {
     opts = opts || {};
     var headers = opts.headers || {};
-    var isForm = opts.body instanceof FormData;
+    var isForm = typeof FormData !== "undefined" && opts.body instanceof FormData;
     if (!isForm && opts.body) headers["Content-Type"] = "application/json";
     var t = get(TK); if (t) headers["Authorization"] = "Bearer " + t;
-    var res = await fetch("/api" + path, {
-      method: opts.method || "GET", headers: headers,
-      body: isForm ? opts.body : (opts.body ? JSON.stringify(opts.body) : undefined),
-    });
+    var res;
+    try {
+      res = await doFetch("/api" + path, {
+        method: opts.method || "GET", headers: headers,
+        body: isForm ? opts.body : (opts.body ? JSON.stringify(opts.body) : undefined),
+      });
+    } catch (e) { throw new Error("ارتباط با سرور برقرار نشد. اتصال اینترنت را بررسی کنید."); }
     var data = null; try { data = await res.json(); } catch (e) {}
+    if (res.status === 401 && t && path.indexOf("/auth/") !== 0) { set(TK, null); set(UK, null); }
     if (!res.ok) throw new Error((data && data.error) || ("خطای سرور (" + res.status + ")"));
     return data;
   }
-
-  async function available() {
-    try {
-      var c = new AbortController(); var to = setTimeout(function () { c.abort(); }, 1500);
-      var r = await fetch("/api/health", { signal: c.signal }); clearTimeout(to);
-      return r.ok;
-    } catch (e) { return false; }
+  async function available() { return window.AtomDemo ? window.AtomDemo.online() : true; }
+  async function remember(d) {
+    set(TK, d.token); set(UK, JSON.stringify(d.user));
+    set(MK, (await available()) ? "online" : "demo");
+    return d.user;
   }
-
-  /* ---------- دادهٔ نمونهٔ حالت دمو ---------- */
-  var DEMO_USERS = {
-    atra: { password: "atra1234", user: { id: 1, username: "atra", role: "seller", name: "فروشگاه آترا چرم", seller_name: "آترا چرم" } },
-  };
-  function demoUsers() { return loadJSON(UKEY, {}); }
-  function seedDemo(user) {
-    if (!loadJSON(SKEY, null)) saveJSON(SKEY, {
-      id: 1, name: user.seller_name || user.name || "فروشگاه من",
-      category: "چرم و پوشاک", city: "تهران", phone: "", avatar: "",
-      bio: "این فروشگاه در حالت دمو (بدون بک‌اند) نمایش داده می‌شود.",
-    });
-    if (!loadJSON(PKEY, null)) saveJSON(PKEY, [
-      { id: 1, title: "کیف چرم طبیعی مدل رویا", category: "کیف", price: 2450000, stock: 12, status: "active", image: "assets/img/products/leather-bag-roya.jpg", description: "" },
-      { id: 2, title: "کمربند چرم دست‌دوز", category: "کمربند", price: 680000, stock: 30, status: "active", image: "", description: "" },
-      { id: 3, title: "کیف‌پول چرم جیبی", category: "کیف‌پول", price: 420000, stock: 45, status: "active", image: "", description: "" },
-    ]);
+  function crud(base) {
+    return {
+      list: function (q) { return api(base + "?limit=200" + (q ? "&" + q : "")); },
+      create: function (d) { return api(base, { method: "POST", body: d }); },
+      update: function (id, d) { return api(base + "/" + id, { method: "PUT", body: d }); },
+      remove: function (id) { return api(base + "/" + id, { method: "DELETE" }); },
+    };
   }
 
   window.SiteAuth = {
+    api: api,
     available: available,
-    isDemo: isDemo,
+    isDemo: function () { return get(MK) === "demo"; },
     token: function () { return get(TK); },
     user: function () { try { return JSON.parse(get(UK) || "null"); } catch (e) { return null; } },
     isAuthed: function () { return !!get(TK); },
     isSeller: function () { var u = this.user(); return !!(u && u.role === "seller"); },
+    isOffice: function () { var u = this.user(); return !!(u && u.role === "office"); },
+    isCustomer: function () { var u = this.user(); return !!(u && u.role === "customer"); },
+    isStaff: function () { var u = this.user(); return !!(u && ["admin", "editor", "support"].indexOf(u.role) !== -1); },
+    validateNationalCode: isNationalCode,
+    isNationalCode: isNationalCode,
+    isMobile: isMobile,
+    // مسیر پنل مناسب هر نقش
+    home: function () {
+      var u = this.user(); if (!u) return "login.html";
+      return u.role === "seller" ? "seller-dashboard.html" : u.role === "office" ? "office-dashboard.html" :
+        ["admin", "editor", "support"].indexOf(u.role) !== -1 ? "adminpanel/index.html" : "dashboard.html";
+    },
 
     login: async function (username, password) {
-      if (await available()) {
-        var d = await api("/auth/login", { method: "POST", body: { username: username, password: password } });
-        set(TK, d.token); set(UK, JSON.stringify(d.user)); set(MK, "online"); return d.user;
-      }
-      // حالت دمو (آفلاین)
-      var du = DEMO_USERS[username] || demoUsers()[username];
-      if (!du || du.password !== password)
-        throw new Error("نام کاربری یا رمز عبور اشتباه است. (سرور در دسترس نیست — حالت دمو)");
-      set(TK, "demo-token"); set(UK, JSON.stringify(du.user)); set(MK, "demo"); seedDemo(du.user);
-      return du.user;
+      return remember(await api("/auth/login", { method: "POST", body: { username: String(username || "").trim(), password: password } }));
     },
-
     register: async function (payload) {
-      if (await available()) {
-        var d = await api("/auth/register", { method: "POST", body: payload });
-        set(TK, d.token); set(UK, JSON.stringify(d.user)); set(MK, "online"); return d.user;
-      }
-      // حالت دمو (آفلاین)
-      if (!payload.seller_name || !payload.username || !payload.password)
-        throw new Error("نام فروشگاه، نام کاربری و رمز عبور الزامی است.");
-      if (payload.password.length < 6) throw new Error("رمز عبور باید حداقل ۶ کاراکتر باشد.");
-      var users = demoUsers();
-      if (DEMO_USERS[payload.username] || users[payload.username])
-        throw new Error("این نام کاربری قبلاً ثبت شده است.");
-      var user = { id: Date.now(), username: payload.username, role: "seller", name: payload.name || payload.seller_name, seller_name: payload.seller_name };
-      users[payload.username] = { password: payload.password, user: user }; saveJSON(UKEY, users);
-      set(TK, "demo-token"); set(UK, JSON.stringify(user)); set(MK, "demo");
-      saveJSON(SKEY, { id: 1, name: payload.seller_name, category: payload.category || "فروشگاه", city: payload.city || "", phone: payload.phone || "", bio: "", avatar: "" });
-      saveJSON(PKEY, []);
-      return user;
+      if (!payload.seller_name || !payload.username || !payload.password) throw new Error("نام فروشگاه، نام کاربری و رمز عبور الزامی است.");
+      if (payload.phone && !isMobile(payload.phone)) throw new Error("شمارهٔ موبایل نامعتبر است (نمونه: 09xxxxxxxxx).");
+      if (payload.phone) payload.phone = toEn(payload.phone);
+      return remember(await api("/auth/register", { method: "POST", body: payload }));
     },
-
-    logout: async function () {
-      if (!isDemo()) { try { await api("/auth/logout", { method: "POST" }); } catch (e) {} }
-      set(TK, null); set(UK, null); set(MK, null);
-    },
-    me: function () { return api("/auth/me"); },
-
-    upload: function (file) {
-      if (isDemo()) return new Promise(function (res) { var r = new FileReader(); r.onload = function () { res({ url: r.result }); }; r.readAsDataURL(file); });
-      var fd = new FormData(); fd.append("file", file); return api("/uploads", { method: "POST", body: fd });
-    },
-
-    products: {
-      list: function () {
-        if (isDemo()) return Promise.resolve({ items: loadJSON(PKEY, []) });
-        return api("/products?limit=200");
-      },
-      create: function (d) {
-        if (isDemo()) { var a = loadJSON(PKEY, []); d.id = Date.now(); d.price = +d.price || 0; d.stock = +d.stock || 0; a.unshift(d); saveJSON(PKEY, a); return Promise.resolve({ id: d.id }); }
-        return api("/products", { method: "POST", body: d });
-      },
-      update: function (id, d) {
-        if (isDemo()) { var a = loadJSON(PKEY, []).map(function (x) { return x.id == id ? Object.assign({}, x, d, { price: +d.price || 0, stock: +d.stock || 0 }) : x; }); saveJSON(PKEY, a); return Promise.resolve({ ok: true }); }
-        return api("/products/" + id, { method: "PUT", body: d });
-      },
-      remove: function (id) {
-        if (isDemo()) { saveJSON(PKEY, loadJSON(PKEY, []).filter(function (x) { return x.id != id; })); return Promise.resolve({ ok: true }); }
-        return api("/products/" + id, { method: "DELETE" });
-      },
-    },
-    myShop: async function () {
-      if (isDemo()) return loadJSON(SKEY, null);
-      var d = await api("/sellers?limit=5"); return (d.items && d.items[0]) || null;
-    },
-    updateShop: function (id, d) {
-      if (isDemo()) { saveJSON(SKEY, Object.assign({}, loadJSON(SKEY, {}), d)); return Promise.resolve({ ok: true }); }
-      return api("/sellers/" + id, { method: "PUT", body: d });
-    },
-
-    /* ---------- دفاتر محلات ---------- */
-    isOffice: function () { var u = this.user(); return !!(u && u.role === "office"); },
-    validateNationalCode: isNationalCode,
-
     registerOffice: async function (payload) {
-      // اعتبارسنجی سمت کلاینت
       if (!payload.office_name || !payload.username || !payload.password || !payload.manager || !payload.national_code)
         throw new Error("نام دفتر، مسئول، کد ملی، نام کاربری و رمز عبور الزامی است.");
       if (!isNationalCode(payload.national_code)) throw new Error("کد ملی واردشده نامعتبر است.");
       if (payload.phone && !isMobile(payload.phone)) throw new Error("شمارهٔ موبایل نامعتبر است (نمونه: 09xxxxxxxxx).");
-      if (await available()) {
-        var d = await api("/auth/register-office", { method: "POST", body: payload });
-        set(TK, d.token); set(UK, JSON.stringify(d.user)); set(MK, "online"); return d.user;
-      }
-      // حالت دمو
-      if (payload.password.length < 6) throw new Error("رمز عبور باید حداقل ۶ کاراکتر باشد.");
-      var users = demoUsers();
-      if (users[payload.username]) throw new Error("این نام کاربری قبلاً ثبت شده است.");
-      var user = { id: Date.now(), username: payload.username, role: "office", name: payload.manager || payload.office_name, office_name: payload.office_name };
-      users[payload.username] = { password: payload.password, user: user }; saveJSON(UKEY, users);
-      set(TK, "demo-token"); set(UK, JSON.stringify(user)); set(MK, "demo");
-      saveJSON(OKEY, { id: 1, name: payload.office_name, manager: payload.manager, area: payload.area || "", city: payload.city || "", address: payload.address || "", phone: payload.phone || "", national_code: payload.national_code, license_no: payload.license_no || "", verified: 0, status: "pending", verify_note: "", bio: "" });
-      saveJSON(OSKEY, []);
-      return user;
+      payload.national_code = toEn(payload.national_code); if (payload.phone) payload.phone = toEn(payload.phone);
+      return remember(await api("/auth/register-office", { method: "POST", body: payload }));
     },
-    myOffice: async function () {
-      if (isDemo()) return loadJSON(OKEY, null);
-      var d = await api("/offices?limit=5"); return (d.items && d.items[0]) || null;
+    registerCustomer: async function (payload) {
+      if (!payload.name || !payload.phone || !payload.username || !payload.password) throw new Error("نام، موبایل، نام کاربری و رمز عبور الزامی است.");
+      if (!isMobile(payload.phone)) throw new Error("شمارهٔ موبایل نامعتبر است (نمونه: 09xxxxxxxxx).");
+      payload.phone = toEn(payload.phone);
+      return remember(await api("/auth/register-customer", { method: "POST", body: payload }));
     },
-    updateOffice: function (id, d) {
-      if (isDemo()) { var o = Object.assign({}, loadJSON(OKEY, {}), d); o.status = (loadJSON(OKEY, {}) || {}).status || "pending"; o.verified = o.status === "verified" ? 1 : 0; saveJSON(OKEY, o); return Promise.resolve({ ok: true }); }
-      return api("/offices/" + id, { method: "PUT", body: d });
+    logout: async function () {
+      try { await api("/auth/logout", { method: "POST" }); } catch (e) {}
+      set(TK, null); set(UK, null); set(MK, null);
     },
-    officeServices: {
-      list: function () { if (isDemo()) return Promise.resolve({ items: loadJSON(OSKEY, []) }); return api("/office-services?limit=200"); },
-      create: function (d) { if (isDemo()) { var a = loadJSON(OSKEY, []); d.id = Date.now(); d.price = +d.price || 0; a.unshift(d); saveJSON(OSKEY, a); return Promise.resolve({ id: d.id }); } return api("/office-services", { method: "POST", body: d }); },
-      update: function (id, d) { if (isDemo()) { saveJSON(OSKEY, loadJSON(OSKEY, []).map(function (x) { return x.id == id ? Object.assign({}, x, d, { price: +d.price || 0 }) : x; })); return Promise.resolve({ ok: true }); } return api("/office-services/" + id, { method: "PUT", body: d }); },
-      remove: function (id) { if (isDemo()) { saveJSON(OSKEY, loadJSON(OSKEY, []).filter(function (x) { return x.id != id; })); return Promise.resolve({ ok: true }); } return api("/office-services/" + id, { method: "DELETE" }); },
+    me: function () { return api("/auth/me"); },
+    changePassword: function (current, next) { return api("/auth/change-password", { method: "POST", body: { current: current, next: next } }); },
+
+    upload: function (file) { var fd = new FormData(); fd.append("file", file); return api("/uploads", { method: "POST", body: fd }); },
+
+    /* فروشنده */
+    products: crud("/products"),
+    myShop: async function () { var d = await api("/sellers?limit=5"); return (d.items && d.items[0]) || null; },
+    updateShop: function (id, d) { return api("/sellers/" + id, { method: "PUT", body: d }); },
+
+    /* دفتر محله */
+    myOffice: async function () { var d = await api("/offices?limit=5"); return (d.items && d.items[0]) || null; },
+    updateOffice: function (id, d) { return api("/offices/" + id, { method: "PUT", body: d }); },
+    officeServices: crud("/office-services"),
+    officeMessages: crud("/office-messages"),
+    sendOfficeMessage: function (payload) {
+      if (!payload || !payload.office_id || !String(payload.body || "").trim()) return Promise.reject(new Error("انتخاب دفتر و متن پیام الزامی است."));
+      if (payload.phone && !isMobile(payload.phone)) return Promise.reject(new Error("شمارهٔ موبایل نامعتبر است (نمونه: 09xxxxxxxxx)."));
+      if (payload.phone) payload.phone = toEn(payload.phone);
+      return api("/public/office-message", { method: "POST", body: payload });
     },
 
-    /* ---------- گفتگوی دفاتر محلات (پیام شهروندان ↔ دفتر) ---------- */
-    // فهرست/پاسخ پیام‌ها برای حساب دفتر واردشده
-    officeMessages: {
-      list: function () { if (isDemo()) return Promise.resolve({ items: loadJSON(OMKEY, []) }); return api("/office-messages?limit=200"); },
-      update: function (id, d) {
-        if (isDemo()) {
-          saveJSON(OMKEY, loadJSON(OMKEY, []).map(function (x) {
-            if (x.id != id) return x;
-            var n = Object.assign({}, x, d);
-            if (d.reply && String(d.reply).trim() && !x.reply) n.status = "replied";
-            return n;
-          }));
-          return Promise.resolve({ ok: true });
-        }
-        return api("/office-messages/" + id, { method: "PUT", body: d });
-      },
-      remove: function (id) { if (isDemo()) { saveJSON(OMKEY, loadJSON(OMKEY, []).filter(function (x) { return x.id != id; })); return Promise.resolve({ ok: true }); } return api("/office-messages/" + id, { method: "DELETE" }); },
+    /* خرید */
+    placeOrder: function (payload) { if (payload.phone) payload.phone = toEn(payload.phone); return api("/public/order", { method: "POST", body: payload }); },
+    trackOrder: function (code, phone) { return api("/public/track?code=" + encodeURIComponent(toEn(code).trim()) + "&phone=" + encodeURIComponent(toEn(phone).trim())); },
+    myOrders: function () { return api("/my/orders"); },
+    profile: function () { return api("/my/profile"); },
+    sellerOrders: function () { return api("/my/seller-orders"); },
+    setSellerOrder: function (id, status) { return api("/my/seller-orders/" + id, { method: "PUT", body: { status: status } }); },
+    sellerComments: function () { return api("/my/seller-comments"); },
+    saveProfile: async function (d) {
+      if (d.phone) d.phone = toEn(d.phone);
+      var r = await api("/my/profile", { method: "PUT", body: d });
+      if (r && r.user) { var u = this.user() || {}; ["name", "email", "phone", "city", "address"].forEach(function (k) { u[k] = r.user[k]; }); set(UK, JSON.stringify(u)); }
+      return r;
     },
-    // ارسال پیام عمومی شهروند به یک دفتر (بدون نیاز به ورود)
-    sendOfficeMessage: async function (payload) {
-      if (!payload || !payload.office_id || !String(payload.body || "").trim())
-        throw new Error("انتخاب دفتر و متن پیام الزامی است.");
-      if (await available()) {
-        return api("/public/office-message", { method: "POST", body: payload });
-      }
-      // حالت دمو — پیام در همین مرورگر ذخیره می‌شود
-      var a = loadJSON(OMKEY, []);
-      a.unshift({ id: Date.now(), office: payload.office_name || "", sender_name: payload.name || "شهروند", sender_phone: payload.phone || "", body: payload.body, reply: "", status: "open", created_at: new Date().toISOString().slice(0, 16).replace("T", " ") });
-      saveJSON(OMKEY, a);
-      return { ok: true, demo: true };
-    },
+
+    /* دادهٔ عمومی */
+    publicGet: function (path) { return api("/public/" + path); },
+    publicSettings: function () { return api("/settings/public"); },
+    articles: function () { return api("/articles/public"); },
+    supportMessage: function (d) { return api("/support/message", { method: "POST", body: d }); },
   };
 })();

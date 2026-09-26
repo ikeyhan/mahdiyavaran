@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-const { requireAuth, logActivity } = require('../auth');
+const { requireAuth, requireRole, logActivity } = require('../auth');
 
 const router = express.Router();
 const UPLOAD_DIR = path.join(__dirname, '..', '..', 'uploads');
@@ -18,17 +18,18 @@ const storage = multer.diskStorage({
   },
 });
 
-const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
+// SVG عمداً مجاز نیست: می‌تواند اسکریپت داشته باشد و روی همین دامنه اجرا شود (XSS)
+const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const upload = multer({
   storage,
   limits: { fileSize: 6 * 1024 * 1024 }, // ۶ مگابایت
   fileFilter: (req, file, cb) => {
     if (ALLOWED.includes(file.mimetype)) cb(null, true);
-    else cb(new Error('فقط فایل تصویری مجاز است (JPG, PNG, WEBP, GIF, SVG).'));
+    else cb(new Error('فقط فایل تصویری مجاز است (JPG, PNG, WEBP, GIF).'));
   },
 });
 
-router.post('/', requireAuth, (req, res) => {
+router.post('/', requireAuth, requireRole('admin', 'editor', 'support', 'seller', 'office'), (req, res) => {
   upload.single('file')(req, res, (err) => {
     if (err) return res.status(400).json({ error: err.message });
     if (!req.file) return res.status(400).json({ error: 'فایلی ارسال نشد.' });

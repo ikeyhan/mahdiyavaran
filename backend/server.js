@@ -29,7 +29,8 @@ const ROOT = path.join(__dirname, '..');        // ریشه سایت (index.html
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 
 const origins = (process.env.CORS_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
-app.use(cors({ origin: origins.length ? origins : true, credentials: false }));
+// بدون CORS_ORIGINS فقط همان دامنه (same-origin) مجاز است
+app.use(cors({ origin: origins.length ? origins : false, credentials: false }));
 
 app.use(express.json({ limit: '12mb' }));       // بدنه بزرگ برای متن مقاله
 app.use(express.urlencoded({ extended: true, limit: '12mb' }));
@@ -68,6 +69,7 @@ app.use('/api/office-services', R.officeServices);
 app.use('/api/office-messages', R.officeMessages);
 app.use('/api/support', require('./src/routes/support'));
 app.use('/api/public', require('./src/routes/public'));
+app.use('/api/my', require('./src/routes/my'));
 
 /* ---------- فایل‌های آپلودشده ---------- */
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d' }));

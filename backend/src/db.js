@@ -264,5 +264,11 @@ addColumn('sellers', 'phone', 'TEXT');
 addColumn('admins', 'seller_name', 'TEXT');        // نام فروشگاه برای نقش فروشنده
 addColumn('admins', 'phone', 'TEXT');
 addColumn('admins', 'office_name', 'TEXT');        // نام دفتر برای نقش office
+addColumn('admins', 'city', 'TEXT');               // شهر (حساب خریدار)
+addColumn('admins', 'address', 'TEXT');            // آدرس پیش‌فرض ارسال (حساب خریدار)
+addColumn('orders', 'phone', 'TEXT');              // موبایل گیرنده (ثبت سفارش از سایت)
+addColumn('orders', 'address', 'TEXT');            // آدرس ارسال
+addColumn('orders', 'owner', 'TEXT');              // نام‌کاربری مشتری (اگر وارد شده باشد)
+addColumn('orders', 'note', 'TEXT');               // توضیحات سفارش (کد تخفیف، هزینهٔ ارسال، یادداشت خریدار)
 
 module.exports = db;

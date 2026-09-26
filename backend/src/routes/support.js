@@ -5,7 +5,7 @@
    کلید API فقط سمت سرور استفاده می‌شود و هرگز به مرورگر ارسال نمی‌شود. */
 const express = require('express');
 const db = require('../db');
-const { requireAuth, clientIp } = require('../auth');
+const { requireAuth, requireStaff, clientIp } = require('../auth');
 const banned = require('../banned');
 const { str } = require('../validate');
 
@@ -127,7 +127,7 @@ router.post('/message', (req, res) => {
 });
 
 // تاریخچهٔ گفتگوها (مدیر)
-router.get('/conversations', requireAuth, (req, res) => {
+router.get('/conversations', requireAuth, requireStaff, (req, res) => {
   res.json({
     items: db.prepare('SELECT session,role,content,created_at FROM chat_messages ORDER BY id DESC LIMIT 100').all(),
   });

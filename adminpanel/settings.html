@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
+<script src="../assets/js/demo-db.js"></script>
 <script src="api.js"></script>
 <script src="admin.js"></script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -357,8 +358,8 @@
     <a href="finance.html"><span class="nav-ic"><svg class="icon"><use href="#i-coins"/></svg></span><span class="nav-tx">مالی و تسویه</span></a>
     <a href="accounting.html"><span class="nav-ic"><svg class="icon"><use href="#i-calculator"/></svg></span><span class="nav-tx">حسابداری</span></a>
     <div class="admin-nav-label">فروشگاه</div>
-    <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span><span class="cnt">۱٬۲۴۸</span></a>
-    <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span><span class="cnt">۹۲</span></a>
+    <a href="products.html"><span class="nav-ic"><svg class="icon"><use href="#i-box"/></svg></span><span class="nav-tx">محصولات</span></a>
+    <a href="orders.html"><span class="nav-ic"><svg class="icon"><use href="#i-cart"/></svg></span><span class="nav-tx">سفارش‌ها</span></a>
     <a href="customers.html"><span class="nav-ic"><svg class="icon"><use href="#i-users"/></svg></span><span class="nav-tx">مشتریان</span></a>
     <a href="loyalty.html"><span class="nav-ic"><svg class="icon"><use href="#i-medal"/></svg></span><span class="nav-tx">باشگاه مشتریان</span></a>
     <a href="sellers.html"><span class="nav-ic"><svg class="icon"><use href="#i-store"/></svg></span><span class="nav-tx">فروشندگان</span></a>
@@ -376,8 +377,8 @@
     <a href="seo.html"><span class="nav-ic"><svg class="icon"><use href="#i-globe"/></svg></span><span class="nav-tx">سئو</span></a>
     <a href="notifications.html"><span class="nav-ic"><svg class="icon"><use href="#i-bell"/></svg></span><span class="nav-tx">اعلان‌ها</span></a>
     <a href="support.html"><span class="nav-ic"><svg class="icon"><use href="#i-support"/></svg></span><span class="nav-tx">پشتیبانی و چت‌بات</span></a>
-    <a href="comments.html"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span><span class="nav-tx">نظرات</span><span class="cnt">۷</span></a>
-    <a href="messages.html"><span class="nav-ic"><svg class="icon"><use href="#i-mail"/></svg></span><span class="nav-tx">پیام‌ها</span><span class="cnt">۳</span></a>
+    <a href="comments.html"><span class="nav-ic"><svg class="icon"><use href="#i-chat"/></svg></span><span class="nav-tx">نظرات</span></a>
+    <a href="messages.html"><span class="nav-ic"><svg class="icon"><use href="#i-mail"/></svg></span><span class="nav-tx">پیام‌ها</span></a>
     <div class="admin-nav-label">سیستم و امنیت</div>
     <a href="settings.html" class="active"><span class="nav-ic"><svg class="icon"><use href="#i-settings"/></svg></span><span class="nav-tx">تنظیمات سایت</span></a>
     <a href="security.html"><span class="nav-ic"><svg class="icon"><use href="#i-key"/></svg></span><span class="nav-tx">امنیت و دسترسی</span></a>
@@ -423,26 +424,27 @@
 <div class="grid-2">
   <div class="card">
     <div class="card-head"><h3>اطلاعات کلی سایت</h3></div>
-    <div class="field"><label>نام سایت</label><input type="text" value="اتم"></div>
-    <div class="field"><label>عنوان (SEO)</label><input type="text" value="اتم | بازارگاه دیجیتال"></div>
-    <div class="field"><label>توضیحات (SEO)</label><textarea>بازارگاه دیجیتال اتم؛ خرید و فروش امن محصولات و خدمات.</textarea></div>
-    <div class="field"><label>ایمیل تماس</label><input type="email" value="info@atom.ir"></div>
-    <div class="field"><label>شماره تماس</label><input type="text" value="۰۲۱-۹۱۰۰۰۰۰۰"></div>
+    <div class="field"><label>نام سایت</label><input type="text" data-key="site_name" value="اتم ۳۱۳"></div>
+    <div class="field"><label>عنوان (SEO)</label><input type="text" data-key="site_title" value="اتم ۳۱۳ | بازارگاه دیجیتال"></div>
+    <div class="field"><label>توضیحات (SEO)</label><textarea data-key="site_description">بازارگاه دیجیتال اتم ۳۱۳؛ خرید و فروش امن محصولات و خدمات.</textarea></div>
+    <div class="field"><label>ایمیل تماس</label><input type="email" data-key="contact_email" value="info@atom.ir"></div>
+    <div class="field"><label>شماره تماس</label><input type="text" data-key="contact_phone" value="۰۲۱-۹۱۰۰۰۰۰۰"></div>
+    <div class="field"><label>آدرس</label><input type="text" data-key="address" value="تهران، ایران"></div>
   </div>
 
   <div class="card">
     <div class="card-head"><h3>پرداخت و مالی</h3></div>
     <div class="field"><label>درگاه پرداخت</label><select><option>زرین‌پال</option><option>بانک ملت</option><option>آسان‌پرداخت</option></select></div>
-    <div class="field"><label>کارمزد فروشنده (٪)</label><input type="number" value="5"></div>
-    <div class="field"><label>حداقل مبلغ سفارش (تومان)</label><input type="number" value="50000"></div>
+    <div class="field"><label>کارمزد فروشنده (٪)</label><input type="number" data-key="seller_fee" value="5"></div>
+    <div class="field"><label>حداقل مبلغ سفارش (تومان)</label><input type="number" data-key="min_order" value="50000"></div>
     <div class="field"><label>روز تسویه با فروشندگان</label><select><option>هفتگی (شنبه)</option><option>روزانه</option><option>ماهانه</option></select></div>
   </div>
 
   <div class="card">
     <div class="card-head"><h3>ارسال و لجستیک</h3></div>
     <div class="field"><label>روش‌های ارسال فعال</label><select><option>پست پیشتاز</option><option>تیپاکس</option><option>پیک اختصاصی</option></select></div>
-    <div class="field"><label>هزینه ارسال پیش‌فرض</label><input type="number" value="45000"></div>
-    <div class="field"><label>حداقل خرید برای ارسال رایگان</label><input type="number" value="500000"></div>
+    <div class="field"><label>هزینه ارسال پیش‌فرض (تومان)</label><input type="number" data-key="shipping_cost" value="45000"></div>
+    <div class="field"><label>حداقل خرید برای ارسال رایگان (تومان)</label><input type="number" data-key="free_shipping_min" value="500000"></div>
   </div>
 
   <div class="card">
@@ -455,10 +457,18 @@
 
   <div class="card">
     <div class="card-head"><h3>دامنه و آدرس‌ها</h3></div>
-    <div class="field"><label>دامنه اصلی</label><input type="text" value="atom313.ir"></div>
+    <div class="field"><label>دامنه اصلی</label><input type="text" data-key="domain" value="atom313.ir"></div>
     <div class="field"><label>آدرس سایت (Site URL)</label><input type="text" value="https://atom313.ir"></div>
     <div class="field"><label>آدرس پنل مدیریت</label><input type="text" value="https://atom313.ir/adminpanel"></div>
     <div class="field"><label>زبان و منطقه</label><select><option>فارسی — ایران (تومان)</option><option>English</option></select></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h3>شبکه‌های اجتماعی (نمایش در فوتر سایت)</h3></div>
+    <div class="field"><label>اینستاگرام</label><input type="text" data-key="social_instagram" placeholder="https://instagram.com/…" style="direction:ltr;text-align:left"></div>
+    <div class="field"><label>تلگرام</label><input type="text" data-key="social_telegram" placeholder="https://t.me/…" style="direction:ltr;text-align:left"></div>
+    <div class="field"><label>واتساپ</label><input type="text" data-key="social_whatsapp" placeholder="https://wa.me/98…" style="direction:ltr;text-align:left"></div>
+    <div class="field"><label>لینکدین</label><input type="text" data-key="social_linkedin" placeholder="https://linkedin.com/company/…" style="direction:ltr;text-align:left"></div>
   </div>
 
   <div class="card">
@@ -483,5 +493,6 @@
 </div>
 <div class="side-scrim" data-side-toggle hidden></div>
 <script src="pages.js"></script>
+<script src="activate.js"></script>
 </body>
 </html>

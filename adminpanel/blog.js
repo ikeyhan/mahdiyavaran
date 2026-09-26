@@ -330,7 +330,8 @@
   });
 
   (async function init(){
-    if (window.AtomAPI){ try { online = await window.AtomAPI.available(); } catch(e){ online = false; } }
+    // سرور واقعی یا «حالت HTML» — در هر دو حالت مقاله‌ها از API (و در سایت هم نمایش داده می‌شوند)
+    online = !!window.AtomAPI;
     await load(); renderList(); showView("list");
   })();
 })();

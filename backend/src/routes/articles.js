@@ -1,7 +1,7 @@
 /* مقالات بلاگ — CRUD واقعی (نقش admin یا editor برای نوشتن) */
 const express = require('express');
 const db = require('../db');
-const { requireAuth, requireRole, logActivity } = require('../auth');
+const { requireAuth, requireRole, requireStaff, logActivity } = require('../auth');
 const { str, oneOf } = require('../validate');
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.get('/public', (req, res) => {
 });
 
 // از اینجا به بعد نیازمند ورود
-router.use(requireAuth);
+router.use(requireAuth, requireStaff);
 
 router.get('/', (req, res) => {
   const f = req.query.status;

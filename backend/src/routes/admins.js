@@ -13,7 +13,7 @@ const STATUS = ['active', 'suspended', 'blocked'];
 const pub = 'id,username,name,email,role,status,last_login,created_at';
 
 router.get('/', (req, res) => {
-  res.json({ items: db.prepare(`SELECT ${pub} FROM admins ORDER BY id`).all() });
+  res.json({ items: db.prepare(`SELECT ${pub} FROM admins WHERE role IN ('admin','editor','support') ORDER BY id`).all() });
 });
 
 router.post('/', (req, res) => {
@@ -46,6 +46,17 @@ router.put('/:id', (req, res) => {
 });
 
 // مسدودسازی/تعلیق سریع
+// غیرفعال‌سازی حساب‌های نمونه (فروشنده، دفتر و کارکنان نمونه با رمز پیش‌فرض) پیش از راه‌اندازی
+router.post('/demo-cleanup', (req, res) => {
+  const DEMO = { atra: 'atra1234', daftar: 'daftar1234', reza: 'atom123', samira: 'atom123' };
+  const rows = db.prepare("SELECT id,username,password_hash FROM admins WHERE status='active' AND username IN ('atra','daftar','reza','samira')").all()
+    .filter(r => bcrypt.compareSync(DEMO[r.username], r.password_hash));
+  const up = db.prepare("UPDATE admins SET status='blocked' WHERE id=?");
+  rows.forEach(r => up.run(r.id));
+  logActivity(req, 'امن‌سازی راه‌اندازی', rows.length + ' حساب نمونه غیرفعال شد');
+  res.json({ ok: true, blocked: rows.map(r => r.username) });
+});
+
 router.post('/:id/status', (req, res) => {
   const id = +req.params.id;
   const a = db.prepare('SELECT * FROM admins WHERE id=?').get(id);

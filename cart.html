@@ -216,7 +216,7 @@
       <div class="step-line"></div>
       <div class="step active"><div class="n">۲</div><span>اطلاعات ارسال</span></div>
       <div class="step-line"></div>
-      <div class="step"><div class="n">۳</div><span>پرداخت</span></div>
+      <div class="step"><div class="n">۳</div><span>ثبت سفارش</span></div>
     </div>
 
     <div class="cart-layout">
@@ -232,23 +232,28 @@
         <div class="panel" style="margin-top:24px;" id="cartReceiver">
           <h3 class="h-3" style="margin-bottom:16px;">اطلاعات گیرنده</h3>
           <div class="grid grid-2">
-            <div class="field"><label>نام گیرنده</label><input type="text" placeholder="نام و نام‌خانوادگی"></div>
-            <div class="field"><label>شماره موبایل</label><input type="text" placeholder="۰۹xxxxxxxxx"></div>
+            <div class="field"><label>نام گیرنده</label><input type="text" id="coName" placeholder="نام و نام‌خانوادگی" autocomplete="name"></div>
+            <div class="field"><label>شماره موبایل</label><input type="text" id="coPhone" placeholder="۰۹xxxxxxxxx" inputmode="numeric" autocomplete="tel"></div>
+            <div class="field"><label>شهر</label><input type="text" id="coCity" placeholder="شهر"></div>
+            <div class="field"><label>کد پستی (اختیاری)</label><input type="text" id="coZip" placeholder="۱۰ رقم" inputmode="numeric"></div>
           </div>
-          <div class="field" style="margin-top:18px;"><label>آدرس کامل</label><textarea placeholder="استان، شهر، خیابان، پلاک..."></textarea></div>
+          <div class="field" style="margin-top:18px;"><label>آدرس کامل</label><textarea id="coAddress" placeholder="استان، شهر، خیابان، پلاک..."></textarea></div>
+          <div class="field" style="margin-top:14px;"><label>یادداشت برای فروشنده (اختیاری)</label><input type="text" id="coNote" placeholder="مثلاً زمان مناسب تحویل"></div>
         </div>
       </div>
 
       <aside class="panel reveal" style="position:sticky; top:calc(var(--header-h) + 24px);">
         <h3 class="h-3" style="margin-bottom:8px;">خلاصه سفارش</h3>
         <div class="promo-row" style="margin:14px 0;">
-          <input type="text" placeholder="کد تخفیف" style="border:none; background:var(--surface); box-shadow:var(--shadow-inset-sm); border-radius:var(--radius-sm); padding:12px 16px; flex:1; outline:none; color:var(--text-1);">
-          <button class="btn btn-sm">اعمال</button>
+          <input type="text" id="couponInput" placeholder="کد تخفیف" style="border:none; background:var(--surface); box-shadow:var(--shadow-inset-sm); border-radius:var(--radius-sm); padding:12px 16px; flex:1; outline:none; color:var(--text-1);">
+          <button class="btn btn-sm" id="couponBtn">اعمال</button>
         </div>
         <div class="summary-row"><span>جمع کالاها (<span id="sumCount">۰</span>)</span><span id="sumItems">۰ ت</span></div>
-        <div class="summary-row"><span>هزینه ارسال</span><span>رایگان</span></div>
+        <div class="summary-row" id="sumDiscRow" hidden><span>تخفیف (<span id="sumCoupon"></span>)</span><span id="sumDisc" style="color:var(--green-500);">۰ ت</span></div>
+        <div class="summary-row"><span>هزینه ارسال</span><span id="sumShip">رایگان</span></div>
+        <p class="faint" id="sumShipHint" style="font-size:.74rem; margin:4px 0 0; line-height:1.8;"></p>
         <div class="summary-row total"><span>مبلغ قابل پرداخت</span><span id="sumTotal">۰ ت</span></div>
-        <button class="btn btn-primary btn-block btn-lg" style="margin-top:18px;" id="cartCheckout">ادامه فرآیند پرداخت <svg class="icon"><use href="#icon-arrow-up-left"/></svg></button>
+        <button class="btn btn-primary btn-block btn-lg" style="margin-top:18px;" id="cartCheckout">ثبت نهایی سفارش <svg class="icon"><use href="#icon-arrow-up-left"/></svg></button>
         <div class="hero-badge" style="width:100%; justify-content:center; margin-top:16px;"><svg class="icon"><use href="#icon-shield"/></svg> پرداخت ۱۰۰٪ امن و بیمه‌شده</div>
       </aside>
     </div>
@@ -270,7 +275,8 @@
         </div>
       </div>
       <div class="footer-col"><h4>بازارگاه</h4><ul>
-        <li><a href="products.html">محصولات</a><a href="offices.html">دفاتر محلات</a></li>
+        <li><a href="products.html">محصولات</a></li>
+        <li><a href="offices.html">دفاتر محلات</a></li>
         <li><a href="categories.html">دسته‌بندی‌ها</a></li>
         <li><a href="sellers.html">فروشندگان</a></li>
         <li><a href="offers.html">تخفیف‌ها و حراج</a></li>
@@ -285,7 +291,9 @@
         <li><a href="about.html">درباره ما</a></li>
         <li><a href="blog.html">بلاگ</a></li>
         <li><a href="contact.html">تماس با ما</a></li>
-        <li><a href="#">سوالات متداول</a></li>
+        <li><a href="faq.html">سوالات متداول</a></li>
+        <li><a href="track.html">پیگیری سفارش</a></li>
+        <li><a href="terms.html">قوانین و مقررات</a></li>
       </ul></div>
       <div class="footer-col"><h4>تماس</h4><ul>
         <li class="flex gap-8"><svg class="icon" style="width:15px;height:15px;"><use href="#icon-phone"/></svg> ۰۲۱-۹۱۰۰۰۰۰۰</li>
@@ -300,6 +308,8 @@
   </div>
 </footer>
 
+<script src="assets/js/demo-db.js"></script>
+<script src="assets/js/site-auth.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

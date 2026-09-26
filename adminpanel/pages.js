@@ -181,6 +181,7 @@
   }
   function bindResource(cfg, tableEl) {
     listTable = tableEl || findListTable(); if (!listTable) return;
+    listTable.setAttribute("data-bound", "1");
     listCfg = cfg;
     // دکمهٔ افزودن: در میان همهٔ نوارها، دکمهٔ «افزودن/جدید/تعریف» را پیدا کن
     var addBtn = [].slice.call(main.querySelectorAll(".section-bar .actions .abtn.primary"))
@@ -388,24 +389,48 @@
   async function activateDashboard() {
     try {
       var s = await window.AtomAPI.stats();
-      setStat(0, money(s.revenue)); setStat(1, fa(s.orders));
-      setStat(2, fa(s.customers)); setStat(3, fa(s.sellers));
+      var labels = ["درآمد قطعی (ارسال و تحویل)", "کل سفارش‌ها", "مشتریان", "فروشندگان"];
+      [money(s.revenue), fa(s.orders), fa(s.customers), fa(s.sellers)].forEach(function (v, i) {
+        setStat(i, v);
+        var st = main.querySelectorAll(".stat-grid .stat")[i];
+        if (st) { var tr = st.querySelector(".trend"); if (tr) tr.remove(); var sp = st.querySelector(":scope > span"); if (sp) sp.textContent = labels[i]; }
+      });
       // جدول آخرین سفارش‌ها (داخل کارت)
       var t = [].slice.call(main.querySelectorAll("table.tbl")).filter(function (x) { return x.closest(".card"); })[0];
       if (t && s.recentOrders) {
+        t.setAttribute("data-bound", "1");
         var tb = t.querySelector("tbody");
-        if (tb) tb.innerHTML = s.recentOrders.map(function (o) {
+        if (tb) tb.innerHTML = s.recentOrders.length ? s.recentOrders.map(function (o) {
           var m = S.orderStatus[o.status] || [o.status, "info"];
           return "<tr><td><b>#" + fa(o.code) + "</b></td><td>" + esc(o.customer) + "</td><td>" + esc(o.product) +
             "</td><td>" + money(o.amount) + "</td><td>" + pdate(o.created_at) + "</td><td>" + chip(m[0], m[1]) + "</td></tr>";
-        }).join("");
+        }).join("") : '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--a-text-3)">هنوز سفارشی ثبت نشده است.</td></tr>';
       }
+      // نمودار ۷ روز اخیر و سهم فروشندگان از روی سفارش‌های واقعی
+      var all = (await window.AtomAPI.orders.list("limit=200")).items || [];
+      var valid = all.filter(function (o) { return o.status !== "returned"; });
+      var now = new Date(), WD = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"], days = [];
+      for (var i = 6; i >= 0; i--) { var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i); days.push({ d: d.toDateString(), l: WD[d.getDay()], v: 0 }); }
+      valid.forEach(function (o) { var d = new Date(String(o.created_at || "").replace(" ", "T")); if (isNaN(d)) return; days.forEach(function (x) { if (x.d === d.toDateString()) x.v += +o.amount || 0; }); });
+      var max = Math.max.apply(null, days.map(function (x) { return x.v; }).concat([1]));
+      var chart = main.querySelector(".bar-chart");
+      if (chart) chart.innerHTML = days.map(function (x) { return '<div class="col"><div class="bar" style="height:' + Math.max(3, Math.round(100 * x.v / max)) + '%" title="' + esc(money(x.v)) + '"></div><span class="lbl">' + x.l + "</span></div>"; }).join("");
+      var by = {}; valid.forEach(function (o) { by[o.seller || "سایر"] = (by[o.seller || "سایر"] || 0) + (+o.amount || 0); });
+      var keys = Object.keys(by).sort(function (a, b) { return by[b] - by[a]; }), tot = keys.reduce(function (x, k) { return x + by[k]; }, 0);
+      var top = keys.slice(0, 3), rest = keys.slice(3).reduce(function (x, k) { return x + by[k]; }, 0);
+      var parts = top.map(function (k) { return [k, by[k]]; }); if (rest) parts.push(["سایر", rest]);
+      var cols = ["#0E7A38", "#22B14C", "#37C463", "#DCE8E0"], acc = 0, stops = [];
+      var legend = main.querySelector(".donut-wrap .legend"), donut = main.querySelector(".donut-wrap .donut");
+      var head = donut && donut.closest(".card") && donut.closest(".card").querySelector(".card-head h3"); if (head) head.textContent = "سهم فروش فروشندگان";
+      if (legend) legend.innerHTML = parts.length ? parts.map(function (p, i) { var pc = tot ? Math.round(100 * p[1] / tot) : 0; stops.push(cols[i] + " " + acc + "% " + (acc + pc) + "%"); acc += pc; return '<div><i style="background:' + cols[i] + '"></i> ' + esc(p[0]) + " — " + fa(pc) + "٪</div>"; }).join("") : "<div>هنوز فروشی ثبت نشده است</div>";
+      if (donut) donut.style.background = stops.length ? "conic-gradient(" + stops.join(",") + ", var(--a-border) " + acc + "% 100%)" : "var(--a-border)";
     } catch (e) {}
   }
   async function activateLoyalty() {
     try {
       var d = await window.AtomAPI.loyalty();
       var t = findListTable(); if (!t) return;
+      t.setAttribute("data-bound", "1");
       var order = { platinum: "t-platinum", gold: "t-gold", silver: "t-silver", bronze: "t-bronze" };
       t.innerHTML = "<thead><tr><th>مشتری</th><th>سطح</th><th>مجموع خرید</th></tr></thead><tbody>" +
         d.members.map(function (m) {
@@ -419,6 +444,7 @@
     try {
       var d = await window.AtomAPI.activity(60);
       var t = findListTable(); if (!t) return;
+      t.setAttribute("data-bound", "1");
       t.innerHTML = "<thead><tr><th>کاربر</th><th>اقدام</th><th>مورد</th><th>IP</th><th>زمان</th></tr></thead><tbody>" +
         d.items.map(function (a) {
           return "<tr><td>" + '<div class="row-th">' + initialBox(a.actor, "135deg,#0E7A38,#37C463") + "<b>" + esc(a.actor) + "</b></div></td>" +
@@ -435,6 +461,7 @@
       var loginCard = cards.filter(function (c) { var h = c.querySelector("h3"); return h && /ورودهای اخیر/.test(h.textContent); })[0];
       if (loginCard) {
         var tb = loginCard.querySelector("tbody");
+        if (tb) tb.closest("table").setAttribute("data-bound", "1");
         if (tb) tb.innerHTML = d.items.slice(0, 8).map(function (l) {
           return "<tr><td>" + esc(l.username) + "</td><td class='mono'>" + esc(l.ip || "—") + "</td><td>" +
             fa((l.created_at || "").slice(11, 16)) + "</td><td>" + (l.success ? chip("موفق", "ok") : chip("ناموفق", "err")) + "</td></tr>";
@@ -443,32 +470,20 @@
     } catch (e) {}
   }
   async function activateSettings() {
+    // فیلدهای دارای data-key مستقیماً به جدول تنظیمات سرور وصل‌اند (و روی سایت اثر دارند)
+    var fields = [].slice.call(main.querySelectorAll("[data-key]"));
     try {
       var d = await window.AtomAPI.settings(); var s = d.settings || {};
-      var map = { site_name: "اتم", site_title: null, domain: null, contact_email: null };
-      // پرکردن ورودی‌ها بر اساس مقدار برچسب — تطبیق ساده با value موجود
-      main.querySelectorAll(".field input, .field textarea").forEach(function (inp) {
-        var lbl = inp.closest(".field").querySelector("label");
-        if (!lbl) return; var t = lbl.textContent;
-        if (/نام سایت/.test(t) && s.site_name) inp.value = s.site_name;
-        else if (/عنوان/.test(t) && s.site_title) inp.value = s.site_title;
-        else if (/دامنه اصلی/.test(t) && s.domain) inp.value = s.domain;
-        else if (/ایمیل تماس/.test(t) && s.contact_email) inp.value = s.contact_email;
-      });
-      var saveBtn = main.querySelector(".section-bar .actions .abtn.primary");
-      if (saveBtn) saveBtn.onclick = async function (e) {
-        e.preventDefault();
-        var out = {};
-        main.querySelectorAll(".field input, .field textarea").forEach(function (inp) {
-          var lbl = inp.closest(".field").querySelector("label"); if (!lbl) return; var t = lbl.textContent;
-          if (/نام سایت/.test(t)) out.site_name = inp.value;
-          else if (/عنوان \(SEO\)|^عنوان/.test(t)) out.site_title = inp.value;
-          else if (/دامنه اصلی/.test(t)) out.domain = inp.value;
-          else if (/ایمیل تماس/.test(t)) out.contact_email = inp.value;
-        });
-        try { await window.AtomAPI.saveSettings(out); toast("تنظیمات ذخیره شد ✓"); } catch (er) { toast(er.message, true); }
-      };
+      fields.forEach(function (el) { var k = el.getAttribute("data-key"); if (s[k] != null && s[k] !== "") el.value = s[k]; });
     } catch (e) {}
+    var saveBtn = main.querySelector(".section-bar .actions .abtn.primary");
+    if (saveBtn) saveBtn.onclick = async function (e) {
+      e.preventDefault();
+      var out = {};
+      fields.forEach(function (el) { out[el.getAttribute("data-key")] = el.value.trim(); });
+      if (out.contact_email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(out.contact_email)) { toast("ایمیل تماس نامعتبر است.", true); return; }
+      try { await window.AtomAPI.saveSettings(out); toast("تنظیمات ذخیره شد و روی سایت اعمال شد ✓"); } catch (er) { toast(er.message, true); }
+    };
   }
   async function activateFlags() {
     try {
@@ -498,7 +513,7 @@
       setVal("sup_ai_provider", s.ai_provider || "openai");
       setVal("sup_ai_base_url", s.ai_base_url);
       setVal("sup_ai_model", s.ai_model);
-      setVal("sup_ai_api_key", s.ai_api_key);
+      var keyInp = document.getElementById("sup_ai_api_key"); if (keyInp) { keyInp.value = ""; keyInp.placeholder = s.ai_api_key_set === "1" ? "•••••••• (کلید ذخیره شده — برای تغییر، کلید جدید وارد کنید)" : "کلید API را وارد کنید"; }
       setVal("sup_ai_system_prompt", s.ai_system_prompt);
       var en = document.getElementById("sup_chat_enabled"); if (en) en.checked = (s.chat_enabled !== "0");
       avatarData = s.chat_avatar || "";
@@ -507,8 +522,8 @@
       if (avatarData && img) { img.src = avatarData; img.hidden = false; if (dz) dz.style.display = "none"; }
       // وضعیت هوش مصنوعی
       var aiChip = document.getElementById("supAiState");
-      if (aiChip) { if (s.ai_api_key) { aiChip.textContent = "فعال"; aiChip.className = "chip ok"; } else { aiChip.textContent = "پیکربندی نشده"; aiChip.className = "chip pend"; } }
-      setStat(0, s.ai_api_key ? "فعال" : "غیرفعال");
+      if (aiChip) { if (s.ai_api_key_set === "1") { aiChip.textContent = "فعال"; aiChip.className = "chip ok"; } else { aiChip.textContent = "پیکربندی نشده"; aiChip.className = "chip pend"; } }
+      setStat(0, s.ai_api_key_set === "1" ? "فعال" : "غیرفعال");
     } catch (e) {}
 
     // رنگ زنده
@@ -559,8 +574,8 @@
 
     // گفتگوهای اخیر
     try {
-      var r = await fetch("/api/support/conversations", { headers: { Authorization: "Bearer " + window.AtomAPI.token() } });
-      var cd = await r.json();
+      var cd = await window.AtomAPI.conversations();
+      var cvT = document.getElementById("supConvos"); if (cvT) cvT.setAttribute("data-bound", "1");
       var tb = document.querySelector("#supConvos tbody");
       if (tb && cd.items && cd.items.length) {
         tb.innerHTML = cd.items.slice(0, 20).map(function (m) {
@@ -583,19 +598,35 @@
   (async function run() {
     var online = false;
     try { online = await window.AtomAPI.available(); } catch (e) {}
-    if (!online) return; // بک‌اند نیست → دمو می‌ماند
-    // نشان «متصل به بک‌اند» در تاپ‌بار
+    // نشان وضعیت اتصال در تاپ‌بار: سرور واقعی یا «حالت HTML» (پایگاه دادهٔ مرورگر)
     var me = main.querySelector(".admin-user .me");
     if (me && !me.querySelector(".live-dot")) {
-      var d = document.createElement("span"); d.className = "live-dot"; d.title = "متصل به بک‌اند واقعی"; me.prepend(d);
+      var d = document.createElement("span"); d.className = "live-dot" + (online ? "" : " html-mode");
+      d.title = online ? "متصل به سرور واقعی" : "حالت HTML — داده‌ها در همین مرورگر ذخیره می‌شوند";
+      me.prepend(d);
     }
-    if (CONFIG[page]) return bindResource(CONFIG[page]);
-    if (page === "dashboard") return activateDashboard();
-    if (page === "loyalty") return activateLoyalty();
-    if (page === "audit") return activateAudit();
-    if (page === "security") return activateSecurity();
-    if (page === "settings") return activateSettings();
-    if (page === "flags") return activateFlags();
-    if (page === "support") return activateSupport();
+    if (!online && !document.querySelector(".html-mode-note")) {
+      var n = document.createElement("div"); n.className = "html-mode-note";
+      n.innerHTML = "حالت HTML فعال است: سرور Node در دسترس نیست و همهٔ بخش‌ها با پایگاه دادهٔ همین مرورگر کار می‌کنند. " +
+        '<button type="button" class="abtn" data-demo-reset>بازنشانی دادهٔ دمو</button>';
+      var bar = main.querySelector(".admin-topbar"); if (bar) bar.insertAdjacentElement("afterend", n);
+      n.querySelector("[data-demo-reset]").onclick = function () {
+        if (!confirm("همهٔ تغییرات حالت HTML پاک شود و داده‌های اولیه برگردد؟")) return;
+        if (window.AtomDemo) window.AtomDemo.reset(); location.reload();
+      };
+    }
+    try {
+      if (CONFIG[page]) bindResource(CONFIG[page]);
+      else if (page === "dashboard") await activateDashboard();
+      else if (page === "loyalty") await activateLoyalty();
+      else if (page === "audit") await activateAudit();
+      else if (page === "security") await activateSecurity();
+      else if (page === "settings") await activateSettings();
+      else if (page === "flags") await activateFlags();
+      else if (page === "support") await activateSupport();
+    } finally {
+      // فعال‌ساز سراسری (activate.js) پس از اتصال داده‌ها اجرا می‌شود
+      document.dispatchEvent(new Event("atom:pages-ready"));
+    }
   })();
 })();
